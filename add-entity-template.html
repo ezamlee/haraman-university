@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label> المستوى الأول </label>
+            <select name="select" class="form-control" ng-model="entityl1" required ng-change="onEntitySelected('level1')">
+                <option value="" disabled>اختر المستوى الأول</option>
+                <option value="{{association._id}}" ng-repeat="association in associations">
+                    {{association.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label> المستوى الثاني </label>
+            <select name="select" class="form-control" ng-model="entityl2" ng-change="onEntitySelected('level2')">
+                <option value="">
+                    غير محدد
+                </option>
+                <option value="{{key}}" ng-repeat="(key, value) in selectedUniversity.children">
+                    {{value.name}}
+                </option>
+            </select>
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label> المستوى الثالث </label>
+            <select name="select" class="form-control" ng-model="entityl3" ng-change="onEntitySelected('level3')">
+                <option value="">
+                    غير محدد
+                </option>
+                <option value="{{key}}" ng-repeat="(key, value) in selectedFaculty.children">
+                    {{value.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label> المستوى الرابع </label>
+            <select name="select" class="form-control" ng-model="entityl4" ng-change="onEntitySelected('level4')">
+                <option value="">
+                    غير محدد
+                </option>
+                <option value="{{key}}" ng-repeat="(key, value) in selectedSector.children">{{value.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,626 @@
+﻿<!--<!DOCTYPE html>-->
+<!--<html lang="en" dir="{{appDirection}}">-->
+<!--<head>-->
+<!--<meta charset="utf-8">-->
+<!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--<title> الجهات   </title>-->
+<!--&lt;!&ndash; Global stylesheets &ndash;&gt;-->
+<!--<link href="assets/css/ar/icons/icomoon/styles.css" rel="stylesheet" type="text/css">-->
+<!--<link href="assets/css/ar/bootstrap.css" rel="stylesheet" type="text/css">-->
+<!--<link href="assets/css/ar/core.css" rel="stylesheet" type="text/css">-->
+<!--<link href="assets/css/ar/font.css" rel="stylesheet" type="text/css">-->
+<!--<link href="assets/css/ar/components.css" rel="stylesheet" type="text/css">-->
+<!--<link href="assets/css/ar/colors.css" rel="stylesheet" type="text/css">-->
+<!--&lt;!&ndash; /global stylesheets &ndash;&gt;-->
+<!--&lt;!&ndash; Core JS files &ndash;&gt;-->
+<!--<script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>-->
+<!--<script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>-->
+<!--&lt;!&ndash; /core JS files &ndash;&gt;-->
+<!--&lt;!&ndash; Theme JS files &ndash;&gt;-->
+<!--<script type="text/javascript" src="assets/js/plugins/notifications/jgrowl.min.js"></script>-->
+<!--<script type="text/javascript" src="assets/js/plugins/ui/moment/moment.min.js"></script>-->
+<!--<script type="text/javascript" src="assets/js/plugins/pickers/daterangepicker.js"></script>-->
+<!--<script type="text/javascript" src="assets/js/core/app.js"></script>-->
+<!--<script type="text/javascript" src="assets/js/pages/picker_date.js"></script>-->
+<!--&lt;!&ndash; /theme JS files &ndash;&gt;-->
+<!--</head>-->
+<!--<body class="navbar-top">-->
+<!--&lt;!&ndash; Main navbar &ndash;&gt;-->
+<!--<div class="navbar navbar-inverse navbar-fixed-top">-->
+<!--<div class="navbar-header">-->
+<!--<a class="navbar-brand" href="index.html"><img src="assets/images/logo_light.png" alt=""></a>-->
+<!--<ul class="nav navbar-nav pull-right visible-xs-block">-->
+<!--<li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>-->
+<!--<li><a class="sidebar-mobile-main-toggle"><i class="icon-paragraph-justify3"></i></a></li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--<div class="navbar-collapse collapse" id="navbar-mobile">-->
+<!--<ul class="nav navbar-nav">-->
+<!--<li><a class="sidebar-control sidebar-main-toggle hidden-xs"><i class="icon-paragraph-justify3"></i></a></li>-->
+<!--<li><a> نظام توثيق ومتابعة المشاريع والمهام الإستراتيجية | جامعة الحرمين </a></li>-->
+<!--</ul>-->
+<!--<ul class="nav navbar-nav navbar-right">-->
+
+<!--<li class="dropdown language-switch">-->
+<!--<a class="dropdown-toggle" data-toggle="dropdown">-->
+<!--<img src="assets/images/flags/sa.png" class="position-left" alt="">-->
+<!--العربية-->
+<!--<span class="caret"></span>-->
+<!--</a>-->
+<!--<ul class="dropdown-menu">-->
+<!--<li><a class="english-font" href="index.html"><img src="assets/images/flags/gb.png" alt="">  English </a></li>-->
+<!--</ul>-->
+<!--</li>-->
+<!--<li><a href="#"><i class="icon-switch2"></i> تسجيل خروج </a></li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /main navbar &ndash;&gt;-->
+<!--&lt;!&ndash; Page container &ndash;&gt;-->
+<!--<div class="page-container">-->
+<!--&lt;!&ndash; Page content &ndash;&gt;-->
+<!--<div class="page-content">-->
+<!--&lt;!&ndash; Main sidebar &ndash;&gt;-->
+<!--<div class="sidebar sidebar-main sidebar-fixed">-->
+<!--<div class="sidebar-content">-->
+
+<!--&lt;!&ndash; User menu &ndash;&gt;-->
+<!--<div class="sidebar-user-material">-->
+<!--<div class="category-content">-->
+<!--<div class="sidebar-user-material-content">-->
+<!--<a href="#"><img src="assets/images/logo.jpg" class="img-responsive" alt=""></a>-->
+<!--<h6>جامعة الحرمين </h6>-->
+<!--<span class="text-size-small">ومن يؤت الحكمة فقد أوتي خيراً كثيراً</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /user menu &ndash;&gt;-->
+<!--&lt;!&ndash; Main navigation &ndash;&gt;-->
+<!--<div class="sidebar-category sidebar-category-visible">-->
+<!--<div class="category-content no-padding">-->
+<!--<ul class="navigation navigation-main navigation-accordion">-->
+<!--&lt;!&ndash; Main &ndash;&gt;-->
+<!--<li class="navigation-header"><span> الرئيسية </span> <i class="icon-menu" title="Main pages"></i></li>-->
+<!--<li><a href="index-ar.html"><i class="icon-home4"></i> <span> الرئيسية</span></a></li>-->
+<!--<li><a href="profile-ar.html"><i class="icon-profile"></i> <span> الصفحة الشخصية </span></a></li>-->
+<!--<li><a href="roles-ar.html"><i class="icon-clipboard2"></i> <span> المهام </span></a></li>-->
+<!--<li><a href="projects-ar.html"><i class="icon-stack2"></i> <span> المشاريع </span></a></li>-->
+<!--<li><a href="programs-ar.html"><i class="icon-stack"></i> <span> البرامج</span></a></li>-->
+<!--<li><a href="targets-ar.html"><i class="icon-target"></i> <span> الأهداف </span></a></li>-->
+<!--<li><a href="persons-ar.html"><i class="icon-users"></i> <span> الأشخاص</span></a></li>-->
+<!--<li><a href="organizations-ar.html"><i class="icon-office"></i> <span> الجهات </span></a></li>-->
+<!--<li class="active"><a href="targets-map-ar.html"><i class="icon-server"></i> <span> خريطة الأهداف / البرامج / الجهات </span></a></li>-->
+<!--<li><a href="reports.html"><i class="icon-file-text2"></i> <span> التقارير</span></a>-->
+<!--</li>-->
+<!--&lt;!&ndash; /main &ndash;&gt;-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /main navigation &ndash;&gt;-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; /main sidebar &ndash;&gt;-->
+<!--&lt;!&ndash; Main content &ndash;&gt;-->
+<!--<div class="content-wrapper pattern-bg">-->
+                <!-- Content area -->
+                <div class="content">
+                    <div class="">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h3><span class="text-semibold"> خريطة الأهداف </span></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-flat">
+                                <div class="panel-body">
+
+                                    <div class="tree">
+                                        <ul>
+                                            <li>
+                                                <a href="#"> الأهداف الاستراتيجية </a>
+                                                <ul>
+                                                    <li>
+                                                        <a href="#">Lab</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Code</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Html</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Css</a>
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <a href="#">Jquery</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Graph</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Image</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Design</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Blog</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Category</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Code</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">Graph</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">About</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Vcard</a>
+
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Map</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Lab</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Code</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Html</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Css</a>
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <a href="#">Jquery</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Graph</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Image</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Design</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Blog</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Category</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Code</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">Graph</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">About</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Vcard</a>
+
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Map</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">About</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Vcard</a>
+
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Map</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                  
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4> <span class="text-semibold"> خريطة البرامج </span></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-flat">
+                                <div class="panel-body">
+
+                                    <div class="tree">
+                                        <ul>
+                                            <li>
+                                                <a href="#"> الأهداف الاستراتيجية </a>
+                                                <ul>
+                                                    <li>
+                                                        <a href="#">Lab</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Code</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Html</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Css</a>
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <a href="#">Jquery</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Graph</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Image</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Design</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Blog</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Category</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Code</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">Graph</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">About</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Vcard</a>
+
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Map</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Lab</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Code</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Html</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Css</a>
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <a href="#">Jquery</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Graph</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Image</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Design</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Blog</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Category</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Code</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">Graph</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">About</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Vcard</a>
+
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Map</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">About</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Vcard</a>
+
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Map</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="">
+                        <div class="page-header-content">
+                            <div class="page-title">
+                                <h4> <span class="text-semibold"> خريطة الجهات </span></h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-flat">
+                                <div class="panel-body">
+
+                                    <div class="tree">
+                                        <ul>
+                                            <li>
+                                                <a href="#"> الأهداف الاستراتيجية </a>
+                                                <ul>
+                                                    <li>
+                                                        <a href="#">Lab</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Code</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Html</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Css</a>
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <a href="#">Jquery</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Graph</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Image</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Design</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Blog</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Category</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Code</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">Graph</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">About</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Vcard</a>
+
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Map</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Lab</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Code</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Html</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Css</a>
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <a href="#">Jquery</a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Graph</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Image</a>
+                                                                        <ul>
+                                                                            <li>
+                                                                                <a href="#">Design</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Blog</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Category</a>
+                                                                <ul>
+                                                                    <li>
+                                                                        <a href="#">Code</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="#">Graph</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">About</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Vcard</a>
+
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Map</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">About</a>
+                                                        <ul>
+                                                            <li>
+                                                                <a href="#">Vcard</a>
+
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Map</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Footer -->
+                    <div class="footer text-muted english-font">
+                        &copy; 2017. <a href="#"> Nahj Est.</a> All rights reserved.
+                    </div>
+                    <!-- /footer -->
+                </div>
+                <!-- /content area -->
+<!--</div>-->
+            <!-- /main content -->
+<!--</div>-->
+        <!-- /page content -->
+<!--</div>-->
+    <!-- /page container -->
+<!--</body>-->
+<!--</html>-->

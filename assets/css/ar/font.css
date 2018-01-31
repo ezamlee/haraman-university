@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'NotoKufiArabicRegular';
+    src: url('font/NotoKufiArabic.eot');
+    src: url('font/NotoKufiArabic.woff2') format('woff2'), url('font/NotoKufiArabic.woff') format('woff'), url('font/NotoKufiArabic.ttf') format('truetype'), url('font/NotoKufiArabic.svg#NotoKufiArabic-Regular') format('svg'), url('font/NotoKufiArabic.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'NotoKufiArabic-Bold';
+    src: url('font/NotoNaskhArabic-Bold.eot');
+    src: url('font/NotoNaskhArabic-Bold.woff2') format('woff2'), url('font/NotoNaskhArabic-Bold.woff') format('woff'), url('font/NotoNaskhArabic-Bold.ttf') format('truetype'), url('font/NotoNaskhArabic-Bold.svg#NotoKufiArabic-Bold') format('svg'), url('font/NotoNaskhArabic-Bold.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    font-family: 'NotoKufiArabicRegular';
+    font-weight:normal;
+	font-size: 12px;
+}

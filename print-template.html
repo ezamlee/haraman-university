@@ -1,0 +1,203 @@
+<div id="printArea" style="direction: rtl;text-align: right;">
+    <div style="direction: rtl;text-align: right;width: 100%;margin-bottom: 12px">
+        <div style="display: inline-block;padding: 0 10px;vertical-align: text-bottom;">
+            <img style="width:75px;height: 75px;" src="assets/images/log_transparent.png" alt="">
+        </div>
+
+        <div style="display: inline-block;vertical-align: top;">
+            <p style="font-weight: bold;font-size:20px;color: darkgrey">
+                {{reportForm.name}}
+            </p>
+            <p style="font-weight: bold;color: darkgrey">
+                {{entityl1}} {{entityl2}} {{entityl3}} {{entityl4}}
+            </p>
+        </div>
+
+    </div>
+    <div style="margin-top: 15px" ng-if="reportForm.message">
+        <p style="font-weight: bold;color: blue;font-size:20px;">
+            الرسالة
+        </p>
+        <p style="margin:8px">
+            {{message}}
+        </p>
+    </div>
+    <div ng-if="reportForm.vision">
+        <p style="font-weight: bold;color: blue;font-size:20px;">
+            الرؤية
+        </p>
+        <p style="margin:8px">
+            {{vision}}
+        </p>
+    </div>
+    <div ng-if="reportForm.principles">
+        <p style="font-weight: bold;color: blue;font-size:20px;">
+            القيم
+        </p>
+        <p style="margin:8px">
+            {{principles}}
+        </p>
+    </div>
+    <div ng-if="enableGoals">
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.goals == 'opt2'">
+            الأهداف الرئيسية فقط
+        </p>
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.goals == 'opt3'">
+            الأهداف الرئيسية والفرعية
+        </p>
+        <div ng-repeat="goal in strategicGoals" ng-if="reportForm.goals == 'opt2' || reportForm.goals == 'opt3'">
+            <p style="margin:8px"> {{goal.name}} </p>
+            <div ng-if="reportForm.goals == 'opt3'" ng-repeat="subgoal in goal.subgoals">
+                <p style="margin:16px">
+                    {{subgoal.name}}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div ng-if="enablePrograms">
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.programs === 'opt1'">
+            البرامج
+        </p>
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.programs === 'opt2'">
+            البرامج موزعة تبعا للأهداف الاستراتيجية
+        </p>
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.programs === 'opt3'">
+            البرامج موزعة تبعا للأهداف الاستراتيجية والفرعية
+        </p>
+        <div ng-repeat="program in programs" style="margin:8px" ng-if="reportForm.programs === 'opt1'">
+            <p>{{program.name}}</p>
+        </div>
+        <div ng-repeat="goal in strategicGoals" ng-if="reportForm.programs === 'opt2' && checkIfGoalHasPrograms(goal)" style="margin:8px">
+            <p>{{goal.name}}</p>
+            <div ng-repeat="program in programs" ng-if="checkForGoalInProgram(goal,program)" style="margin:16px">
+                <p>{{program.name}}</p>
+            </div>
+        </div>
+        <!-- TODO: optimize these loops whenever you have time  -->
+        <div ng-repeat="goal in strategicGoals" ng-if="reportForm.programs === 'opt3' && checkIfGoalHasPrograms(goal)" style="margin:8px">
+            <p style="font-weight: bold">{{goal.name}}</p>
+            <div ng-repeat="program in programs" ng-if="programWithNoSubGoals(goal,program) && checkForGoalInProgram(goal,program)" style="margin:16px">
+                <p>{{program.name}}</p>
+            </div>
+            <div ng-repeat="(key,value) in goal.subgoals" style="margin:8px" ng-if="subgoalHasPrograms(key)">
+                <p>{{value.name}}</p>
+                <div ng-repeat="program in programs" style="margin:8px" ng-if="subGoalInProgram(key,program)">
+                    <p>{{program.name}}</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div ng-if="enableProjects">
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.projects === 'opt2'">
+            المشاريع
+        </p>
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.projects === 'opt3'">
+            المشاريع موزعة تبعا للبرامج
+        </p>
+        <p ng-repeat="project in projects" style="margin:8px" ng-if="reportForm.projects === 'opt2'">
+            {{project.name}}
+        </p>
+        <div ng-repeat="program in programs" ng-if="reportForm.projects === 'opt3' && checkIfProgramHasProjects(program)">
+            <p style="margin:8px;font-weight: bold">
+                {{program.name}}
+            </p>
+            <div ng-repeat="project in projects" style="margin:16px" ng-if="project.program == program._id">
+                <p>
+                    {{project.name}}
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div ng-if="enableTasks">
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.tasks === 'opt1'">
+            المهام
+        </p>
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.tasks === 'opt2'">
+            المهام موزعة تبعا للحالة الراهنة
+        </p>
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.tasks === 'opt3'">
+            المهام موزعة تبعا للمشاريع
+        </p>
+        <p ng-repeat="task in tasks" style="margin: 8px 10px" ng-if="reportForm.tasks === 'opt1'">
+            {{task.name}}
+        </p>
+        <div ng-if="reportForm.tasks === 'opt2'" style="margin:8px">
+            <div>
+                <p style="font-weight: bold">المهام المنتهية</p>
+                <div style="margin: 0 10px" ng-repeat="task in tasks" ng-if="task.active == false">
+                    <p>
+                        {{task.name}}
+                    </p>
+                </div>
+            </div>
+            <div>
+                <p style="font-weight: bold">المهام تحت الإجراء</p>
+                <div style="margin: 0 10px" ng-repeat="task in tasks" ng-if="task.active == true">
+                    <p>
+                        {{task.name}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div ng-if="reportForm.tasks === 'opt3'" style="margin:8px">
+            <div ng-repeat="project in projects" ng-if="checkIfProjectHasTasks(project)" style="margin:8px">
+                <p style="font-weight: bold">
+                    {{project.name}}
+                </p>
+                <div style="margin: 0 10px" ng-repeat="task in tasks" ng-if="task.project == project._id">
+                    <p>
+                        {{task.name}}
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div ng-if="enableKPIs">
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.kpis === 'opt2'">
+            مؤشرات الأداء
+        </p>
+        <p style="font-weight: bold;color: blue;font-size:20px;" ng-if="reportForm.kpis === 'opt3'">
+            مؤشرات الأداء موزعة تبعا للمشاريع والمراحل
+        </p>
+        <div ng-repeat="indicator in indicesArray" style="margin:8px" ng-if="reportForm.kpis === 'opt2'">
+            <p style="font-weight: bold">
+                {{indicator.name}}
+            </p>
+            <span style="margin:0 5px">
+                القيمة المستهدفة {{indicator.goal}}
+            </span>
+            <span style="margin:0 5px">
+                القيمة الحالية {{indicator.actual}}
+            </span>
+        </div>
+        <div ng-repeat="project in projects" style="margin:8px" ng-if="reportForm.kpis === 'opt3' && showProject(project)">
+            <p style="font-weight: bold">
+                {{project.name}}
+            </p>
+            <div ng-repeat="stage in project.stages" style="margin:8px" ng-if="stage.indices.length > 0">
+                <p>
+                    {{stage.name}}
+                </p>
+                <div ng-repeat="indicator in stage.indices" style="margin:8px">
+                    <p>
+                        {{indicator.name}}
+                    </p>
+                    <span style="margin:0 5px">
+                        القيمة المستهدفة {{indicator.goal}}
+                    </span>
+                    <span style="margin:0 5px">
+                        القيمة الحالية {{indicator.actual}}
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

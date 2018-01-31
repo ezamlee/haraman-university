@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label> الأهداف الرئيسية</label>
+            <select name="select" class="form-control" ng-model="strategicGoal" ng-change="onGoalSelected('strategic')">
+                <option value="" disabled>هدف رئيسي</option>
+                <option value="{{mainGoal._id}}" ng-repeat="mainGoal in strategicGoals">
+                    {{mainGoal.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label> الأهداف الفرعية </label>
+            <select name="select" class="form-control" ng-model="secondaryGoal" ng-change="onGoalSelected('secondary')">
+                <option value="">غير محدد</option>
+                <option value="{{key}}" ng-repeat="(key, value) in selectedFirstLevelGoal.subgoals">
+                    {{value.name}}
+                </option>
+            </select>
+
+        </div>
+    </div>
+
+</div>
