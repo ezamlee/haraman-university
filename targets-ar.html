@@ -1,4 +1,4 @@
-﻿<!--<!DOCTYPE html>-->
+﻿<!DOCTYPE html>-->
 <!--<html lang="en" dir="{{appDirection}}">-->
 <!--<head>-->
 <!--<meta charset="utf-8">-->
@@ -118,25 +118,128 @@
             <form name="strategicGoalForm">
                 <div class="panel panel-flat">
                     <div class="panel-body height-70-vh">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label> الأهداف الرئيسية </label>
-                                <select multiple="multiple" class="form-control height-45-vh">
-                                    <option ng-repeat="mainGoal in strategicGoals" ng-click="onStrategicGoalSelected(mainGoal,$index)">
-                                        {{mainGoal.name}}
-                                    </option>
-                                </select>
+                    
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse1">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> اﻷهداف اﻷستراتيجية </a>
+                                </h4>
                             </div>
-                            <div class="form-group">
-                                <textarea rows="3" class="form-control" placeholder="" ng-model="strategicGoalModel" required></textarea>
-                            </div>
-                            <div class="text-right">
-                                <i class="fa fa-plus fa-2x text-green action-icon" ng-click="addStrategicGoal(strategicGoalForm.$valid)" aria-hidden="true"></i>
-                                <i class="fa fa-floppy-o fa-2x action-icon" ng-click="editStrategicGoal(strategicGoalForm.$valid)" aria-hidden="true"></i>
-                                <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteStrategicGoal()" aria-hidden="true"></i>
 
+                            <div id="collapse1" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label> الأهداف الرئيسية </label>
+                                            <select multiple="multiple" class="form-control height-45-vh">
+                                                <option ng-repeat="mainGoal in strategicGoals" ng-click="onStrategicGoalSelected(mainGoal,$index)">
+                                                    {{mainGoal.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea rows="3" class="form-control" placeholder="" ng-model="strategicGoalModel" required></textarea>
+                                        </div>
+                                        <div class="text-right">
+                                            <i class="fa fa-plus fa-2x text-green action-icon" ng-click="addStrategicGoal(strategicGoalForm.$valid)" aria-hidden="true"></i>
+                                            <i class="fa fa-floppy-o fa-2x action-icon" ng-click="editStrategicGoal(strategicGoalForm.$valid)" aria-hidden="true"></i>
+                                            <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteStrategicGoal()" aria-hidden="true"></i>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse2">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> العنوان </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse2" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse3">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> النسبة المئوية من كامل الخطة </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse3" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse4">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> نسبة التحقق </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse4" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse5">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> البرامج المرتبطة </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse5" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse6">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> المشاريع المرتبطة </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse6" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </form>
@@ -145,32 +248,144 @@
             <form name="secondaryGoalForm">
                 <div class="panel panel-flat">
                     <div class="panel-body height-70-vh">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label> الأهداف الفرعية </label>
-                                <select multiple="multiple" class="form-control height-45-vh">
-                                    <option ng-repeat="(key, value) in selectedStrategicGoal.subgoals" ng-click="onSecondaryGoalSelected(key,$index,value)">
-                                        {{value.name}}
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <textarea rows="3" class="form-control" placeholder="" ng-model="secondaryGoalModel" required></textarea>
-                            </div>
-                            <div class="text-right">
-                                <i class="fa fa-plus fa-2x text-green action-icon" ng-click="addSecondaryGoal(secondaryGoalForm.$valid)" aria-hidden="true"></i>
-                                <i class="fa fa-floppy-o fa-2x action-icon" ng-click="editSecondaryGoal(secondaryGoalForm.$valid)" aria-hidden="true"></i>
-                                <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteSecondaryGoal()" aria-hidden="true"></i>
 
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse7">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> اﻷهداف اﻷستراتيجية </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse7" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label> الأهداف الفرعية </label>
+                                            <select multiple="multiple" class="form-control height-45-vh">
+                                                <option ng-repeat="(key, value) in selectedStrategicGoal.subgoals" ng-click="onSecondaryGoalSelected(key,$index,value)">
+                                                    {{value.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea rows="3" class="form-control" placeholder="" ng-model="secondaryGoalModel" required></textarea>
+                                        </div>
+                                        <div class="text-right">
+                                            <i class="fa fa-plus fa-2x text-green action-icon" ng-click="addSecondaryGoal(secondaryGoalForm.$valid)" aria-hidden="true"></i>
+                                            <i class="fa fa-floppy-o fa-2x action-icon" ng-click="editSecondaryGoal(secondaryGoalForm.$valid)" aria-hidden="true"></i>
+                                            <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteSecondaryGoal()" aria-hidden="true"></i>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse8">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> العنوان </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse8" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse9">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> النسبة المئوية من كامل الخطة </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse9" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse10">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> نسبة التحقق </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse10" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse11">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> البرامج المرتبطة </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse11" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse12">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> المشاريع المرتبطة </a>
+                                </h4>
+                            </div>
+
+                            <div id="collapse12" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    <script>
+        $(".collapse").on('show.bs.collapse', function(){
+            $(".fa").removeClass("fa-arrow-down");
+            $(".fa").addClass("fa-arrow-up");
+         });
+         $(".collapse").on('hide.bs.collapse', function(){
+            $(".fa").removeClass("fa-arrow-up");
+            $(".fa").addClass("fa-arrow-down");
+          });
+    </script>
     <!-- Footer -->
     <div class="footer text-muted">
         &copy; 2017. كلية المسجد النبوي - </a> جميع الحقوق محفوظة.
@@ -185,4 +400,4 @@
 <!--</div>-->
 <!-- /page container -->
 <!--</body>-->
-<!--</html>-->
+<!--</html>
