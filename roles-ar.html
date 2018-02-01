@@ -7,7 +7,7 @@
                             </h4>
                           </div>
 
-                          <div id="collapse#" class="panel-collapse collapse in">
+                          <div id="collapse#" class="panel-collapse collapse">
                             <div class="panel-body">
 
                             </div>
@@ -37,7 +37,7 @@
                               <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> المهمة </a>
                             </h4>
                           </div>
-                          <div id="collapse1" class="panel-collapse collapse in">
+                          <div id="collapse1" class="panel-collapse collapse">
                             <div class="panel-body">
                               <div class="col-md-12">
                                   <div class="form-group">
@@ -63,7 +63,7 @@
                               <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> المستويات </a>
                             </h4>
                           </div>
-                          <div id="collapse2" class="panel-collapse collapse in">
+                          <div id="collapse2" class="panel-collapse collapse">
                             <div class="panel-body">
                               <div class="col-md-6">
                                   <div class="form-group">
@@ -122,7 +122,7 @@
                             </h4>
                           </div>
 
-                          <div id="collapse3" class="panel-collapse collapse in">
+                          <div id="collapse3" class="panel-collapse collapse">
                             <div class="panel-body">
                               <div class="col-md-6">
                                   <div class="form-group">
@@ -186,7 +186,7 @@
                             </h4>
                           </div>
 
-                          <div id="collapse4" class="panel-collapse collapse in">
+                          <div id="collapse4" class="panel-collapse collapse">
                             <div class="panel-body">
                               <div class="col-md-6">
                                   <div class="form-group">
@@ -268,137 +268,240 @@
             <form name="taskForm">
                 <div class="panel panel-flat">
                     <div class="panel-body height-70-vh">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label> عنوان المهمة </label>
-                                <input type="text" class="form-control" placeholder="مهمة " required ng-model="taskObject.name">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label> حالة المهمة </label>
-                                <select name="select" class="form-control" ng-model="taskObject.active">
-                                    <option value="" disabled> حالة المهمة </option>
-                                    <option value="true"> نشطة</option>
-                                    <option value="false">تمت</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label> مدير المهمة </label>
-                                <select name="select" class="form-control" ng-model="taskObject.manager">
-                                    <option value="" disabled> مدير المهمة</option>
-                                    <option ng-repeat="user in usersList" value="{{user._id}}">{{user.name}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label> المرحلة </label>
-                                <select name="select" class="form-control" ng-model="taskObject.stage">
-                                    <option value=""> غير محدد</option>
-                                    <option ng-repeat="stage in selectedProject.stages" value="{{stage.name}}">{{stage.name}}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label> التكلفة التقديرية </label>
-                                <input type="number" class="form-control" placeholder="10,000" ng-model="taskObject.approxCost">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label> تاريخ البداية المخطط </label>
 
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="icon-calendar22"></i>
-                                    </span>
-                                    <input type="date" class="form-control daterange-single" ng-model="taskObject.datePlannedStart">
+                      <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse"  href="#collapse5">
+                          <h4 class="panel-title">
+                            <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> عنوان مهمة </a>
+                          </h4>
+                        </div>
+
+                        <div id="collapse5" class="panel-collapse collapse">
+                          <div class="panel-body">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                  <input type="text" class="form-control" placeholder="مهمة " required ng-model="taskObject.name">
+                              </div>
+                          </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse"  href="#collapse6">
+                          <h4 class="panel-title">
+                            <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> البيانات الاساسية </a>
+                          </h4>
+                        </div>
+
+                        <div id="collapse6" class="panel-collapse collapse">
+                          <div class="panel-body">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> حالة المهمة </label>
+                                    <select name="select" class="form-control" ng-model="taskObject.active">
+                                        <option value="" disabled> حالة المهمة </option>
+                                        <option value="true"> نشطة</option>
+                                        <option value="false">تمت</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label> تاريخ النهاية المخطط </label>
-
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="icon-calendar22"></i>
-                                    </span>
-                                    <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.datePlannedEnd">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> مدير المهمة </label>
+                                    <select name="select" class="form-control" ng-model="taskObject.manager">
+                                        <option value="" disabled> مدير المهمة</option>
+                                        <option ng-repeat="user in usersList" value="{{user._id}}">{{user.name}}</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label> تاريخ البداية الفعلي </label>
-
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="icon-calendar22"></i>
-                                    </span>
-                                    <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.dateActualStart">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> المرحلة </label>
+                                    <select name="select" class="form-control" ng-model="taskObject.stage">
+                                        <option value=""> غير محدد</option>
+                                        <option ng-repeat="stage in selectedProject.stages" value="{{stage.name}}">{{stage.name}}</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label> تاريخ النهاية الفعلي </label>
-
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="icon-calendar22"></i>
-                                    </span>
-                                    <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.dateActualEnd">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label> التكلفة التقديرية </label>
+                                    <input type="number" class="form-control" placeholder="10,000" ng-model="taskObject.approxCost">
                                 </div>
                             </div>
+
+                          </div>
                         </div>
-                        <div class="col-md-12">
-                            <label style="font-weight: bold">اختيار فريق العمل</label>
+                      </div>
+
+                      <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse"  href="#collapse7">
+                          <h4 class="panel-title">
+                            <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> اﻷهمية، الانجاز والجودة </a>
+                          </h4>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>الأشخاص المضافين للمشروع</label>
-                                <select multiple="multiple" class="form-control" style="height: 345px">
-                                    <option ng-repeat="user in usersList" ng-click="putUserInTeam(user)">{{user.name}}</option>
-                                </select>
+
+                        <div id="collapse7" class="panel-collapse collapse">
+                          <div class="panel-body">
+
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse"  href="#collapse8">
+                          <h4 class="panel-title">
+                            <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> تواريخ البداية والنهارة </a>
+                          </h4>
+                        </div>
+
+                        <div id="collapse8" class="panel-collapse collapse">
+                          <div class="panel-body">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label> تاريخ البداية المخطط </label>
+
+                                      <div class="input-group">
+                                          <span class="input-group-addon">
+                                              <i class="icon-calendar22"></i>
+                                          </span>
+                                          <input type="date" class="form-control daterange-single" ng-model="taskObject.datePlannedStart">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label> تاريخ النهاية المخطط </label>
+
+                                      <div class="input-group">
+                                          <span class="input-group-addon">
+                                              <i class="icon-calendar22"></i>
+                                          </span>
+                                          <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.datePlannedEnd">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label> تاريخ البداية الفعلي </label>
+
+                                      <div class="input-group">
+                                          <span class="input-group-addon">
+                                              <i class="icon-calendar22"></i>
+                                          </span>
+                                          <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.dateActualStart">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label> تاريخ النهاية الفعلي </label>
+
+                                      <div class="input-group">
+                                          <span class="input-group-addon">
+                                              <i class="icon-calendar22"></i>
+                                          </span>
+                                          <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.dateActualEnd">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse"  href="#collapse9">
+                          <h4 class="panel-title">
+                            <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> فريق العمل </a>
+                          </h4>
+                        </div>
+
+                        <div id="collapse9" class="panel-collapse collapse">
+                          <div class="panel-body">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>الأشخاص المضافين للمشروع</label>
+                                    <select multiple="multiple" class="form-control" style="height: 345px">
+                                        <option ng-repeat="user in usersList" ng-click="putUserInTeam(user)">{{user.name}}</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>فريق العمل داخليا</label>
-                                <select multiple="multiple" class="form-control">
-                                    <option ng-repeat="user in internalTeamArr track by $index" ng-click="deleteMember($index,'internal')">{{user.name}}</option>
-                                </select>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>فريق العمل داخليا</label>
+                                    <select multiple="multiple" class="form-control">
+                                        <option ng-repeat="user in internalTeamArr track by $index" ng-click="deleteMember($index,'internal')">{{user.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>فريق العمل خارجياً</label>
+                                    <select multiple="multiple" class="form-control">
+                                        <option ng-repeat="user in externalTeamArr track by $index" ng-click="deleteMember($index,'external')">{{user.name}}</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>فريق العمل خارجياً</label>
-                                <select multiple="multiple" class="form-control">
-                                    <option ng-repeat="user in externalTeamArr track by $index" ng-click="deleteMember($index,'external')">{{user.name}}</option>
-                                </select>
-                            </div>
+                          </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label> تفصيلات المهمة والخطوات التنفيذية </label>
-                                <textarea rows="3" class="form-control" ng-model="taskObject.description"></textarea>
-                            </div>
+                      </div>
+                        
+                      <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse"  href="#collapse10">
+                          <h4 class="panel-title">
+                            <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> الجهات ذات العلاقة </a>
+                          </h4>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label> مطالب التنفيذ - الأدوات </label>
-                                <textarea rows="3" class="form-control" ng-model="taskObject.requirements"></textarea>
-                            </div>
+
+                        <div id="collapse10" class="panel-collapse collapse">
+                          <div class="panel-body">
+                            
+                          </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>مؤشرات الأداء</label>
-                                <textarea rows="3" class="form-control" ng-model="taskObject.kpis"></textarea>
-                            </div>
+                      </div>
+
+                      <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse"  href="#collapse11">
+                          <h4 class="panel-title">
+                            <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> التفصيلات ومطالب التنفيذ </a>
+                          </h4>
                         </div>
+
+                        <div id="collapse11" class="panel-collapse collapse">
+                          <div class="panel-body">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label> تفصيلات المهمة والخطوات التنفيذية </label>
+                                    <textarea rows="3" class="form-control" ng-model="taskObject.description"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label> مطالب التنفيذ - الأدوات </label>
+                                    <textarea rows="3" class="form-control" ng-model="taskObject.requirements"></textarea>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse"  href="#collapse12">
+                          <h4 class="panel-title">
+                            <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> مؤشرات اﻷداء </a>
+                          </h4>
+                        </div>
+
+                        <div id="collapse12" class="panel-collapse collapse">
+                          <div class="panel-body">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="3" class="form-control" ng-model="taskObject.kpis"></textarea>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                 </div>
             </form>
