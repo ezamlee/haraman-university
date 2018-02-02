@@ -349,7 +349,7 @@
                           </div>
                         </div>
                       </div>
-                      
+
                       <div class="panel panel-default">
                         <div class="panel-heading" data-toggle="collapse"  href="#collapse8">
                           <h4 class="panel-title">
@@ -445,7 +445,7 @@
                           </div>
                         </div>
                       </div>
-                        
+
                       <div class="panel panel-default">
                         <div class="panel-heading" data-toggle="collapse"  href="#collapse10">
                           <h4 class="panel-title">
@@ -455,7 +455,7 @@
 
                         <div id="collapse10" class="panel-collapse collapse">
                           <div class="panel-body">
-                            
+
                           </div>
                         </div>
                       </div>
@@ -509,12 +509,12 @@
         <script>
 
         $(".collapse").on('show.bs.collapse', function(){
-            $(".fa").removeClass("fa-arrow-down");
-            $(".fa").addClass("fa-arrow-up");
+            $($(this).siblings().find("h4 > a > i.fa")[0]).removeClass("fa-arrow-down");
+            $($(this).siblings().find("h4 > a > i.fa")[0]).addClass("fa-arrow-up");
          });
          $(".collapse").on('hide.bs.collapse', function(){
-            $(".fa").removeClass("fa-arrow-up");
-            $(".fa").addClass("fa-arrow-down");
+            $($(this).siblings().find("h4 > a > i.fa")[0]).removeClass("fa-arrow-up");
+            $($(this).siblings().find("h4 > a > i.fa")[0]).addClass("fa-arrow-down");
           });
           $(".collapse").collapse("hide");
         </script>

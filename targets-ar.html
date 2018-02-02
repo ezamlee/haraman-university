@@ -118,11 +118,11 @@
             <form name="strategicGoalForm">
                 <div class="panel panel-flat">
                     <div class="panel-body height-70-vh">
-                    
+
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse1">
                                 <h4 class="panel-title">
-                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> اﻷهداف اﻷستراتيجية </a>
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i>الأهداف الرئيسية</a>
                                 </h4>
                             </div>
 
@@ -130,16 +130,14 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label> الأهداف الرئيسية </label>
+                                            <label> </label>
                                             <select multiple="multiple" class="form-control height-45-vh">
                                                 <option ng-repeat="mainGoal in strategicGoals" ng-click="onStrategicGoalSelected(mainGoal,$index)">
                                                     {{mainGoal.name}}
                                                 </option>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <textarea rows="3" class="form-control" placeholder="" ng-model="strategicGoalModel" required></textarea>
-                                        </div>
+
                                         <div class="text-right">
                                             <i class="fa fa-plus fa-2x text-green action-icon" ng-click="addStrategicGoal(strategicGoalForm.$valid)" aria-hidden="true"></i>
                                             <i class="fa fa-floppy-o fa-2x action-icon" ng-click="editStrategicGoal(strategicGoalForm.$valid)" aria-hidden="true"></i>
@@ -150,7 +148,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse2">
                                 <h4 class="panel-title">
@@ -162,13 +159,12 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" required>
+                                            <textarea rows="3" class="form-control" placeholder="" ng-model="strategicGoalModel" required></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse3">
                                 <h4 class="panel-title">
@@ -186,7 +182,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse4">
                                 <h4 class="panel-title">
@@ -221,7 +216,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse6">
                                 <h4 class="panel-title">
@@ -249,11 +243,10 @@
                 <div class="panel panel-flat">
                     <div class="panel-body height-70-vh">
 
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse7">
                                 <h4 class="panel-title">
-                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> اﻷهداف اﻷستراتيجية </a>
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> الأهداف الفرعية </a>
                                 </h4>
                             </div>
 
@@ -261,16 +254,14 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label> الأهداف الفرعية </label>
+                                            <label></label>
                                             <select multiple="multiple" class="form-control height-45-vh">
                                                 <option ng-repeat="(key, value) in selectedStrategicGoal.subgoals" ng-click="onSecondaryGoalSelected(key,$index,value)">
                                                     {{value.name}}
                                                 </option>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <textarea rows="3" class="form-control" placeholder="" ng-model="secondaryGoalModel" required></textarea>
-                                        </div>
+
                                         <div class="text-right">
                                             <i class="fa fa-plus fa-2x text-green action-icon" ng-click="addSecondaryGoal(secondaryGoalForm.$valid)" aria-hidden="true"></i>
                                             <i class="fa fa-floppy-o fa-2x action-icon" ng-click="editSecondaryGoal(secondaryGoalForm.$valid)" aria-hidden="true"></i>
@@ -281,7 +272,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse8">
                                 <h4 class="panel-title">
@@ -299,7 +289,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse9">
                                 <h4 class="panel-title">
@@ -310,14 +299,13 @@
                             <div id="collapse9" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" required>
-                                        </div>
+                                      <div class="form-group">
+                                          <textarea rows="3" class="form-control" placeholder="" ng-model="secondaryGoalModel" required></textarea>
+                                      </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse10">
                                 <h4 class="panel-title">
@@ -352,7 +340,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse12">
                                 <h4 class="panel-title">
@@ -377,14 +364,16 @@
         </div>
     </div>
     <script>
-        $(".collapse").on('show.bs.collapse', function(){
-            $(".fa").removeClass("fa-arrow-down");
-            $(".fa").addClass("fa-arrow-up");
-         });
-         $(".collapse").on('hide.bs.collapse', function(){
-            $(".fa").removeClass("fa-arrow-up");
-            $(".fa").addClass("fa-arrow-down");
-          });
+
+    $(".collapse").on('show.bs.collapse', function(){
+        $($(this).siblings().find("h4 > a > i.fa")[0]).removeClass("fa-arrow-down");
+        $($(this).siblings().find("h4 > a > i.fa")[0]).addClass("fa-arrow-up");
+     });
+     $(".collapse").on('hide.bs.collapse', function(){
+        $($(this).siblings().find("h4 > a > i.fa")[0]).removeClass("fa-arrow-up");
+        $($(this).siblings().find("h4 > a > i.fa")[0]).addClass("fa-arrow-down");
+      });
+      $(".collapse").collapse("hide");
     </script>
     <!-- Footer -->
     <div class="footer text-muted">

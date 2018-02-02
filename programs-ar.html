@@ -120,7 +120,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6"> 
+        <div class="col-md-6">
             <!--<form>-->
             <div class="panel panel-flat">
                 <div class="panel-body height-70-vh">
@@ -337,7 +337,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 
+                    <!--
                      -->
                 </div>
             </div>
@@ -717,10 +717,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>                       
-                        
-                        
-                        
+                        </div>
+
+
+
                         <!-- <div class="col-md-12"> -->
                         <!-- <div class="col-md-6">
                             <div class="form-group">
@@ -751,29 +751,23 @@
                             </div>
                         </div> -->
                         <!-- </div> -->
-                        
-                        
+
+
                     </div>
                 </div>
             </form>
         </div>
         <script>
-            $(".collapse").on('show.bs.collapse', function(){
-                $(".fa").removeClass("fa-arrow-down");
-                $(".fa").addClass("fa-arrow-up");
-             });
-             $(".collapse").on('hide.bs.collapse', function(){
-                $(".fa").removeClass("fa-arrow-up");
-                $(".fa").addClass("fa-arrow-down");
-              });
 
-            // function toggleIcon(e) {
-            //     $(e.target)
-            //         .prev('.panel-heading')
-            //         .toggleClass('fa-arrow-down fa-arrow-up');
-            // }
-            // $('.panel').on('hidden.bs.collapse', toggleIcon);
-            // $('.panel').on('shown.bs.collapse', toggleIcon);
+        $(".collapse").on('show.bs.collapse', function(){
+            $($(this).siblings().find("h4 > a > i.fa")[0]).removeClass("fa-arrow-down");
+            $($(this).siblings().find("h4 > a > i.fa")[0]).addClass("fa-arrow-up");
+         });
+         $(".collapse").on('hide.bs.collapse', function(){
+            $($(this).siblings().find("h4 > a > i.fa")[0]).removeClass("fa-arrow-up");
+            $($(this).siblings().find("h4 > a > i.fa")[0]).addClass("fa-arrow-down");
+          });
+          $(".collapse").collapse("hide");
         </script>
     </div>
 
