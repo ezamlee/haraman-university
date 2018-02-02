@@ -176,7 +176,15 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" required>
+                                            <!-- <input type="text" class="form-control" numbers-only ng-model="number" min="0" max="100" required> -->
+                                            <input type="number" class="form-control" name="val1" min="{{min}}" max="{{max}}" ng-model="val1" required step="5" />
+                                            
+                                        </div>
+                                        <div style="color: #ff0000" role="alert" ng-if="strategicGoalForm.val1.$dirty">
+                                            <div ng-show="strategicGoalForm.val1.$error.required">This field is required</div>
+                                            <div ng-show="strategicGoalForm.val1.$error.min">This field must be at least {{min}}.</div>
+                                            <div ng-show="strategicGoalForm.val1.$error.max">This field must be at max {{max}}.</div>
+                                            <div ng-show="strategicGoalForm.val1.$error.number">Not a valid number.</div>
                                         </div>
                                     </div>
                                 </div>
@@ -210,7 +218,11 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" required>
+                                            <select multiple="multiple" class="form-control height-45-vh">
+                                                <option disabled>
+                                                    project
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -227,7 +239,11 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" required>
+                                            <select multiple="multiple" class="form-control height-45-vh">
+                                                <option disabled>
+                                                    project
+                                                </option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -299,9 +315,17 @@
                             <div id="collapse9" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="col-md-12">
-                                      <div class="form-group">
-                                          <textarea rows="3" class="form-control" placeholder="" ng-model="secondaryGoalModel" required></textarea>
-                                      </div>
+                                        <div class="form-group">
+                                          <!-- <textarea rows="3" class="form-control" placeholder="" ng-model="secondaryGoalModel" required></textarea> -->
+                                            <input type="number" class="form-control" name="val2" min="{{min}}" max="{{max}}" ng-model="val2" required step="5" />
+                                            
+                                        </div>
+                                        <div style="color: #ff0000" role="alert" ng-if="strategicGoalForm.val2.$dirty">
+                                            <div ng-show="strategicGoalForm.val2.$error.required">This field is required</div>
+                                            <div ng-show="strategicGoalForm.val2.$error.min">This field must be at least {{min}}.</div>
+                                            <div ng-show="strategicGoalForm.val2.$error.max">This field must be at max {{max}}.</div>
+                                            <div ng-show="strategicGoalForm.val2.$error.number">Not a valid number.</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -317,7 +341,13 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" required>
+                                            <input type="number" class="form-control" name="val3" min="{{min}}" max="{{max}}" ng-model="val3" required step="5" />
+                                        </div>
+                                        <div style="color: #ff0000" role="alert" ng-if="strategicGoalForm.val3.$dirty">
+                                            <div ng-show="strategicGoalForm.val3.$error.required">This field is required</div>
+                                            <div ng-show="strategicGoalForm.val3.$error.min">This field must be at least {{min}}.</div>
+                                            <div ng-show="strategicGoalForm.val3.$error.max">This field must be at max {{max}}.</div>
+                                            <div ng-show="strategicGoalForm.val3.$error.number">Not a valid number.</div>
                                         </div>
                                     </div>
                                 </div>

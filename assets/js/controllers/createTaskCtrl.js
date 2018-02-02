@@ -1,8 +1,13 @@
 /**
  * Created by Khalid on 11/1/2017.
- */
+ */ 
 app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, user, $timeout, $ngConfirm) {
     console.log("Welcome to tasks screen");
+
+    $scope.min = 0;
+    $scope.max = 100;
+
+    
     $scope.goalsModel = {};
     $scope.entitiesModel = {};
     $scope.taskObject = {};

@@ -9,6 +9,10 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
     $scope.showSecondaryGoalsColumn = false;
     $scope.strategicGoalModel = '';
     $scope.secondaryGoalModel = '';
+
+    $scope.min = 0;
+    $scope.max = 100;
+
     $scope.renderGoals = function () {
         user.getGoals().then(function (goals) {
             //debugger;
@@ -252,5 +256,33 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
             }
         }
 
+    };
+})
+.directive('numbersOnly', function () {
+    console.log("hello from directive")
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attr, ngModelCtrl) {
+            function fromUser(text) {
+                if (text) {
+                    console.log("text", text)
+                    var transformedInput = text.replace(/[^0-9]/g, '');
+
+                    if (transformedInput > 100) {
+                        console.log("transformedInput > 100")
+                        transformedInput = 100
+                        return transformedInput;
+                    }
+
+                    if (transformedInput !== text) {
+                        ngModelCtrl.$setViewValue(transformedInput);
+                        ngModelCtrl.$render();
+                    }
+                    return transformedInput;
+                }
+                return undefined;
+            }            
+            ngModelCtrl.$parsers.push(fromUser);
+        }
     };
 });
