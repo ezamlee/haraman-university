@@ -61,6 +61,10 @@ app.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', functio
         url: '/reports',
         templateUrl: 'reports.html',
         controller: 'reportsCtrl'
+    }).state('totals', {
+        url: '/totals',
+        templateUrl: 'totals.html',
+        controller: 'reportsCtrl'
     });
 }]);
 

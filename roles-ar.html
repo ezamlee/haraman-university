@@ -349,7 +349,13 @@
                                   <div class="form-group">
                                       <label> الحجم/اﻷهمية (بالنسبة للمشروع) </label>
                                       <select name="select" class="form-control">
-                                          <option value="" disabled>غير محدد</option>
+                                          <option value="" selected disabled>غير محدد</option>
+                                          <option value="">كبير جدا</option>
+                                          <option value="">كبير</option>
+                                          <option value="">متوسط</option>
+                                          <option value="">صغير</option>
+                                          <option value="">صغير جدا</option>
+                                          <option value="">يعرف رقميا</option>
                                       </select>
                                   </div>
                                   <div class="form-group">
@@ -381,22 +387,22 @@
                                   <div class="form-group">
                                       <label> نسبة الجودة </label>
                                       <input type="number" class="form-control" name="quality" min="{{min}}" max="{{max}}" ng-model="quality" required step="10" />
-                                      <div style="color: #ff0000" role="alert" ng-if="strategicGoalForm.quality.$dirty">
-                                          <div ng-show="strategicGoalForm.quality.$error.required">This field is required</div>
-                                          <div ng-show="strategicGoalForm.quality.$error.min">This field must be at least {{min}}.</div>
-                                          <div ng-show="strategicGoalForm.quality.$error.max">This field must be at max {{max}}.</div>
-                                          <div ng-show="strategicGoalForm.quality.$error.number">Not a valid number.</div>
+                                      <div style="color: #ff0000" role="alert" ng-if="taskForm.quality.$dirty">
+                                          <div ng-show="taskForm.quality.$error.required">يجب ادخال قيمة</div>
+                                          <div ng-show="taskForm.quality.$error.min">اقل قيمة يمكن ادخالها {{min}}.</div>
+                                          <div ng-show="taskForm.quality.$error.max">أكبر قيمة يمكن ادخالها {{max}}.</div>
+                                          <div ng-show="taskForm.quality.$error.number">يجب ادخال ارقام فقط.</div>
                                       </div>
                                   </div>
                                   
                                   <div class="form-group">
                                       <label> نسبة الإنجاز </label>
                                       <input type="number" class="form-control" name="acheive" min="{{min}}" max="{{max}}" ng-model="acheive" required step="10" />
-                                      <div style="color: #ff0000" role="alert" ng-if="strategicGoalForm.acheive.$dirty">
-                                          <div ng-show="strategicGoalForm.acheive.$error.required">This field is required</div>
-                                          <div ng-show="strategicGoalForm.acheive.$error.min">This field must be at least {{min}}.</div>
-                                          <div ng-show="strategicGoalForm.acheive.$error.max">This field must be at max {{max}}.</div>
-                                          <div ng-show="strategicGoalForm.acheive.$error.number">Not a valid number.</div>
+                                      <div style="color: #ff0000" role="alert" ng-if="taskForm.acheive.$dirty">
+                                          <div ng-show="taskForm.acheive.$error.required">يجب ادخال قيمة</div>
+                                          <div ng-show="taskForm.acheive.$error.min">اقل قيمة يمكن ادخالها {{min}}.</div>
+                                          <div ng-show="taskForm.acheive.$error.max">أكبر قيمة يمكن ادخالها {{max}}.</div>
+                                          <div ng-show="taskForm.acheive.$error.number">يجب ادخال ارقام فقط.</div>
                                       </div>
                                   </div>
                               </div>
