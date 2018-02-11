@@ -1,4 +1,3 @@
-﻿<!DOCTYPE html>-->
 <!--<html lang="en" dir="{{appDirection}}">-->
 <!--<head>-->
 <!--<meta charset="utf-8">-->
@@ -177,8 +176,16 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <!-- <input type="text" class="form-control" numbers-only ng-model="number" min="0" max="100" required> -->
-                                            <input type="number" class="form-control" name="val1" min="{{min}}" max="{{max}}" ng-model="val1" required step="5" />
-                                            
+                                            <input
+                                                  type="number"
+                                                  class="form-control"
+                                                  name="val1"
+                                                  min="{{min}}" max="{{max}}"
+                                                  ng-model="selectedStrategicGoal.wt"
+                                                  required
+                                                  step="5"
+                                            />
+
                                         </div>
                                         <div style="color: #ff0000" role="alert" ng-if="strategicGoalForm.val1.$dirty">
                                             <div ng-show="strategicGoalForm.val1.$error.required">يجب ادخال قيمة</div>
@@ -201,7 +208,7 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" required>
+                                            <p>{{ selectedStrategicComplete * 100}}% </p>
                                         </div>
                                     </div>
                                 </div>
@@ -218,11 +225,11 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <select multiple="multiple" class="form-control height-45-vh">
-                                                <option disabled>
-                                                    project
-                                                </option>
-                                            </select>
+                                          <ul id="Mainprojects">
+                                            <li data-id="{{ project._id }}" ng-repeat="project in MainrelatedProjects">
+                                                {{ project.name }}
+                                            </li>
+                                          </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -239,11 +246,11 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <select multiple="multiple" class="form-control height-45-vh">
-                                                <option disabled>
-                                                    project
-                                                </option>
-                                            </select>
+                                          <ul id="Mainprogram">
+                                            <li data-id="{{ program._id }}" ng-repeat="program in MainrelatedPrograms">
+                                                {{ program.name }}
+                                            </li>
+                                          </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -299,7 +306,7 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" required>
+                                            <textarea rows="3" class="form-control" placeholder="" ng-model="secondaryGoalModel" required></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -308,7 +315,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse9">
                                 <h4 class="panel-title">
-                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> النسبة المئوية من كامل الخطة </a>
+                                    <a > <i class="fa fa-arrow-up" aria-hidden="true"> </i>النسبه المئوية من الهدف الاساسي</a>
                                 </h4>
                             </div>
 
@@ -317,8 +324,16 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                           <!-- <textarea rows="3" class="form-control" placeholder="" ng-model="secondaryGoalModel" required></textarea> -->
-                                            <input type="number" class="form-control" name="val2" min="{{min}}" max="{{max}}" ng-model="val2" required step="5" />
-                                            
+                                            <input
+                                                  type="number"
+                                                  class="form-control"
+                                                  name="val2"
+                                                  min="{{min}}" max="{{max}}"
+                                                  ng-model="selectedSecondaryGoal.wt"
+                                                  required
+                                                  step="5"
+                                            />
+
                                         </div>
                                         <div style="color: #ff0000" role="alert" ng-if="secondaryGoalForm.val2.$dirty">
                                             <div ng-show="secondaryGoalForm.val2.$error.required">يجب ادخال قيمة</div>
@@ -341,7 +356,15 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="number" class="form-control" name="val3" min="{{min}}" max="{{max}}" ng-model="val3" required step="5" />
+                                          <input
+                                                type="number"
+                                                class="form-control"
+                                                name="val2"
+                                                min="{{min}}" max="{{max}}"
+                                                ng-model="selectedSecondaryGoal.completed"
+                                                required
+                                                step="5"
+                                          />
                                         </div>
                                         <div style="color: #ff0000" role="alert" ng-if="secondaryGoalForm.val3.$dirty">
                                             <div ng-show="secondaryGoalForm.val3.$error.required">يجب ادخال قيمة</div>
@@ -364,7 +387,11 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" required>
+                                          <ul id="projects">
+                                            <li data-id="{{ project._id }}" ng-repeat="project in relatedProjects">
+                                                {{ project.name }}
+                                            </li>
+                                          </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -381,7 +408,11 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" required>
+                                          <ul id="program">
+                                            <li data-id="{{ program._id }}" ng-repeat="program in relatedPrograms">
+                                                {{ program.name }}
+                                            </li>
+                                          </ul>
                                         </div>
                                     </div>
                                 </div>

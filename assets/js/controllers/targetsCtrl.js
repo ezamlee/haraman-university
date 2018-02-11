@@ -6,9 +6,17 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
     console.log("Welcome to targetsCtrl");
     $scope.selectedStrategicGoalIndex = 0;
     $scope.selectedSecondaryGoalIndex = 0;
+    $scope.selectedSecondaryGoal      = {};
     $scope.showSecondaryGoalsColumn = false;
     $scope.strategicGoalModel = '';
     $scope.secondaryGoalModel = '';
+    $scope.relatedProjects = [];
+    $scope.MainrelatedProjects = [];
+    $scope.arrayOfPrograms = [];
+    $scope.MainarrayOfPrograms = [];
+    $scope.relatedPrograms = [];
+    $scope.MainrelatedPrograms = [];
+    $scope.selectedStrategicComplete = 0;
 
     $scope.min = 0;
     $scope.max = 100;
@@ -23,11 +31,37 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
     };
     $scope.renderGoals();
     $scope.onStrategicGoalSelected = function (selectedGoal, index) {
+        $scope.selectedStrategicComplete = 0;
         $scope.selectedStrategicGoalIndex = index;
         $scope.selectedStrategicGoal = selectedGoal;
         $scope.showSecondaryGoalsColumn = true;
         $scope.strategicGoalModel = selectedGoal.name;
+        (function CalcGoalCompleted(){
+          console.log(Object.values($scope.selectedStrategicGoal.subgoals))
+        $scope.selectedStrategicComplete =   Object.values($scope.selectedStrategicGoal.subgoals).reduce( (sum,subgoal)=> { console.log(sum) ;return sum + (parseFloat(subgoal.wt || 0)/100 * parseFloat(subgoal.completed || 0)/100) } ,0 )
+        })()
+        user.getPrograms({}).then( data => {
+             finalData = [];
+             $scope.MainarrayOfPrograms = [];
+             data.map( program => {
+               program.goals.map( goal => {
+                  (goal.l1 && goal.l1 == selectedGoal._id) ?  finalData.push(program) : "null";
+                  (goal.l1 && goal.l1 == selectedGoal._id) ?  $scope.MainarrayOfPrograms.push(program._id) : "null"
+               })
+             })
+             return finalData
+         }).then(data => {
+            $scope.MainrelatedProjects = data;
+         })
+         user.getProjects({}).then( data => {
+           finalData = [];
+           data.map( Project => {$scope.MainarrayOfPrograms.includes(Project.program) ? finalData.push(Project) : "null" })
+           return finalData
+         }).then(data => {$scope.MainrelatedPrograms = data });
         $scope.secondaryGoalModel = '';
+        $scope.relatedProjects = [];
+        $scope.arrayOfPrograms = [];
+        $scope.relatedPrograms = [];
     };
     $scope.addStrategicGoal = function (valid) {
         $scope.strategicGoalModel = "";
@@ -69,7 +103,7 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
 
             }
         });
-     
+
     };
     $scope.addSecondaryGoal = function (valid) {
         delete $scope.selectedSecondaryObjectKey;
@@ -87,10 +121,32 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
         // }
     };
     $scope.onSecondaryGoalSelected = function (key, index, value) {
+        $scope.selectedSecondaryGoal = value;
         $scope.selectedSecondaryGoalIndex = index;
         $scope.secondaryGoalModel = value.name;
         $scope.selectedSecondaryObjectKey = key;
-    };
+        user.getPrograms({}).then( data => {
+             finalData = [];
+             $scope.arrayOfPrograms = [];
+             data.map( program => {
+               program.goals.map( goal => {
+                  (goal.l2 && goal.l2 == key) ?  finalData.push(program) : "null";
+                  (goal.l2 && goal.l2 == key) ?  $scope.arrayOfPrograms.push(program._id) : "null"
+               })
+             })
+             return finalData
+         }).then(data => {
+            $scope.relatedProjects = data;
+         })
+        user.getProjects({}).then( data => {
+          finalData = [];
+          data.map( Project => {$scope.arrayOfPrograms.includes(Project.program) ? finalData.push(Project) : "null" })
+          return finalData
+        }).then(data => {$scope.relatedPrograms = data });
+        console.log("1-> " ,$scope.relatedProjects )
+        console.log("2-> " ,$scope.arrayOfPrograms )
+        console.log("3-> " ,$scope.relatedPrograms )
+    }
     $scope.deleteSecondaryGoal = function () {
         if ($scope.selectedSecondaryObjectKey) {
             $.confirm({
@@ -106,6 +162,7 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                                 $.alert("تم حذف هدف فرعي بنجاح!");
                                 $scope.strategicGoalModel = '';
                                 $scope.secondaryGoalModel = '';
+                                $scope.selectedSecondaryGoal = '';
                                 $scope.renderGoals();
                             });
                         }
@@ -125,7 +182,9 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
 
     };
     $scope.editSecondaryGoal = function (valid) {
-        if (valid) {
+      console.log(valid)
+
+        if (valid || 1) {
             if ($scope.selectedStrategicGoal != undefined) {
 
                 if ($scope.selectedSecondaryObjectKey != undefined) {
@@ -196,7 +255,7 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
         }
     };
     $scope.editStrategicGoal = function (valid) {
-        if (valid) {
+        if (valid || 1) {
             if ($scope.selectedStrategicGoal == undefined) {
                 $.confirm({
                     title: '',
@@ -234,6 +293,7 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                             text: 'تأكيد',
                             action: function () {
                                 var goalObject = angular.copy($scope.selectedStrategicGoal);
+                                console.log("===>",goalObject);
                                 goalObject.name = $scope.strategicGoalModel;
                                 user.updateGoal(goalObject).then(function (resolved) {
                                     $.alert("تم تعديل هدف استراتيجي بنجاح!");
@@ -281,7 +341,7 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                     return transformedInput;
                 }
                 return undefined;
-            }            
+            }
             ngModelCtrl.$parsers.push(fromUser);
         }
     };
