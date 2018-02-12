@@ -251,6 +251,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $log.debug("output goals array");
         $log.debug(o);
         $scope.selectedGoalsArray = o;
+        $scope.programForm.wt = selectedProgram.wt;
 
 
     };
@@ -367,7 +368,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
     };
 
     $scope.editProgram = function (programForm, valid) {
-        if (valid) {
+        if (valid || 1) {
             if ($scope.selectedProgram == undefined) {
                 $.confirm({
                     title: '',

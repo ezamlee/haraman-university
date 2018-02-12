@@ -127,7 +127,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" data-toggle="collapse"  href="#collapse1">
                             <h4 class="panel-title">
-                              <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> البرامج </a>
+                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> البرامج </a>
                             </h4>
                         </div>
 
@@ -153,7 +153,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" data-toggle="collapse"  href="#collapse2">
                             <h4 class="panel-title">
-                              <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> الفلتره </a>
+                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الفلتره </a>
                             </h4>
                         </div>
 
@@ -214,7 +214,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" data-toggle="collapse"  href="#collapse3">
                             <h4 class="panel-title">
-                              <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> اﻷهداف </a>
+                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷهداف </a>
                             </h4>
                         </div>
 
@@ -248,7 +248,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" data-toggle="collapse"  href="#collapse4">
                             <h4 class="panel-title">
-                                <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> الاهميه ،الإنجاز و الجوده </a>
+                                <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الاهميه ،الإنجاز و الجوده </a>
                             </h4>
                         </div>
 
@@ -310,7 +310,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" data-toggle="collapse"  href="#collapse5">
                             <h4 class="panel-title">
-                              <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> اﻷشخاص والجهات ذوي العلاقة </a>
+                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷشخاص والجهات ذوي العلاقة </a>
                             </h4>
                         </div>
 
@@ -351,7 +351,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse6">
                                 <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> عنوان البرنامج </a>
+                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> عنوان البرنامج </a>
                                 </h4>
                             </div>
                             <div id="collapse6" class="panel-collapse collapse">
@@ -368,7 +368,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse" href="#collapse7">
                                 <h4 class="panel-title">
-                                  <a> <i class="fa fa-arrow-up" aria-hidden="true"></i> البيانات اﻷساسية </a>
+                                  <a> <i class="fa fa-arrow-down" aria-hidden="true"></i> البيانات اﻷساسية </a>
                                 </h4>
                             </div>
                             <div id="collapse7" class="panel-collapse collapse">
@@ -396,64 +396,92 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="panel panel-default">
-                            <div class="panel-heading" data-toggle="collapse"  href="#collapse8">
-                                <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> اﻷهمية، الإنجاز والجودة </a>
-                                </h4>
-                            </div>
-                            <div id="collapse8" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label> الحجم/اﻷهمية (بالنسبة للمشروع) </label>
-                                            <select name="select" class="form-control">
-                                                <option value="" disabled>غير محدد</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label> الوزن النسبي(من المشروع) </label>
-                                            <select name="select" class="form-control">
-                                                <option value="" disabled>غير محدد</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label> %المنقضي من وقت التنفيذ </label>
-                                            <select name="select" class="form-control">
-                                                <option value="" disabled>غير محدد</option>
-                                            </select>
-                                        </div>
+                          <div class="panel-heading" data-toggle="collapse"  href="#collapse8">
+                            <h4 class="panel-title">
+                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷهمية، الانجاز والجودة </a>
+                            </h4>
+                          </div>
+
+                          <div id="collapse8" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label> الحجم/اﻷهمية (بالنسبة للمشروع) </label>
+                                        <span><input type="checkbox" ng-model="isDigital">
+                                          يعرف رقميا</span>
+                                        <select name="select"  ng-model="programForm.wt" class="form-control" ng-disabled="!isDigital ? false : true">
+                                            <option value="0" selected disabled>غير محدد</option>
+                                            <option value="80">كبير جدا</option>
+                                            <option value="60">كبير</option>
+                                            <option value="40">متوسط</option>
+                                            <option value="20">صغير</option>
+                                            <option value="5">صغير جدا</option>
+                                        <select>
                                     </div>
-                                    <div class="col-md-6">
-                                        <!-- <div class="form-group">
-                                            <label> الحاله الراهنة (تحسب اتوماتيكيا) </label>
-                                            <input type="text" class="form-control" placeholder="0" required>
-                                        </div> -->
-                                        <div class="form-group">
-                                            <label> حالة البرنامج </label>
-                                            <select name="select" class="form-control" ng-model="programForm.active">
-                                                <option value="" disabled>حالة البرنامج</option>
-                                                <option value="true"> نشطة</option>
-                                                <option value="false">تمت</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label> نسبة الجودة </label>
-                                            <input type="text" class="form-control" placeholder="0" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label> نسبة الإنجاز </label>
-                                            <input type="text" class="form-control" placeholder="0" required>
+                                    <div class="form-group">
+                                        <label> الوزن النسبي(من المشروع) </label><br/>
+                                        <input class="form-control" type="text" ng-disabled="isDigital ? false : true"  name="" ng-model="programForm.wt">
+                                    </div>
+                                    <div class="form-group">
+                                        <label> %المنقضي من وقت التنفيذ </label>
+                                        <input class="form-control" type="text" disabled name="" ng-model="passed">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- <div class="form-group">
+                                        <label> الحاله الراهنة (تحسب اتوماتيكيا) </label>
+                                        <input type="text" class="form-control" placeholder="0" required>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label> حالة البرنامج </label>
+                                        <span><input type="checkbox" ng-model="isAuto" ng-change="calcAuto()">
+                                          يحسب اتوماتيكيا</span>
+                                        <select ng-model="programForm.status" name="select" class="form-control" ng-disabled="!isAuto ? false : true">
+                                            <option value="" ng-disabled="">حالة البرنامج</option>
+                                            <option ng-show="isAuto"  value="1"> لم تبدء بعد</option>
+                                            <option ng-show="isAuto"  value="2"> تحت التنفيذ تبعاً للمخطط </option>
+                                            <option ng-show="isAuto"  value="3"> تحت التنفيذ وتسبق المخطط </option>
+                                            <option ng-show="isAuto"  value="4">تحت التنفيذ ولكن متأخرة </option>
+                                            <option ng-show="isAuto"  value="5">تحت الدراسة والاعتماد </option>
+                                            <option ng-show="!isAuto" value="6"> لم تبدء بعدت </option>
+                                            <option ng-show="!isAuto" value="7"> متوقفة مؤقتاً  </option>
+                                            <option ng-show="!isAuto" value="8"> ملغاه </option>
+                                            <option ng-show="!isAuto" value="9"> منتهية  </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> نسبة الجودة </label>
+                                        <input type="number" class="form-control" name="quality" min="{{min}}" max="{{max}}" ng-model="programForm.quality" required step="10" />
+                                        <div style="color: #ff0000" role="alert" ng-if="taskForm.quality.$dirty">
+                                            <div ng-show="taskForm.quality.$error.required">يجب ادخال قيمة</div>
+                                            <div ng-show="taskForm.quality.$error.min">اقل قيمة يمكن ادخالها {{min}}.</div>
+                                            <div ng-show="taskForm.quality.$error.max">أكبر قيمة يمكن ادخالها {{max}}.</div>
+                                            <div ng-show="taskForm.quality.$error.number">يجب ادخال ارقام فقط.</div>
                                         </div>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label> نسبة الإنجاز </label>
+                                        <input type="number" class="form-control" name="acheive" min="{{min}}" max="{{max}}" ng-model="programForm.completed" required step="10" />
+                                        <div style="color: #ff0000" role="alert" ng-if="taskForm.acheive.$dirty">
+                                            <div ng-show="taskForm.acheive.$error.required">يجب ادخال قيمة</div>
+                                            <div ng-show="taskForm.acheive.$error.min">اقل قيمة يمكن ادخالها {{min}}.</div>
+                                            <div ng-show="taskForm.acheive.$error.max">أكبر قيمة يمكن ادخالها {{max}}.</div>
+                                            <div ng-show="taskForm.acheive.$error.number">يجب ادخال ارقام فقط.</div>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
+                          </div>
                         </div>
+
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse9">
                                 <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> تواريخ البداية والنهاية </a>
+                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> تواريخ البداية والنهاية </a>
                                 </h4>
                             </div>
                             <div id="collapse9" class="panel-collapse collapse">
@@ -513,7 +541,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse10">
                                 <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> فريق العمل </a>
+                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> فريق العمل </a>
                                 </h4>
                             </div>
                             <div id="collapse10" class="panel-collapse collapse">
@@ -540,7 +568,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse11">
                                 <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> الجهات ذات العلاقة </a>
+                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الجهات ذات العلاقة </a>
                                 </h4>
                             </div>
                             <div id="collapse11" class="panel-collapse collapse">
@@ -636,7 +664,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse12">
                                 <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> اﻷهداف المرتبطة </a>
+                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷهداف المرتبطة </a>
                                 </h4>
                             </div>
                             <div id="collapse12" class="panel-collapse collapse">
@@ -673,7 +701,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse13">
                                 <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> وصف البرنامج </a>
+                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> وصف البرنامج </a>
                                 </h4>
                             </div>
                             <div id="collapse13" class="panel-collapse collapse">
@@ -689,7 +717,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse14">
                                 <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> اﻷستراتجيات العامة للبرنامج </a>
+                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷستراتجيات العامة للبرنامج </a>
                                 </h4>
                             </div>
                             <div id="collapse14" class="panel-collapse collapse">
@@ -705,7 +733,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse15">
                                 <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> مراحل البرنامج </a>
+                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> مراحل البرنامج </a>
                                 </h4>
                             </div>
                             <div id="collapse15" class="panel-collapse collapse">

@@ -3083,8 +3083,8 @@ sidebar-xs .sidebar-user-material > .category-content {
 }
 
 .height-70-vh {
-  max-height: 75vh;
-  height: 75vh;
+  max-height: 80vh;
+  height: 80vh;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -3151,13 +3151,13 @@ sidebar-xs .sidebar-user-material > .category-content {
 .fa:active{
   font-size: 2.5em;
   /* background-color: black; */
-  
-    
+
+
 }
 .home-editor-enabled{
   font-size: 1.7em;
   background-color: #fff;
-  
+
 }
 .home-editor-disabled{
 font-size: 1.7em;

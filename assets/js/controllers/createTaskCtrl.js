@@ -1,13 +1,13 @@
 /**
  * Created by Khalid on 11/1/2017.
- */ 
+ */
 app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, user, $timeout, $ngConfirm) {
     console.log("Welcome to tasks screen");
 
     $scope.min = 0;
     $scope.max = 100;
 
-    
+
     $scope.goalsModel = {};
     $scope.entitiesModel = {};
     $scope.taskObject = {};
@@ -153,6 +153,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
     $scope.renderTasks = function (projectId, stageName) {
         user.getTasks(projectId, stageName).then(function (tasks) {
             $timeout(function () {
+                console.log(tasks);
                 $scope.tasks = tasks;
                 $scope.$apply();
             });
@@ -247,10 +248,15 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         $scope.taskObject.stage = object.stage;
         $scope.taskObject.requirements = object.requirements;
         $scope.taskObject.kpis = object.kpis;
+        $scope.taskObject.wt = object.wt;
+        $scope.taskObject.completed = object.completed;
+        $scope.taskObject.quality = object.quality;
 
     };
     $scope.onTaskClicked = function (task) {
+        console.log(task)
         $scope.selectedTask = task;
+        $scope.taskObject = task;
         $log.debug("Clicked task");
         $log.debug(task);
         $scope.setTaskObject($scope.selectedTask);
@@ -327,7 +333,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         return submittedForm;
     };
     $scope.editTask = function (taskObject, valid) {
-        if (valid) {
+        if (valid || 1) {
             if ($scope.selectedTask == undefined) {
                 $.confirm({
                     title: '',
@@ -570,4 +576,8 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
             }
         });
     }
+    $scope.calcAuto =function(){
+      console.log('hi')
+    }
+    $scope.passed = "10%"
 });

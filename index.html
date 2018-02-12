@@ -19,7 +19,7 @@
     <!-- /global stylesheets -->
 
     <!--angular base-->
-    <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>    
+    <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
     <script type="text/javascript" src="assets/js/core/libraries/angular/angular.min.js"></script>
     <script type="text/javascript" src="assets/js/core/libraries/angular/angular-ui-router.min.js"></script>
     <!--/angular base-->
@@ -98,6 +98,13 @@
 
 
     <!--controllers-->
+    <style>
+    .panel , .panel-body  .panel-body , .panel-heading {
+      border: 0!important;
+      padding: 0px!important;
+      margin: 0px!important;
+    }
+    </style>
 </head>
 
 <body ng-class="loginPage? 'login-container':'navbar-top'" ng-app="myApp">

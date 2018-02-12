@@ -121,7 +121,6 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         });
     };
     $scope.renderPrograms();
-
     $scope.renderProjects = function (filtrationProgram) {
 
         user.getProjects(filtrationProgram).then(function (projects) {
@@ -176,16 +175,21 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.projectObject.description = object.description;
         $scope.projectObject.outputs = object.outputs[0];
         $scope.projectObject.stages = object.stages;
+        $scope.projectObject.wt = object.wt;
+        $scope.projectObject.completed = object.completed;
+        $scope.projectObject.quality = object.quality;
 
     };
     $scope.onProjectClicked = function (project) {
+        console.log(project)
         $scope.selectedProject = project;
+        $scope.projectObject = project;
+        $scope.projectObject = $scope.selectedProject;
         $log.debug("Clicked project");
         $log.debug(project);
         $scope.setProjectObject($scope.selectedProject);
 
     };
-
     $scope.renderUsers = function (filter) {
         user.getUsers(filter).then(function (resolved) {
             $timeout(function () {
@@ -252,8 +256,6 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.renderUsers($scope.userFilterationModel);
 
     };
-
-
     $scope.deleteProject = function () {
         if($scope.selectedProject){
         $.confirm({
@@ -281,15 +283,15 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                         console.log("Cancelled");
                     }
                 }
-               
+
             }
-        });
-    }
-    else{
-        $.alert("لم يتم اختيار أي مشروع");
-    }
-      
-    };
+          });
+      }
+      else{
+          $.alert("لم يتم اختيار أي مشروع");
+      }
+
+      };
     $scope.addNewProject = function (newProjectObject, valid, form) {
         $scope.projectObject = {};
         $scope.projectObject.stages = [];
@@ -359,7 +361,8 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         return submittedForm;
     };
     $scope.editProject = function (projectObject, valid) {
-        if (valid) {
+        console.log("from editProject: ProjectObject is: " , projectObject)
+        if (valid || 1) {
             if ($scope.selectedProject == undefined) {
                 $.confirm({
                     title: '',
@@ -374,7 +377,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                                  $log.debug(submittedForm);
                                  user.addProject(submittedForm).then(function (resolved) {
                                      $scope.filterProjects();
-                                     $.alert("تمت إضافة مشروع بنجاح!");                                     
+                                     $.alert("تمت إضافة مشروع بنجاح!");
                                  });
                             }
                         },
@@ -384,10 +387,10 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                                 console.log("Cancelled");
                             }
                         }
-                       
+
                     }
                 });
-             
+
             }
             else {
                 $.confirm({
@@ -403,7 +406,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                                 $log.debug(submittedForm);
                                 user.editProject(submittedForm).then(function (resolved) {
                                     $scope.filterProjects();
-                                    $.alert("تم تعديل المشروع بنجاح!");                                    
+                                    $.alert("تم تعديل المشروع بنجاح!");
                                 });
                             }
                         },
@@ -413,10 +416,10 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                                 console.log("Cancelled");
                             }
                         }
-                       
+
                     }
                 });
-               
+
             }
         }
         else {
@@ -424,8 +427,6 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         }
 
     };
-
-
     // var internalTeamSelect = $("#sel1");
     // internalTeamSelect.select2();
     // internalTeamSelect.change(function () {
@@ -585,7 +586,6 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
             $scope.outputName = "";
         }
     };
-
     $scope.onIndicatorSelected = function (indicator, index) {
         $scope.selectedIndicator = indicator;
         $scope.selectedIndicatorIndex = index;
@@ -630,5 +630,4 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
             $scope.actualValue = "";
         }
     };
-
 });
