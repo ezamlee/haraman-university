@@ -165,7 +165,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $log.debug(program);
         $scope.selectedProgram = program;
         $scope.setProgramForm($scope.selectedProgram);
-        $scope.relatedProjects=[];
+        $scope.relatedProjects=[]
         $scope.updateRelatedProjects(program)
 
     };
@@ -613,7 +613,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                         if ($scope.entityl1 != undefined && $scope.entityl1 != '') {
                             $timeout(function () {
                                 // var newEntityObject = {};
-                                debugger;
+                              //  debugger;
                                 if (!($scope.entityl1 in $scope.selectedEntitiesArray)) {
                                     $scope.selectedEntitiesArray[$scope.entityl1] = null;
                                 }
