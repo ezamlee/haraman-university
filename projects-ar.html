@@ -156,70 +156,86 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse2">
                                 <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الفلتره </a>
+                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> المشروع </a>
                                 </h4>
                             </div>
 
                             <div id="collapse2" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label> المستوى الأول </label>
-                                            <select name="select" class="form-control" ng-change="onAssociationSelected('level1')" ng-model="entitiesModel.firstLevel">
-                                                <option value="">جميع الجهات</option>
-                                                <option value="{{$index}}" ng-repeat="association in associations">
-                                                    {{association.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label> المستوى الثاني </label>
-                                            <select name="select" class="form-control" ng-model="entitiesModel.secondLevel" ng-change="onAssociationSelected('level2')"
-                                                ng-disabled="disableSecondLevel">
-                                                <option value="">جميع الجهات</option>
-                                                <option value="{{key}}" ng-repeat="(key, value) in selectedFirstLevelObject.children">
-                                                    {{value.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label> المستوى الثالث </label>
-                                            <select name="select" class="form-control" ng-model="entitiesModel.thirdLevel" ng-change="onAssociationSelected('level3')"
-                                                ng-disabled="disablethirdLevel">
-                                                <option value=""> جميع الجهات</option>
-                                                <option value="{{key}}" ng-repeat="(key, value) in selectedSecondLevelObject.children">
-                                                    {{value.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label> المستوى الرابع </label>
-                                            <select name="select" class="form-control" ng-model="entitiesModel.fourthLevel" ng-change="onAssociationSelected('level4')"
-                                                ng-disabled="disableFourthLevel">
-                                                <option value=""> جميع الجهات</option>
-                                                <option value="{{key}}" ng-repeat="(key, value) in selectedThirdLevelObject.children">{{value.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label>  </label>
+                                          <select multiple="multiple" class="form-control">
+                                              <option ng-repeat="project in projects" value="{{project._id}}" ng-click="onProjectClicked(project)">{{project.name}}
+                                              </option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="text-right">
+                                      <i class="fa fa-plus fa-2x text-green action-icon" ng-click="addNewProject(projectObject,projectForm.$valid,projectForm)"
+                                          aria-hidden="true"></i>
+                                      <i class="fa fa-floppy-o fa-2x action-icon" aria-hidden="true" ng-click="editProject(projectObject,projectForm.$valid)"></i>
+                                      <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteProject()" aria-hidden="true"></i>
+                                  </div>
+
                                 </div>
                             </div>
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse3">
                                 <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷهداف </a>
+                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الفلتره </a>
                                 </h4>
                             </div>
 
                             <div id="collapse3" class="panel-collapse collapse">
                                 <div class="panel-body">
+                                  <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label> المستوى الأول </label>
+                                          <select name="select" class="form-control" ng-change="onAssociationSelected('level1')" ng-model="entitiesModel.firstLevel">
+                                              <option value="">جميع الجهات</option>
+                                              <option value="{{$index}}" ng-repeat="association in associations">
+                                                  {{association.name}}
+                                              </option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                    <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label> المستوى الثاني </label>
+                                          <select name="select" class="form-control" ng-model="entitiesModel.secondLevel" ng-change="onAssociationSelected('level2')"
+                                              ng-disabled="disableSecondLevel">
+                                              <option value="">جميع الجهات</option>
+                                              <option value="{{key}}" ng-repeat="(key, value) in selectedFirstLevelObject.children">
+                                                  {{value.name}}
+                                              </option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                    <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label> المستوى الثالث </label>
+                                          <select name="select" class="form-control" ng-model="entitiesModel.thirdLevel" ng-change="onAssociationSelected('level3')"
+                                              ng-disabled="disablethirdLevel">
+                                              <option value=""> جميع الجهات</option>
+                                              <option value="{{key}}" ng-repeat="(key, value) in selectedSecondLevelObject.children">
+                                                  {{value.name}}
+                                              </option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                    <div class="col-md-6">
+                                      <div class="form-group">
+                                          <label> المستوى الرابع </label>
+                                          <select name="select" class="form-control" ng-model="entitiesModel.fourthLevel" ng-change="onAssociationSelected('level4')"
+                                              ng-disabled="disableFourthLevel">
+                                              <option value=""> جميع الجهات</option>
+                                              <option value="{{key}}" ng-repeat="(key, value) in selectedThirdLevelObject.children">{{value.name}}
+                                              </option>
+                                          </select>
+                                      </div>
+                                  </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label> اختيار الهدف الإستراتيجي </label>
@@ -251,21 +267,6 @@
                                                 </option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label> المشروع </label>
-                                            <select multiple="multiple" class="form-control">
-                                                <option ng-repeat="project in projects" value="{{project._id}}" ng-click="onProjectClicked(project)">{{project.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="text-right">
-                                        <i class="fa fa-plus fa-2x text-green action-icon" ng-click="addNewProject(projectObject,projectForm.$valid,projectForm)"
-                                            aria-hidden="true"></i>
-                                        <i class="fa fa-floppy-o fa-2x action-icon" aria-hidden="true" ng-click="editProject(projectObject,projectForm.$valid)"></i>
-                                        <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteProject()" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
@@ -370,25 +371,7 @@
             <form name="projectForm">
                 <div class="panel panel-flat">
                     <div class="panel-body height-70-vh">
-
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading" data-toggle="collapse"  href="#collapse6">
-                                <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> عنوان المشروع </a>
-                                </h4>
-                            </div>
-                            <div id="collapse6" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" required ng-model="selectedProject.name" placeholder="مشروع 2">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        <h3 ng-model="selectedProject.name">{{ selectedProject.name }}</h3>
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse7">
                                 <h4 class="panel-title">
@@ -436,66 +419,12 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- <div class="panel panel-default">
-                            <div class="panel-heading" data-toggle="collapse"  href="#collapse8">
-                                <h4 class="panel-title">
-                                  <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷهمية، الإنجاز والجودة </a>
-                                </h4>
-                            </div>
-                            <div id="collapse8" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label> الحجم/اﻷهمية (بالنسبة للمشروع) </label>
-                                            <select name="select" class="form-control">
-                                                <option value="" selected disabled>غير محدد</option>
-                                                <option value="">كبير جدا</option>
-                                                <option value="">كبير</option>
-                                                <option value="">متوسط</option>
-                                                <option value="">صغير</option>
-                                                <option value="">صغير جدا</option>
-                                                <option value="">يعرف رقميا</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label> الوزن النسبي(من المشروع) </label>
-                                            <select name="select" class="form-control">
-                                                <option value="" disabled>غير محدد</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label> %المنقضي من وقت التنفيذ </label>
-                                            <select name="select" class="form-control">
-                                                <option value="" disabled>غير محدد</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label> الحاله الراهنة (تحسب اتوماتيكيا) </label>
-                                            <input type="text" class="form-control" placeholder="0" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label> نسبة الجودة </label>
-                                            <input type="text" class="form-control" placeholder="0" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label> نسبة الإنجاز </label>
-                                            <input type="text" class="form-control" placeholder="0" required>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="panel panel-default">
                           <div class="panel-heading" data-toggle="collapse"  href="#collapse8">
                             <h4 class="panel-title">
                               <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷهمية، الانجاز والجودة </a>
                             </h4>
                           </div>
-
                           <div id="collapse8" class="panel-collapse collapse">
                             <div class="panel-body">
                                 <div class="col-md-6">
@@ -569,7 +498,6 @@
                             </div>
                           </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse9">
                                 <h4 class="panel-title">
@@ -625,7 +553,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse10">
                                 <h4 class="panel-title">
@@ -639,7 +566,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse11">
                                 <h4 class="panel-title">
@@ -648,74 +574,45 @@
                             </div>
                             <div id="collapse11" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>المستوى الأول</label>
-                                            <select name="select" class="form-control" ng-change="filterUsers('level1')" ng-model="userFilterEntitiesModel.firstLevel">
-                                                <option value="">جميع الجهات</option>
-                                                <option value="{{$index}}" ng-repeat="association in associations">
-                                                    {{association.name}}
-                                                </option>
+                                            <label>الجهات المختارة</label>
+                                            <!-- <select multiple="multiple" class="form-control" ng-model="programForm.entities">
+                                                <optgroup ng-repeat="et in ets" label=" {{et.el1.name}}
+                                                   &rsaquo; {{et.el2.name}}
+                                                    &rsaquo; {{et.el3.name}}">
+                                                    <option value="{{et.el1._id}}.{{et.eli2}}.{{et.eli3}}.{{key}}" ng-repeat="(key,value) in et.el4">
+                                                        {{value.name}}
+                                                    </option>
+                                                </optgroup>
+                                            </select> -->
+                                            <div class="form-control" style="height: 150px;padding: 7px; overflow: auto;">
+                                                <div ng-repeat="(key1,firstLevelValue) in selectedEntitiesArray" ng-if="flatEntities[key1] != undefined && flatEntities[key1] != '' && flatEntities[key1] != 'undefined'">
+                                                    <p style="font-weight: bold; cursor: pointer" ng-click="deleteEntityFromProgram('firstLevel',key1)">{{flatEntities[key1]}} </p>
+                                                    <div style="padding:5px" ng-repeat="(key2,secondLevelValue) in firstLevelValue" ng-if="flatEntities[key2] != undefined && flatEntities[key2] != '' && flatEntities[key2] != 'undefined'">
+                                                        <p style="margin:0 8px; cursor: pointer" ng-click="deleteEntityFromProgram('secondLevel',key1,key2)"> &rsaquo; {{flatEntities[key2]}} </p>
+                                                        <div style="padding:5px" ng-repeat="(key3,thirdLevelValue) in secondLevelValue" ng-if="flatEntities[key3] != undefined && flatEntities[key3] != '' && flatEntities[key3] != 'undefined'">
+                                                            <p style="margin:0 16px; cursor: pointer" ng-click="deleteEntityFromProgram('thirdLevel',key1,key2,key3)"> &rsaquo;&rsaquo; {{flatEntities[key3]}}</p>
+                                                            <div style="padding:5px" ng-repeat="(key4,fourthLevelValue) in thirdLevelValue" ng-if="flatEntities[key4] != undefined && flatEntities[key4] != '' && flatEntities[key4] != 'undefined'">
+                                                                <p style="margin:0 24px; cursor: pointer" ng-click="deleteEntityFromProgram('fourthLevel',key1,key2,key3,key4)"> &rsaquo;&rsaquo;&rsaquo; {{flatEntities[key4]}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>المستوى الثاني</label>
-                                            <select name="select" class="form-control" ng-model="userFilterEntitiesModel.secondLevel" ng-change="filterUsers('level2')"
-                                                ng-disabled="disableSecondLevelEntity">
-                                                <option value="">جميع الجهات</option>
-                                                <option value="{{key}}" ng-repeat="(key, value) in selectedFirstLevelEntity.children">
-                                                    {{value.name}}
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>المستوى الثالث</label>
-                                            <select name="select" class="form-control" ng-model="userFilterEntitiesModel.thirdLevel" ng-change="filterUsers('level3')"
-                                                ng-disabled="disableThirdLevelEntity">
-                                                <option value=""> جميع الجهات</option>
-                                                <option value="{{key}}" ng-repeat="(key, value) in selectedSecondLevelEntity.children">
-                                                    {{value.name}}
-                                                </option>
+                                                </div>
 
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>المستوى الرابع</label>
-                                            <select name="select" class="form-control" ng-model="userFilterEntitiesModel.fourthLevel" ng-change="filterUsers('level4')"
-                                                ng-disabled="disableFourthLevelEntity">
-                                                <option value=""> جميع الجهات</option>
-                                                <option value="{{key}}" ng-repeat="(key, value) in selectedThirdLevelEntity.children">{{value.name}}
-                                                </option>
-
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>اختيار فريق العمل</label>
-                                            <select multiple="multiple" class="form-control">
-                                                <option ng-repeat="user in users" ng-click="putUserInTeam(user)">{{user.name}}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>فريق العمل داخليا</label>
-                                            <select multiple="multiple" class="form-control" style="height: 214px">
-                                                <option ng-repeat="user in internalTeamArr track by $index" ng-click="deleteMember($index,'internal')">{{user.name}}</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>فريق العمل خارجياً</label>
-                                            <select multiple="multiple" class="form-control" style="height: 214px">
-                                                <option ng-repeat="user in externalTeamArr track by $index" ng-click="deleteMember($index,'external')">{{user.name}}</option>
-                                            </select>
+                                            </div>
+                                            <div class="text-right" style="margin-top: 8px">
+                                                <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="addEntityToProgram()"></i>
+                                                <!-- <i class="fa fa-floppy-o fa-2x action-icon" aria-hidden="true" ng-click="editProgram(programForm,newProgramForm.$valid)"></i> -->
+                                                <!-- <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteProgram()" aria-hidden="true"></i> -->
+                                            </div>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse12">
                                 <h4 class="panel-title">
@@ -732,7 +629,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse13">
                                 <h4 class="panel-title">
@@ -750,7 +646,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse14">
                                 <h4 class="panel-title">
@@ -850,30 +745,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- <div class="col-md-12"> -->
-                        <!-- <div class="col-md-6">
-                                <div class="form-group">
-                                    <label> فريق العمل داخلياً </label>
-                                    <select id="sel1" multiple="multiple"  class="form-control select"
-                                            ng-model="projectObject.teamInt">
-                                        <option value="{{user._id}}" ng-repeat="user in users">{{user.name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label> فريق العمل خارجياً </label>
-                                    <select id="sel2" multiple="multiple"  class="form-control select"
-                                            ng-model="projectObject.teamExt">
-                                        <option value="{{user._id}}" ng-repeat="user in users">{{user.name}}</option>
-                                    </select>
-                                </div>
-                            </div> -->
-                        <!-- </div> -->
-
-
-
                     </div>
                 </div>
             </form>

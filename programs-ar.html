@@ -560,6 +560,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse11">
                                 <h4 class="panel-title">
@@ -571,15 +572,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>الجهات المختارة</label>
-                                            <!-- <select multiple="multiple" class="form-control" ng-model="programForm.entities">
-                                                <optgroup ng-repeat="et in ets" label=" {{et.el1.name}}
-                                                   &rsaquo; {{et.el2.name}}
-                                                    &rsaquo; {{et.el3.name}}">
-                                                    <option value="{{et.el1._id}}.{{et.eli2}}.{{et.eli3}}.{{key}}" ng-repeat="(key,value) in et.el4">
-                                                        {{value.name}}
-                                                    </option>
-                                                </optgroup>
-                                            </select> -->
+
                                             <div class="form-control" style="height: 150px;padding: 7px; overflow: auto;">
                                                 <div ng-repeat="(key1,firstLevelValue) in selectedEntitiesArray" ng-if="flatEntities[key1] != undefined && flatEntities[key1] != '' && flatEntities[key1] != 'undefined'">
                                                     <p style="font-weight: bold; cursor: pointer" ng-click="deleteEntityFromProgram('firstLevel',key1)">{{flatEntities[key1]}} </p>
@@ -607,6 +600,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="panel panel-default">
                             <div class="panel-heading" data-toggle="collapse"  href="#collapse12">
                                 <h4 class="panel-title">

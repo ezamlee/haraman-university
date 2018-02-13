@@ -198,13 +198,13 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         var lvls = selectedProgram.entities;
 
         var o = {};
-
-        for (var i = 0; i < lvls.length; i++) {
-            var lvl = lvls[i];
-            var l1 = lvl.l1;
-            var l2 = lvl.l2;
-            var l3 = lvl.l3;
-            var l4 = lvl.l4;
+        if(lvls)
+          for (var i = 0; i < lvls.length; i++) {
+            var lvl = lvls[i] || undefined;
+            var l1 = lvl.l1 || undefined;
+            var l2 = lvl.l2 || undefined;
+            var l3 = lvl.l3 || undefined;
+            var l4 = lvl.l4 || undefined;
 
             if (l1 != undefined && l1 != "undefined") {
                 if (!(l1 in o)) { o[l1] = {}; }
@@ -227,6 +227,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                 }
             }
         }
+
         $log.debug("output entities array");
         $log.debug(o);
         $scope.selectedEntitiesArray = o;
@@ -458,7 +459,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         return newForm;
     };
     $scope.internalTeamArr = [];
-    $scope.externalTeamArr = []; 
+    $scope.externalTeamArr = [];
     $scope.putUserInTeam = function (user) {
         $.confirm({
             title: '',
@@ -674,6 +675,45 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
             }
         });
     };
+    $scope.deleteEntityFromProgram = function (type, key1, key2, key3, key4) {
+        $.confirm({
+            title: '',
+            content: 'هل ترغب بحذف الجهة من هذه القائمة؟',
+            buttons: {
+                confirm: {
+                    text: 'حذف',
+                    action: function () {
+                        $timeout(function () {
+                            if (type == "firstLevel") {
+                                delete $scope.selectedEntitiesArray[key1];
+
+                            }
+                            else if (type == "secondLevel") {
+                                delete $scope.selectedEntitiesArray[key1][key2];
+                            }
+                            else if (type == "thirdLevel") {
+                                delete $scope.selectedEntitiesArray[key1][key2][key3];
+                            }
+                            else if (type == "fourthLevel") {
+                                delete $scope.selectedEntitiesArray[key1][key2][key3][key4];
+                            }
+                            $log.debug("Entities after deleting item");
+                            $log.debug($scope.selectedEntitiesArray);
+                            $scope.$apply();
+                        });
+
+                    }
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    action: function () {
+                        console.log("Cancelled");
+                    }
+                }
+
+            }
+        });
+    };
 
     // start team modal "added by heba"
     $scope.addTeamToProgram = function () {
@@ -698,7 +738,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
             }
         });
     };
-
     // end team modal "added by heba"
 
     $scope.onGoalSelected = function (type) {
@@ -800,45 +839,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
             }
         });
 
-    };
-    $scope.deleteEntityFromProgram = function (type, key1, key2, key3, key4) {
-        $.confirm({
-            title: '',
-            content: 'هل ترغب بحذف الجهة من هذه القائمة؟',
-            buttons: {
-                confirm: {
-                    text: 'حذف',
-                    action: function () {
-                        $timeout(function () {
-                            if (type == "firstLevel") {
-                                delete $scope.selectedEntitiesArray[key1];
-
-                            }
-                            else if (type == "secondLevel") {
-                                delete $scope.selectedEntitiesArray[key1][key2];
-                            }
-                            else if (type == "thirdLevel") {
-                                delete $scope.selectedEntitiesArray[key1][key2][key3];
-                            }
-                            else if (type == "fourthLevel") {
-                                delete $scope.selectedEntitiesArray[key1][key2][key3][key4];
-                            }
-                            $log.debug("Entities after deleting item");
-                            $log.debug($scope.selectedEntitiesArray);
-                            $scope.$apply();
-                        });
-
-                    }
-                },
-                cancel: {
-                    text: 'إلغاء',
-                    action: function () {
-                        console.log("Cancelled");
-                    }
-                }
-
-            }
-        });
     };
     $scope.updateRelatedProjects = function(currentProgram){
       user.getProjects({"program":currentProgram._id}).then( data =>{
