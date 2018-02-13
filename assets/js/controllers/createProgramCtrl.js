@@ -19,6 +19,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         "entityl3": undefined,
         "entityl4": undefined
     };
+    $scope.relatedProjects = [];
     $scope.updateFilterationModel = function () {
         $scope.filterationModel.entities.$elemMatch.l1 = angular.isDefined($scope.selectedFirstLevelObject) ? $scope.selectedFirstLevelObject._id : undefined;
         $scope.filterationModel.entities.$elemMatch.l2 = $scope.entitiesModel.secondLevel == '' ? undefined : $scope.entitiesModel.secondLevel;
@@ -164,6 +165,8 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $log.debug(program);
         $scope.selectedProgram = program;
         $scope.setProgramForm($scope.selectedProgram);
+        $scope.relatedProjects=[];
+        $scope.updateRelatedProjects(program)
 
     };
     $scope.setProgramForm = function (selectedProgram) {
@@ -321,8 +324,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.renderUsers($scope.userFilterationModel);
 
     };
-
-
     $scope.deleteProgram = function () {
         if ($scope.selectedProgram) {
             $.confirm({
@@ -366,7 +367,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.selectedEntitiesArray = {};
         $scope.selectedGoalsArray = {};
     };
-
     $scope.editProgram = function (programForm, valid) {
         if (valid || 1) {
             if ($scope.selectedProgram == undefined) {
@@ -457,7 +457,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         }
         return newForm;
     };
-
     $scope.internalTeamArr = [];
     $scope.externalTeamArr = [];
     $scope.putUserInTeam = function (user) {
@@ -539,7 +538,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
             }
         });
     };
-
     function serialize(obj, lstCmpl, lstCrnt) {
         lstCmpl = lstCmpl || [];
         lstCrnt = lstCrnt || [];
@@ -558,7 +556,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
 
         return lstCmpl;
     };
-
     function convert(arr) {
         var res = [];
 
@@ -602,7 +599,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                 break;
         }
     };
-
     $scope.addEntityToProgram = function () {
         $ngConfirm({
             title: 'إضافة جهة',
@@ -817,5 +813,9 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
             }
         });
     };
-
+    $scope.updateRelatedProjects = function(currentProgram){
+      user.getProjects({"program":currentProgram._id}).then( data =>{
+        $scope.relatedProjects = data;
+      })
+    }
 });

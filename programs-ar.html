@@ -376,7 +376,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label> المشاريع المرتبطة</label>
-                                            <input type="text" class="form-control" required>
+                                            <div style="width:100%;height:12vh;max-height:12vh;overflow:auto;">
+                                              <ul>
+                                                <li ng-repeat="project in relatedProjects">{{ project.name }}</li>
+                                              </ul>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
