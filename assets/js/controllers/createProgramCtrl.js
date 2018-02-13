@@ -458,7 +458,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         return newForm;
     };
     $scope.internalTeamArr = [];
-    $scope.externalTeamArr = [];
+    $scope.externalTeamArr = []; 
     $scope.putUserInTeam = function (user) {
         $.confirm({
             title: '',
@@ -674,6 +674,33 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
             }
         });
     };
+
+    // start team modal "added by heba"
+    $scope.addTeamToProgram = function () {
+        $ngConfirm({
+            title: 'إضافة فريق العمل',
+            contentUrl: 'add-team-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                // add: {
+                //     text: 'تم',
+                //     btnClass: 'btn-blue',
+                //     action: function (scope, button) {
+                //     }
+                // },
+                cancel: {
+                    text: 'إغلاق',
+                    btnClass: 'btn-red',
+                    action: function (scope, button) {
+                    }
+                }
+            }
+        });
+    };
+
+    // end team modal "added by heba"
+
     $scope.onGoalSelected = function (type) {
         if (type == "strategic") {
             for (var i = 0; i < $scope.strategicGoals.length; i++) {
