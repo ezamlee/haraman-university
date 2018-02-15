@@ -1,0 +1,10 @@
+<div class="row">
+	<div class="col-md-12">
+        <div class="form-group">
+            <label>الأشخاص المضافين للمشروع</label>
+            <select multiple="multiple" class="form-control" style="height: 345px">
+                <option ng-repeat="user in usersList" ng-click="putUserInTeam(user)">{{user.name}}</option>
+            </select>
+        </div>
+    </div>
+</div>

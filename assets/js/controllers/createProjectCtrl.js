@@ -18,7 +18,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         "entityl2": undefined,
         "entityl3": undefined,
         "entityl4": undefined
-    };
+    }; 
     //$scope.selectedEntitiesArray=[];
 
     $scope.updateFilterationModel = function () {
@@ -829,6 +829,27 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
             }
         });
     };
+
+    // start team modal "added by heba"
+    $scope.addTeamToProject = function () {
+        $ngConfirm({
+            title: 'إضافة فريق العمل',
+            contentUrl: 'add-project-team-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                
+                cancel: {
+                    text: 'إغلاق',
+                    btnClass: 'btn-red',
+                    action: function (scope, button) {
+                    }
+                },
+            }
+        });
+    };
+    // end team modal "added by heba"
+    
     $scope.deleteEntityFromProgram = function (type, key1, key2, key3, key4) {
         $.confirm({
             title: '',

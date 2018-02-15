@@ -561,8 +561,27 @@
                             </div>
                             <div id="collapse10" class="panel-collapse collapse">
                                 <div class="panel-body">
-
-
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>فريق العمل داخليا</label>
+                                        <select multiple="multiple" class="form-control" style="height: 214px">
+                                            <option ng-repeat="user in internalTeamArr track by $index" ng-click="deleteMember($index,'internal')">{{user.name}}</option>
+                                        </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>فريق العمل خارجياً</label>
+                                        <select multiple="multiple" class="form-control" style="height: 214px">
+                                            <option ng-repeat="user in externalTeamArr track by $index" ng-click="deleteMember($index,'external')">{{user.name}}</option>
+                                        </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <div class="text-right" style="margin-top: 8px">
+                                      <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="addTeamToProject()"></i>
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
                         </div>

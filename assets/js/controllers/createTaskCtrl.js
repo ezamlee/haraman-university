@@ -132,7 +132,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         });
     };
     $scope.renderProjects();
-    $scope.filterProjects = function () {
+    $scope.filterProjects = function () { 
         $scope.projectId = '';
         $scope.stageName = '';
         if ($scope.programId != undefined) {
@@ -398,6 +398,32 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         }
 
     };
+
+
+    // start team modal "added by heba"
+    $scope.addTeamToTask = function () {
+        $ngConfirm({
+            title: 'إضافة فريق العمل',
+            contentUrl: 'add-task-team-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                // add: {
+                //     text: 'تم',
+                //     btnClass: 'btn-blue',
+                //     action: function (scope, button) {
+                //     }
+                // },
+                cancel: {
+                    text: 'إغلاق',
+                    btnClass: 'btn-red',
+                    action: function (scope, button) {
+                    }
+                }
+            }
+        });
+    };
+    // end team modal "added by heba"
 
     $scope.internalTeamArr = [];
     $scope.externalTeamArr = [];
