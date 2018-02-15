@@ -267,12 +267,14 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         });
     };
     $scope.renderUsers();
+
     $scope.updateUserFiltrationModel = function () {
         $scope.userFilterationModel.entityl1 = angular.isDefined($scope.selectedFirstLevelEntity) ? $scope.selectedFirstLevelEntity._id : undefined;
         $scope.userFilterationModel.entityl2 = $scope.userFilterEntitiesModel.secondLevel == '' ? undefined : $scope.userFilterEntitiesModel.secondLevel;
         $scope.userFilterationModel.entityl3 = $scope.userFilterEntitiesModel.thirdLevel == '' ? undefined : $scope.userFilterEntitiesModel.thirdLevel;
         $scope.userFilterationModel.entityl4 = $scope.userFilterEntitiesModel.fourthLevel == '' ? undefined : $scope.userFilterEntitiesModel.fourthLevel;
     };
+
     $scope.filterUsers = function (level) {
         switch (level) {
             case 'level1':
@@ -317,8 +319,8 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         }
         $scope.updateUserFiltrationModel();
         $scope.renderUsers($scope.userFilterationModel);
-
     };
+    
     $scope.deleteProject = function () {
         if($scope.selectedProject){
         $.confirm({
@@ -816,8 +818,6 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                             $ngConfirm('يجب اختيار المستوى الأول');
                             return false;
                         }
-
-
                     }
                 },
                 cancel: {

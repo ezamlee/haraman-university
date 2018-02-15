@@ -1,10 +1,54 @@
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-6">
         <div class="form-group">
-            <label>الأشخاص المضافين للمشروع</label>
-            <select multiple="multiple" class="form-control" style="height: 345px">
-                <option ng-repeat="user in usersList" ng-click="putUserInTeam(user)">{{user.name}}</option>
+            <label>المستوى الأول</label>
+            <select name="select" class="form-control" ng-change="filterUsers('level1')" ng-model="userFilterEntitiesModel.firstLevel">
+                <option value="">جميع الجهات</option>
+                <option value="{{$index}}" ng-repeat="association in associations">
+                    {{association.name}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>المستوى الثالث</label>
+            <select name="select" class="form-control" ng-model="userFilterEntitiesModel.thirdLevel" ng-change="filterUsers('level3')"
+                ng-disabled="disableThirdLevelEntity">
+                <option value=""> جميع الجهات</option>
+                <option value="{{key}}" ng-repeat="(key, value) in selectedSecondLevelEntity.children">
+                    {{value.name}}
+                </option>
+            </select>
+        </div>        
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>المستوى الثاني</label>
+            <select name="select" class="form-control" ng-model="userFilterEntitiesModel.secondLevel" ng-change="filterUsers('level2')"
+                ng-disabled="disableSecondLevelEntity">
+                <option value="">جميع الجهات</option>
+                <option value="{{key}}" ng-repeat="(key, value) in selectedFirstLevelEntity.children">
+                    {{value.name}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>المستوى الرابع</label>
+            <select name="select" class="form-control" ng-model="userFilterEntitiesModel.fourthLevel" ng-change="filterUsers('level4')"
+                ng-disabled="disableFourthLevelEntity">
+                <option value=""> جميع الجهات</option>
+                <option value="{{key}}" ng-repeat="(key, value) in selectedThirdLevelEntity.children">{{value.name}}
+                </option>
+
             </select>
         </div>
     </div>
+	<div class="col-md-12">
+        <div class="form-group">
+            <label>الأشخاص المضافين للمشروع</label>
+            <select multiple="multiple" class="form-control">
+                <option ng-repeat="user in users" ng-click="putUserInTeam(user)">{{user.name}}</option>
+            </select>
+        </div>
+    </div>
+
 </div>

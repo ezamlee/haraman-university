@@ -1,6 +1,6 @@
 /**
  * Created by Khalid on 11/2/2017.
- */
+ */ 
 
 app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $location, user, $timeout, $ngConfirm) {
 
@@ -279,6 +279,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.userFilterationModel.entityl3 = $scope.userFilterEntitiesModel.thirdLevel == '' ? undefined : $scope.userFilterEntitiesModel.thirdLevel;
         $scope.userFilterationModel.entityl4 = $scope.userFilterEntitiesModel.fourthLevel == '' ? undefined : $scope.userFilterEntitiesModel.fourthLevel;
     };
+
     $scope.filterUsers = function (level) {
         switch (level) {
             case 'level1':

@@ -423,6 +423,76 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
             }
         });
     };
+
+    $scope.renderUsers = function (filter) {
+        user.getUsers(filter).then(function (resolved) {
+            $timeout(function () {
+                if (filter == undefined) {
+                    $scope.allUsers = resolved;
+                }
+                $scope.users = resolved;
+                $scope.$apply();
+            });
+
+
+        });
+    };
+    $scope.renderUsers();
+
+    $scope.updateUserFiltrationModel = function () {
+        $scope.userFilterationModel.entityl1 = angular.isDefined($scope.selectedFirstLevelEntity) ? $scope.selectedFirstLevelEntity._id : undefined;
+        $scope.userFilterationModel.entityl2 = $scope.userFilterEntitiesModel.secondLevel == '' ? undefined : $scope.userFilterEntitiesModel.secondLevel;
+        $scope.userFilterationModel.entityl3 = $scope.userFilterEntitiesModel.thirdLevel == '' ? undefined : $scope.userFilterEntitiesModel.thirdLevel;
+        $scope.userFilterationModel.entityl4 = $scope.userFilterEntitiesModel.fourthLevel == '' ? undefined : $scope.userFilterEntitiesModel.fourthLevel;
+    };
+
+    $scope.filterUsers = function (level) {
+        switch (level) {
+            case 'level1':
+                $scope.selectedFirstLevelEntity = $scope.associations[parseInt($scope.userFilterEntitiesModel.firstLevel)];
+                $scope.userFilterEntitiesModel.secondLevel = '';
+                $scope.userFilterEntitiesModel.thirdLevel = '';
+                $scope.userFilterEntitiesModel.fourthLevel = '';
+                if ($scope.userFilterEntitiesModel.firstLevel === "") {
+                    $scope.disableSecondLevelEntity = true;
+                    $scope.disableThirdLevelEntity = true;
+                    $scope.disableFourthLevelEntity = true;
+                }
+                else {
+                    $scope.disableSecondLevelEntity = false;
+                }
+                break;
+            case 'level2':
+                $scope.selectedSecondLevelEntity = $scope.selectedFirstLevelEntity.children[$scope.userFilterEntitiesModel.secondLevel];
+                $scope.userFilterEntitiesModel.thirdLevel = '';
+                $scope.userFilterEntitiesModel.fourthLevel = '';
+                if ($scope.userFilterEntitiesModel.secondLevel === "") {
+                    $scope.disableThirdLevelEntity = true;
+                    $scope.disableFourthLevelEntity = true;
+                }
+                else {
+                    $scope.disableThirdLevelEntity = false;
+                }
+                break;
+            case 'level3':
+                $scope.selectedThirdLevelEntity = $scope.selectedFirstLevelEntity.children[$scope.userFilterEntitiesModel.secondLevel].children[$scope.userFilterEntitiesModel.thirdLevel];
+                $scope.userFilterEntitiesModel.fourthLevel = '';
+                if ($scope.userFilterEntitiesModel.thirdLevel === "") {
+                    $scope.disableFourthLevelEntity = true;
+                }
+                else {
+                    $scope.disableFourthLevelEntity = false;
+                }
+                break;
+            case 'level4':
+                //$scope.fourthLevelKey = $scope.userFilterEntitiesModel.fourthLevel;
+                break;
+        }
+        $scope.updateUserFiltrationModel();
+        $scope.renderUsers($scope.userFilterationModel);
+
+    };
+
     // end team modal "added by heba"
 
     $scope.internalTeamArr = [];
@@ -441,7 +511,6 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                             $log.debug($scope.internalTeamArr);
                             $scope.$apply();
                         });
-
                     }
                 },
                 external: {
