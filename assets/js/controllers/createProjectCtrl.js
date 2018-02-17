@@ -5,7 +5,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
 
     console.log("Welcome to project screen");
     // start "added by heba"
-    $scope.result;
+    $scope.result = false;
     $scope.reportForm = {
         mainData: true,
         entity: true,
@@ -862,17 +862,19 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
             }
         });
     };
+
     $scope.reportTempate = function () {
-        if ($scope.selectedProject) {
+        // console.log("result",$scope.result);
+        // if ($scope.selectedProject) {
             $ngConfirm({
-                title: 'تقرير المهام',
+                title: 'تقرير المشاريع',
                 contentUrl: 'project-report-template.html',
                 scope: $scope,
                 rtl: true,
                 columnClass: 'col-md-6 col-md-offset-3',
                 buttons: {
                     add: {
-                        text: 'تم',
+                        text: 'طباعة',
                         btnClass: 'btn-blue',
                         action: function (scope, button) {
                             console.log("scope.result", scope.result)
@@ -892,10 +894,10 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                     }
                 }
             });
-        }
-        else {
-            $scope.printReport(true);
-        }
+        // }
+        // else {
+        //     $scope.printReport(true);
+        // }
     };
 
     $scope.printReport = function (printAllProjects, reportForm) {

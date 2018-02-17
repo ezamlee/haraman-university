@@ -49,6 +49,7 @@
             <div ng-if="reportForm.quality">
                 <p>نسبة الجودة: {{project.quality}}</p>
                 <p>الوزن النسبي: {{project.wt}}</p>
+                <p>المنقضي من وقت التنفيذ: {{project.completed}}</p>
             </div>
             <div ng-if="reportForm.outputs">
                 <p ng-if="project.outputs.length > 0" style="font-weight: bold">مخرجات المشروع</p>
@@ -129,7 +130,7 @@
         <div ng-if="reportForm.quality">
             <p>نسبة الجودة: {{selectedProject.quality}}</p>
             <p>الوزن النسبي: {{selectedProject.wt}}</p>
-
+            <p>المنقضي من وقت التنفيذ: {{selectedProject.completed}}</p>
         </div>
         <div ng-if="reportForm.outputs">
             <p ng-if="selectedProject.outputs.length > 0" style="font-weight: bold">مخرجات المشروع</p>

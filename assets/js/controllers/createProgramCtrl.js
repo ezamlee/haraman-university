@@ -5,6 +5,22 @@
 app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $location, user, $timeout, $ngConfirm) {
 
     console.log("Welcome to ProgramCtrl");
+
+    // start "added by heba"
+    $scope.result = false;
+    $scope.reportForm = {
+        mainData: true,
+        entity: true,
+        quality: true,
+        desc: true,
+        dates: true,
+        strategies: true,
+        team: true,
+        stages: true,
+        goals: true
+    };
+    //end "added by heba"
+
     $scope.goalsModel = {};
     $scope.entitiesModel = {};
     $scope.programForm = {};
@@ -167,8 +183,8 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.setProgramForm($scope.selectedProgram);
         $scope.relatedProjects=[]
         $scope.updateRelatedProjects(program)
-
     };
+
     $scope.setProgramForm = function (selectedProgram) {
         $scope.programForm._id = selectedProgram._id;
         $scope.programForm.name = selectedProgram.name;
@@ -739,6 +755,105 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
             }
         });
     };
+
+    $scope.reportTempate = function () {
+        $ngConfirm({
+            title: 'تقرير برامج الخطة',
+            contentUrl: 'program-report-template.html',
+            scope: $scope,
+            rtl: true,
+            columnClass: 'col-md-6 col-md-offset-3',
+            buttons: {
+                add: {
+                    text: 'طباعة',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+                        console.log("scope.result", scope.result)
+                        if(!scope.result){
+                            $scope.printReport(false);
+                        }else{
+                            $scope.printReport(true);
+                        }
+                    }
+                },
+                cancel: {
+                    text: 'إغلاق',
+                    btnClass: 'btn-red',
+                    action: function (scope, button) {
+                        console.log("Cancelled");
+                    }
+                }
+            }
+        });
+        
+    };
+
+    $scope.printReport = function (printAllPrograms, reportForm) {
+        console.log("reportObj", $scope.reportForm)
+        $ngConfirm({
+            title: '',
+            contentUrl: 'program-print-template.html',
+            scope: $scope,
+            rtl: true,
+            columnClass: 'col-md-8 col-md-offset-3',
+            onOpenBefore: function (scope) {
+                console.log("associations", $scope.associations)
+                scope.printAllPrograms = printAllPrograms;
+                scope.entityl1 = '';
+                scope.entityl2 = '';
+                scope.entityl3 = '';
+                scope.entityl4 = '';
+                if ($scope.selectedFirstLevelObject) {
+                    console.log("selectedFirstLevelObject", $scope.selectedFirstLevelObject)
+                    for (var x in $scope.associations) {
+                        if ($scope.selectedFirstLevelObject._id === $scope.associations[x]._id) {
+                            scope.entityl1 = $scope.associations[x].name;
+                            if ($scope.entitiesModel.secondLevel != undefined && $scope.entitiesModel.secondLevel != '') {
+                                scope.entityl2 = "| " + $scope.associations[x].children[$scope.entitiesModel.secondLevel].name;
+                                if ($scope.entitiesModel.thirdLevel != undefined && $scope.entitiesModel.thirdLevel != '') {
+                                    scope.entityl3 = "| " + $scope.associations[x].children[$scope.entitiesModel.secondLevel].children[$scope.entitiesModel.thirdLevel].name;
+                                    if ($scope.entitiesModel.fourthLevel != undefined && $scope.entitiesModel.fourthLevel != '') {
+                                        scope.entityl4 = "| " + $scope.associations[x].children[$scope.entitiesModel.secondLevel].children[$scope.entitiesModel.thirdLevel].children[$scope.entitiesModel.fourthLevel].name;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            },
+            buttons: {
+                add: {
+                    text: 'طباعة',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+
+                        var htmlPrint = document.getElementById("printArea");
+                        console.log("Parsed html");
+                        console.log(htmlPrint);
+                        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+                        mywindow.document.write($('<div/>').append($(htmlPrint).clone()).html());
+                        mywindow.document.close(); // necessary for IE >= 10
+                        mywindow.focus(); // necessary for IE >= 10*/
+                        console.log("To be printed");
+                        console.log(mywindow.document);
+                        mywindow.print();
+                        mywindow.close();
+
+
+                        return false;
+
+                    }
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    btnClass: 'btn-red',
+                    action: function (scope, button) {
+                    }
+                },
+            }
+        });
+    }
     // end team modal "added by heba"
 
     $scope.onGoalSelected = function (type) {

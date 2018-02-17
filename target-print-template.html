@@ -1,0 +1,196 @@
+<div id="printArea" style="direction: rtl;text-align: right;">
+    <div style="direction: rtl;text-align: right;width: 100%;margin-bottom: 12px">
+        <div style="display: inline-block;padding: 0 10px;vertical-align: text-bottom;">
+            <img style="width:75px;height: 75px;" src="assets/images/log_transparent.png" alt="" />
+        </div>
+
+        <div style="display: inline-block;vertical-align: top;">
+            <p style="font-weight: bold;font-size:20px;color: darkgrey">
+                {{ printAllPrograms ? 'البرامج ': selectedProgram.name}}
+            </p>
+            <p style="font-weight: bold;color: darkgrey">
+                {{entityl1}} {{entityl2}} {{entityl3}} {{entityl4}}
+            </p>
+        </div>
+
+    </div>
+    <div ng-if="printAllPrograms" style="margin:8px">
+        <p style="font-weight: bold;color: blue;" ng-if="selectedProgram != undefined && programId != undefined && programId != ''">
+            البرنامج: {{selectedProgram.name}}
+        </p>
+        <p style="font-weight: bold;color: blue; margin: 8px" ng-if="stageName != undefined && stageName != ''">
+            المرحلة: {{stageName}}
+        </p>
+        <div ng-repeat="program in programs">
+            <p style="font-weight: bold;color: blue"> عنوان البرنامج: {{program.name}} </p>
+
+            <div ng-if="reportForm.mainData">
+                <p>
+                    حالة البرنامج: {{program.active ? 'نشطة':'تمت'}}
+                </p>
+
+                <p ng-repeat="user in allUsers" ng-if="user._id == program.manager">
+                    مدير البرنامج: {{user.name}}
+                </p>
+                <p ng-if="program.approxCost != 0">
+                    التكلفة التقديرية: {{program.approxCost}}
+                </p>
+            </div>
+
+            <div ng-if="reportForm.stages">
+                <p style="font-weight: bold">مراحل البرنامج : {{program.stages}}</p>
+            </div>
+
+            <div ng-if="reportForm.quality">
+                <p>نسبة الجودة: {{program.quality}}</p>
+                <p>الوزن النسبي: {{program.wt}}</p>
+                <p>المنقضي من وقت التنفيذ: {{program.completed}}</p>
+            </div>
+            <div ng-if="reportForm.strategies">
+                <p style="font-weight: bold">اﻷستراتجيات العامة للبرنامج: {{program.strategies}}</p>
+                <!-- <textarea rows="3" class="form-control" ng-model="program.strategies"></textarea> -->
+
+                <!-- <div style="margin: 10px" ng-repeat="output in program.outputs">
+                    <p>
+                        {{output.name}}
+                    </p>
+                </div> -->
+            </div>
+
+            <div ng-if="reportForm.goals">
+                <div ng-repeat="(key1,firstLevelValue) in selectedGoalsArray" ng-if="flatGoals[key1] != undefined && flatGoals[key1] != '' && flatGoals[key1] != 'undefined'">
+                    <p>{{flatGoals[key1]}} </p>
+                    <div style="padding:5px" ng-repeat="(key2,secondLevelValue) in firstLevelValue" ng-if="flatGoals[key2] != undefined && flatGoals[key2] != '' && flatGoals[key2] != 'undefined'">
+                        <p> {{flatGoals[key2]}} </p>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="reportForm.dates">
+                <p ng-if="program.datePlannedStart != 'NaN-NaN-NaN' && program.datePlannedStart != ''">
+                    تاريخ البداية المخطط: {{program.datePlannedStart}}
+                </p>
+                <p ng-if="program.datePlannedEnd != 'NaN-NaN-NaN' && program.datePlannedEnd != ''">
+                    تاريخ النهاية المخطط: {{program.datePlannedEnd}}
+                </p>
+                <p ng-if="program.dateActualStart != 'NaN-NaN-NaN' && program.dateActualStart != ''">
+                    تاريخ البداية الفعلي: {{program.dateActualStart}}
+                </p>
+                <p ng-if="program.dateActualEnd != 'NaN-NaN-NaN' && program.dateActualEnd != ''">
+                    تاريخ النهاية الفعلي: {{program.dateActualEnd}}
+                </p>
+            </div>
+
+            <div ng-if="reportForm.team">
+                <p ng-if="program.teamInt.length > 0" style="font-weight: bold">فريق العمل داخليا</p>
+                <div style="margin: 10px" ng-repeat="member in program.teamInt">
+                    <div ng-repeat="user in allUsers" ng-if="member == user._id">
+                        <p>
+                            {{user.name}}
+                        </p>
+                    </div>
+                </div>
+                <p ng-if="program.teamExt.length > 0" style="font-weight: bold">فريق العمل خارجيا</p>
+                <div style="margin: 10px" ng-repeat="member in program.teamExt">
+                    <div ng-repeat="user in allUsers" ng-if="member == user._id">
+                        <p>
+                            {{user.name}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="reportForm.desc">
+                <p ng-if="program.description != ''">
+                    تفصيلات البرنامج والخطوات التنفيذية: {{program.description}}
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div ng-if="!printAllPrograms" style="margin:8px">
+        <p style="font-weight: bold;color: blue;" ng-if="selectedProgram != undefined">
+            عنوان البرنامج: {{selectedProgram.name}}
+        </p>
+        
+        <div ng-if="reportForm.stages">
+            <p style="font-weight: bold">مراحل البرنامج : {{program.stages}}</p>
+        </div>
+
+        <div ng-if="reportForm.mainData">
+            <p>
+                حالة البرنامج: {{selectedProgram.active ? 'نشطة':'تمت'}}
+            </p>
+            <p ng-repeat="user in allUsers" ng-if="user._id == selectedProgram.manager">
+                مدير البرنامج: {{user.name}}
+            </p>
+            <p ng-if="selectedProgram.approxCost != 0">
+                التكلفة التقديرية {{selectedProgram.approxCost}}
+            </p>
+        </div>
+        <div ng-if="reportForm.quality">
+            <p>نسبة الجودة: {{selectedProgram.quality}}</p>
+            <p>الوزن النسبي: {{selectedProgram.wt}}</p>
+            <p>المنقضي من وقت التنفيذ: {{selectedProgram.completed}}</p>
+        </div>
+        
+        <div ng-if="reportForm.strategies">
+                <p style="font-weight: bold">اﻷستراتجيات العامة للبرنامج: {{program.strategies}}</p>
+                <!-- <div style="margin: 10px" ng-repeat="output in program.outputs">
+                    <p>
+                        {{output.name}}
+                    </p>
+                </div> -->
+            </div>
+        <div ng-if="reportForm.goals">
+            <div ng-repeat="(key1,firstLevelValue) in selectedGoalsArray" ng-if="flatGoals[key1] != undefined && flatGoals[key1] != '' && flatGoals[key1] != 'undefined'">
+                <p>{{flatGoals[key1]}} </p>
+                <div style="padding:5px" ng-repeat="(key2,secondLevelValue) in firstLevelValue" ng-if="flatGoals[key2] != undefined && flatGoals[key2] != '' && flatGoals[key2] != 'undefined'">
+                    <p> {{flatGoals[key2]}} </p>
+                </div>
+            </div>
+        </div>
+        <div ng-if="reportForm.dates">
+            <p ng-if="selectedProgram.datePlannedStart != 'NaN-NaN-NaN' && selectedProgram.datePlannedStart != ''">
+                تاريخ البداية المخطط: {{selectedProgram.datePlannedStart}}
+            </p>
+            <p ng-if="selectedProgram.datePlannedEnd != 'NaN-NaN-NaN' && selectedProgram.datePlannedEnd != ''">
+                تاريخ النهاية المخطط: {{selectedProgram.datePlannedEnd}}
+            </p>
+            <p ng-if="selectedProgram.dateActualStart != 'NaN-NaN-NaN' && selectedProgram.dateActualStart != ''">
+                تاريخ البداية الفعلي: {{selectedProgram.dateActualStart}}
+            </p>
+            <p ng-if="selectedProgram.dateActualEnd != 'NaN-NaN-NaN' && selectedProgram.dateActualEnd != ''">
+                تاريخ النهاية الفعلي: {{selectedProgram.dateActualEnd}}
+            </p>
+        </div>
+        
+        <div ng-if="reportForm.team">
+            <p ng-if="selectedProgram.teamInt.length > 0" style="font-weight: bold">فريق العمل داخليا</p>
+            <div style="margin: 10px" ng-repeat="member in selectedProgram.teamInt">
+                <div ng-repeat="user in allUsers" ng-if="member == user._id">
+                    <p>
+                        {{user.name}}
+                    </p>
+                </div>
+            </div>
+            <p ng-if="selectedProgram.teamExt.length > 0" style="font-weight: bold">فريق العمل خارجيا</p>
+            <div style="margin: 10px" ng-repeat="member in selectedProgram.teamExt">
+                <div ng-repeat="user in allUsers" ng-if="member == user._id">
+                    <p>
+                        {{user.name}}
+                    </p>
+                </div>
+            </div>  
+        </div>
+        
+        <div ng-if="reportForm.desc">
+            <p ng-if="selectedProgram.description != ''">
+                تفصيلات البرنامج والخطوات التنفيذية: {{selectedProgram.description}}
+            </p>
+        </div>
+
+    </div>
+
+
+</div>

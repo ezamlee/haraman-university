@@ -4,6 +4,28 @@
 app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, user) {
 
     console.log("Welcome to targetsCtrl");
+
+    // start "added by heba"
+    $scope.result = false;
+    $scope.reportForm = {
+        strategic:{
+            goal: true,
+            projects: true,
+            programs: true,
+            percent: true,
+            completed: true
+        },
+        secondary:{
+            goal: true,
+            projects: true,
+            programs: true,
+            percent: true,
+            completed: true
+        }
+    };
+    //end "added by heba"
+
+
     $scope.selectedStrategicGoalIndex = 0;
     $scope.selectedSecondaryGoalIndex = 0;
     $scope.selectedSecondaryGoal      = {};
@@ -20,6 +42,109 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
 
     $scope.min = 0;
     $scope.max = 100;
+
+
+
+    // start "added by heba"
+    $scope.reportTempate = function () {
+        $ngConfirm({
+            title: 'تقرير اﻷهداف اﻷستراتيجية',
+            contentUrl: 'target-report-template.html',
+            scope: $scope,
+            rtl: true,
+            columnClass: 'col-md-6 col-md-offset-3',
+            buttons: {
+                add: {
+                    text: 'طباعة',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+                        console.log("scope.result", scope.result)
+                        if(!scope.result){
+                            $scope.printReport(false);
+                        }else{
+                            $scope.printReport(true);
+                        }
+                    }
+                },
+                cancel: {
+                    text: 'إغلاق',
+                    btnClass: 'btn-red',
+                    action: function (scope, button) {
+                        console.log("Cancelled");
+                    }
+                }
+            }
+        });
+        
+    };
+
+    $scope.printReport = function (printAllPrograms, reportForm) {
+        console.log("reportObj", $scope.reportForm)
+        $ngConfirm({
+            title: '',
+            contentUrl: 'target-print-template.html',
+            scope: $scope,
+            rtl: true,
+            columnClass: 'col-md-8 col-md-offset-3',
+            onOpenBefore: function (scope) {
+                console.log("associations", $scope.associations)
+                scope.printAllPrograms = printAllPrograms;
+                scope.entityl1 = '';
+                scope.entityl2 = '';
+                scope.entityl3 = '';
+                scope.entityl4 = '';
+                if ($scope.selectedFirstLevelObject) {
+                    console.log("selectedFirstLevelObject", $scope.selectedFirstLevelObject)
+                    for (var x in $scope.associations) {
+                        if ($scope.selectedFirstLevelObject._id === $scope.associations[x]._id) {
+                            scope.entityl1 = $scope.associations[x].name;
+                            if ($scope.entitiesModel.secondLevel != undefined && $scope.entitiesModel.secondLevel != '') {
+                                scope.entityl2 = "| " + $scope.associations[x].children[$scope.entitiesModel.secondLevel].name;
+                                if ($scope.entitiesModel.thirdLevel != undefined && $scope.entitiesModel.thirdLevel != '') {
+                                    scope.entityl3 = "| " + $scope.associations[x].children[$scope.entitiesModel.secondLevel].children[$scope.entitiesModel.thirdLevel].name;
+                                    if ($scope.entitiesModel.fourthLevel != undefined && $scope.entitiesModel.fourthLevel != '') {
+                                        scope.entityl4 = "| " + $scope.associations[x].children[$scope.entitiesModel.secondLevel].children[$scope.entitiesModel.thirdLevel].children[$scope.entitiesModel.fourthLevel].name;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            },
+            buttons: {
+                add: {
+                    text: 'طباعة',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+
+                        var htmlPrint = document.getElementById("printArea");
+                        console.log("Parsed html");
+                        console.log(htmlPrint);
+                        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+                        mywindow.document.write($('<div/>').append($(htmlPrint).clone()).html());
+                        mywindow.document.close(); // necessary for IE >= 10
+                        mywindow.focus(); // necessary for IE >= 10*/
+                        console.log("To be printed");
+                        console.log(mywindow.document);
+                        mywindow.print();
+                        mywindow.close();
+
+
+                        return false;
+
+                    }
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    btnClass: 'btn-red',
+                    action: function (scope, button) {
+                    }
+                },
+            }
+        });
+    }
+    // end "added by heba"
 
     $scope.renderGoals = function () {
         user.getGoals().then(function (goals) {
