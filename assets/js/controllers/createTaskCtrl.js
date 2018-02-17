@@ -493,6 +493,30 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
 
     };
 
+
+    $scope.reportTempate = function () {
+        $ngConfirm({
+            title: 'إضافة فريق العمل',
+            contentUrl: 'task-report-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                // add: {
+                //     text: 'تم',
+                //     btnClass: 'btn-blue',
+                //     action: function (scope, button) {
+                //     }
+                // },
+                cancel: {
+                    text: 'إغلاق',
+                    btnClass: 'btn-red',
+                    action: function (scope, button) {
+                    }
+                }
+            }
+        });
+    };
+
     // end team modal "added by heba"
 
     $scope.internalTeamArr = [];
@@ -609,6 +633,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
 
     };
     $scope.printReport = function (printAllTasks) {
+        console.log("printAllTasks", printAllTasks)
         $ngConfirm({
             title: '',
             contentUrl: 'task-print-template.html',
