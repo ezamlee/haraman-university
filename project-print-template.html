@@ -1,0 +1,186 @@
+<div id="printArea" style="direction: rtl;text-align: right;">
+    <div style="direction: rtl;text-align: right;width: 100%;margin-bottom: 12px">
+        <div style="display: inline-block;padding: 0 10px;vertical-align: text-bottom;">
+            <img style="width:75px;height: 75px;" src="assets/images/log_transparent.png" alt="" />
+        </div>
+
+        <div style="display: inline-block;vertical-align: top;">
+            <p style="font-weight: bold;font-size:20px;color: darkgrey">
+                {{ printAllProjects ? 'المشاريع ': selectedProject.name}}
+            </p>
+            <p style="font-weight: bold;color: darkgrey">
+                {{entityl1}} {{entityl2}} {{entityl3}} {{entityl4}}
+            </p>
+        </div>
+
+    </div>
+    <div ng-if="printAllProjects" style="margin:8px">
+        <p style="font-weight: bold;color: blue;" ng-if="selectedProject != undefined && projectId != undefined && projectId != ''">
+            المشروع: {{selectedProject.name}}
+        </p>
+        <p style="font-weight: bold;color: blue; margin: 8px" ng-if="stageName != undefined && stageName != ''">
+            المرحلة: {{stageName}}
+        </p>
+        <div ng-repeat="project in projects">
+            <p style="font-weight: bold;color: blue"> عنوان المشروع: {{project.name}} </p>
+
+            <div ng-if="reportForm.mainData">
+                <p>
+                    حالة المشروع: {{project.active ? 'نشطة':'تمت'}}
+                </p>
+
+                <p ng-repeat="user in allUsers" ng-if="user._id == project.manager">
+                    مدير المشروع: {{user.name}}
+                </p>
+                <p ng-if="project.approxCost != 0">
+                    التكلفة التقديرية {{project.approxCost}}
+                </p>
+            </div>
+
+            <div ng-if="reportForm.stages">
+                <p ng-if="project.stages.length > 0" style="font-weight: bold">مراحل المشروع</p>
+                <div style="margin: 10px" ng-repeat="stage in project.stages">
+                    <p>
+                        {{stage.name}}
+                    </p>
+                </div>
+            </div>
+
+            <div ng-if="reportForm.quality">
+                <p>نسبة الجودة: {{project.quality}}</p>
+                <p>الوزن النسبي: {{project.wt}}</p>
+            </div>
+            <div ng-if="reportForm.outputs">
+                <p ng-if="project.outputs.length > 0" style="font-weight: bold">مخرجات المشروع</p>
+                <div style="margin: 10px" ng-repeat="output in project.outputs">
+                    <p>
+                        {{output.name}}
+                    </p>
+                </div>
+            </div>
+
+            <div ng-if="reportForm.dates">
+                <p ng-if="project.datePlannedStart != 'NaN-NaN-NaN' && project.datePlannedStart != ''">
+                    تاريخ البداية المخطط: {{project.datePlannedStart}}
+                </p>
+                <p ng-if="project.datePlannedEnd != 'NaN-NaN-NaN' && project.datePlannedEnd != ''">
+                    تاريخ النهاية المخطط: {{project.datePlannedEnd}}
+                </p>
+                <p ng-if="project.dateActualStart != 'NaN-NaN-NaN' && project.dateActualStart != ''">
+                    تاريخ البداية الفعلي: {{project.dateActualStart}}
+                </p>
+                <p ng-if="project.dateActualEnd != 'NaN-NaN-NaN' && project.dateActualEnd != ''">
+                    تاريخ النهاية الفعلي: {{project.dateActualEnd}}
+                </p>
+            </div>
+
+            <div ng-if="reportForm.team">
+                <p ng-if="project.teamInt.length > 0" style="font-weight: bold">فريق العمل داخليا</p>
+                <div style="margin: 10px" ng-repeat="member in project.teamInt">
+                    <div ng-repeat="user in allUsers" ng-if="member == user._id">
+                        <p>
+                            {{user.name}}
+                        </p>
+                    </div>
+                </div>
+                <p ng-if="project.teamExt.length > 0" style="font-weight: bold">فريق العمل خارجيا</p>
+                <div style="margin: 10px" ng-repeat="member in project.teamExt">
+                    <div ng-repeat="user in allUsers" ng-if="member == user._id">
+                        <p>
+                            {{user.name}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="reportForm.desc">
+                <p ng-if="project.description != ''">
+                    تفصيلات المشروع والخطوات التنفيذية: {{project.description}}
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div ng-if="!printAllProjects" style="margin:8px">
+        <p style="font-weight: bold;color: blue;" ng-if="selectedProject != undefined">
+            عنوان المشروع: {{selectedProject.name}}
+        </p>
+        
+        <div ng-if="reportForm.stages">
+            <p ng-if="selectedProject.stages.length > 0" style="font-weight: bold">مراحل المشروع</p>
+            <div style="margin: 10px" ng-repeat="stage in selectedProject.stages">
+                <p>
+                    {{stage.name}}
+                </p>
+            </div>
+        </div>
+
+        <div ng-if="reportForm.mainData">
+            <p>
+                حالة المشروع: {{selectedProject.active ? 'نشطة':'تمت'}}
+            </p>
+            <p ng-repeat="user in allUsers" ng-if="user._id == selectedProject.manager">
+                مدير المشروع: {{user.name}}
+            </p>
+            <p ng-if="selectedProject.approxCost != 0">
+                التكلفة التقديرية {{selectedProject.approxCost}}
+            </p>
+        </div>
+        <div ng-if="reportForm.quality">
+            <p>نسبة الجودة: {{selectedProject.quality}}</p>
+            <p>الوزن النسبي: {{selectedProject.wt}}</p>
+
+        </div>
+        <div ng-if="reportForm.outputs">
+            <p ng-if="selectedProject.outputs.length > 0" style="font-weight: bold">مخرجات المشروع</p>
+            <div style="margin: 10px" ng-repeat="output in selectedProject.outputs">
+                <p>
+                    {{output.name}}
+                </p>
+            </div>
+        </div>
+        
+        <div ng-if="reportForm.dates">
+            <p ng-if="selectedProject.datePlannedStart != 'NaN-NaN-NaN' && selectedProject.datePlannedStart != ''">
+                تاريخ البداية المخطط: {{selectedProject.datePlannedStart}}
+            </p>
+            <p ng-if="selectedProject.datePlannedEnd != 'NaN-NaN-NaN' && selectedProject.datePlannedEnd != ''">
+                تاريخ النهاية المخطط: {{selectedProject.datePlannedEnd}}
+            </p>
+            <p ng-if="selectedProject.dateActualStart != 'NaN-NaN-NaN' && selectedProject.dateActualStart != ''">
+                تاريخ البداية الفعلي: {{selectedProject.dateActualStart}}
+            </p>
+            <p ng-if="selectedProject.dateActualEnd != 'NaN-NaN-NaN' && selectedProject.dateActualEnd != ''">
+                تاريخ النهاية الفعلي: {{selectedProject.dateActualEnd}}
+            </p>
+        </div>
+        
+        <div ng-if="reportForm.team">
+            <p ng-if="selectedProject.teamInt.length > 0" style="font-weight: bold">فريق العمل داخليا</p>
+            <div style="margin: 10px" ng-repeat="member in selectedProject.teamInt">
+                <div ng-repeat="user in allUsers" ng-if="member == user._id">
+                    <p>
+                        {{user.name}}
+                    </p>
+                </div>
+            </div>
+            <p ng-if="selectedProject.teamExt.length > 0" style="font-weight: bold">فريق العمل خارجيا</p>
+            <div style="margin: 10px" ng-repeat="member in selectedProject.teamExt">
+                <div ng-repeat="user in allUsers" ng-if="member == user._id">
+                    <p>
+                        {{user.name}}
+                    </p>
+                </div>
+            </div>  
+        </div>
+        
+        <div ng-if="reportForm.desc">
+            <p ng-if="selectedProject.description != ''">
+                تفصيلات المشروع والخطوات التنفيذية: {{selectedProject.description}}
+            </p>
+        </div>
+
+    </div>
+
+
+</div>
