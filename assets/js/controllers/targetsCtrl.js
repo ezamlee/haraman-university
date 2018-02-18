@@ -36,10 +36,10 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
         $scope.selectedStrategicGoal = selectedGoal;
         $scope.showSecondaryGoalsColumn = true;
         $scope.strategicGoalModel = selectedGoal.name;
-        (function CalcGoalCompleted(){
-          console.log(Object.values($scope.selectedStrategicGoal.subgoals))
-        $scope.selectedStrategicComplete =   Object.values($scope.selectedStrategicGoal.subgoals).reduce( (sum,subgoal)=> { console.log(sum) ;return sum + (parseFloat(subgoal.wt || 0)/100 * parseFloat(subgoal.completed || 0)/100) } ,0 )
-        })()
+        // (function CalcGoalCompleted(){
+        //   console.log(Object.values($scope.selectedStrategicGoal.subgoals))
+        // $scope.selectedStrategicComplete =   Object.values($scope.selectedStrategicGoal.subgoals).reduce( (sum,subgoal)=> { console.log(sum) ;return sum + (parseFloat(subgoal.wt || 0)/100 * parseFloat(subgoal.completed || 0)/100) } ,0 )
+        // })()
         user.getPrograms({}).then( data => {
              finalData = [];
              $scope.MainarrayOfPrograms = [];

@@ -33,13 +33,12 @@
                                                 </option>
                                             </select>
                                         </div>
-
                                         <div class="text-right">
                                             <i class="fa fa-plus fa-2x text-green action-icon" ng-click="addStrategicGoal(strategicGoalForm.$valid)" aria-hidden="true"></i>
                                             <i class="fa fa-floppy-o fa-2x action-icon" ng-click="editStrategicGoal(strategicGoalForm.$valid)" aria-hidden="true"></i>
                                             <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteStrategicGoal()" aria-hidden="true"></i>
-
                                         </div>
+                                        <hr>
                                     </div>
                                 </div>
                             </div>
@@ -53,11 +52,18 @@
 
                             <div id="collapse2" class="panel-collapse collapse">
                                 <div class="panel-body">
+
+
                                     <div class="col-md-12">
                                         <div class="form-group">
+                                            <hr>
                                             <textarea rows="3" class="form-control" placeholder="" ng-model="strategicGoalModel" required></textarea>
+                                            <hr>
                                         </div>
                                     </div>
+
+                                    <hr>
+                                    <hr>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +111,7 @@
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <p>{{ selectedStrategicComplete * 100}}% </p>
+                                            <p>{{ selectedStrategicGoal.completed ||0 }}%</p>
                                         </div>
                                     </div>
                                 </div>

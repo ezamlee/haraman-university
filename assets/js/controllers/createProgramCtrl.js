@@ -1,6 +1,6 @@
 /**
  * Created by Khalid on 11/2/2017.
- */ 
+ */
 
 app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $location, user, $timeout, $ngConfirm) {
 
@@ -279,7 +279,11 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.userFilterationModel.entityl3 = $scope.userFilterEntitiesModel.thirdLevel == '' ? undefined : $scope.userFilterEntitiesModel.thirdLevel;
         $scope.userFilterationModel.entityl4 = $scope.userFilterEntitiesModel.fourthLevel == '' ? undefined : $scope.userFilterEntitiesModel.fourthLevel;
     };
-
+    $scope.validateMinMax=function(val,obj){
+      if(obj  > 100)    $scope[val] =100;
+      else if (obj < 0) $scope[val] =0;
+      if (!$scope[val]) $scope[val] = 0;
+    }
     $scope.filterUsers = function (level) {
         switch (level) {
             case 'level1':
