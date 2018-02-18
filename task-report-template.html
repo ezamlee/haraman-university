@@ -1,0 +1,65 @@
+<div class="row">   
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="radio">
+                <input type="radio" id="radio1" name="radiobtn" ng-model="result" ng-value="false"/>
+                <label for="radio1"> العنصر المختار فقط </label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="radio">
+                <input type="radio" id="radio2" name="radiobtn" ng-model="result" ng-value="true"/>
+                <label for="radio2"> جميع العناصر المفلترة </label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="checkbox">
+                <input type="checkbox" id="inlineCheckbox1" ng-model="reportForm.mainData">
+                <label for="inlineCheckbox1"> البيانات اﻷساسية </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <input type="checkbox" id="inlineCheckbox3" ng-model="reportForm.quality">
+                <label for="inlineCheckbox3"> اﻷهمية،الإنجاز والجودة </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <input type="checkbox" id="inlineCheckbox5" ng-model="reportForm.dates">
+                <label for="inlineCheckbox5"> تواريخ البداية والنهاية </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <input type="checkbox" id="inlineCheckbox7" ng-model="reportForm.team">
+                <label for="inlineCheckbox7"> فريق العمل </label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+    	<div class="form-group">
+            <div class="checkbox">
+                <input type="checkbox" id="inlineCheckbox2" ng-model="reportForm.users">
+                <label for="inlineCheckbox2"> الجهات ذات العلاقة </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <input type="checkbox" id="inlineCheckbox8" ng-model="reportForm.requirements">
+                <label for="inlineCheckbox8"> التفصيلات و مطالب التنفيذ </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <input type="checkbox" id="inlineCheckbox8" ng-model="reportForm.kpis">
+                <label for="inlineCheckbox8"> مؤشرات اﻷداء </label>
+            </div>
+        </div>
+    </div>
+
+</div>

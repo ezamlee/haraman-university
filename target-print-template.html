@@ -1,0 +1,80 @@
+<div id="printArea" style="direction: rtl;text-align: right;">
+    <div style="direction: rtl;text-align: right;width: 100%;margin-bottom: 12px">
+        <div style="display: inline-block;padding: 0 10px;vertical-align: text-bottom;">
+            <img style="width:75px;height: 75px;" src="assets/images/log_transparent.png" alt="" />
+        </div>
+
+        <!-- <div style="display: inline-block;vertical-align: top;">
+            <p style="font-weight: bold;font-size:20px;color: darkgrey">
+                {{ selectedStrategicGoal.name}}
+            </p>
+        </div> -->
+    </div>
+
+    <div style="margin:8px">
+        <div ng-if="reportForm.strategic.goal">
+            <p style="font-weight: bold;color: blue;">
+                الأهدف الرئيسي: {{selectedStrategicGoal.name}}
+            </p>
+        </div>
+        
+        <div ng-if="reportForm.strategic.wt">
+            <p style="font-weight: bold;">النسبة المئوية من كامل الخطة: {{selectedStrategicGoal.wt}}</p>
+        </div>
+        <div ng-if="reportForm.strategic.completed">
+            <p style="font-weight: bold;">نسبة التحقق: {{selectedStrategicComplete * 100}} %</p>
+        </div>
+
+        <div ng-if="reportForm.strategic.programs">
+            <p ng-if="MainrelatedProjects.length > 0" style="font-weight: bold">البرامج المرتبطة</p>
+            <div style="margin: 10px" ng-repeat="project in MainrelatedProjects">
+                <p>
+                    {{project.name}}
+                </p>
+            </div>
+        </div>
+
+        <div ng-if="reportForm.strategic.projects">
+            <p ng-if="MainrelatedPrograms.length > 0" style="font-weight: bold">المشاريع المرتبطة</p>
+            <div style="margin: 10px" ng-repeat="program in MainrelatedPrograms">
+                <p>
+                    {{program.name}}
+                </p>
+            </div>
+        </div>
+
+        <div ng-if="reportForm.secondary.goal" style="border-top: 1px solid #aaa; margin-top: 20px;">
+            <p style="font-weight: bold;color: blue; margin-top: 20px;">الأهداف التفصيلية: 
+                <!-- <div> -->
+                <p style="font-weight: bold;" ng-repeat="subgoal in selectedStrategicGoal.subgoals">{{subgoal.name}}</p>
+                <!-- </div> -->
+            </p>
+        </div>
+        
+        <div ng-if="reportForm.secondary.wt">
+            <p style="font-weight: bold;">النسبة المئوية من الهدف الأستراتيجي: {{selectedsecondaryGoal.wt}}</p>
+        </div>
+        <div ng-if="reportForm.secondary.completed">
+            <p style="font-weight: bold;">نسبة التحقق: {{selectedSecondaryGoal.completed * 100}} %</p>
+        </div>
+
+        <div ng-if="reportForm.secondary.programs">
+            <p ng-if="relatedProjects.length > 0" style="font-weight: bold">البرامج المرتبطة</p>
+            <div style="margin: 10px" ng-repeat="project in relatedProjects">
+                <p>
+                    {{project.name}}
+                </p>
+            </div>
+        </div>
+
+        <div ng-if="reportForm.secondary.projects">
+            <p ng-if="relatedPrograms.length > 0" style="font-weight: bold">المشاريع المرتبطة</p>
+            <div style="margin: 10px" ng-repeat="program in relatedPrograms">
+                <p>
+                    {{program.name}}
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
