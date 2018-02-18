@@ -1,25 +1,29 @@
 /**
  * Created by Khalid on 11/1/2017.
  */
-app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, user) {
+app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, user, $ngConfirm) {
 
     console.log("Welcome to targetsCtrl");
 
     // start "added by heba"
+
+    $scope.min = 0;
+    $scope.max = 100;
+
     $scope.result = false;
     $scope.reportForm = {
         strategic:{
             goal: true,
             projects: true,
             programs: true,
-            percent: true,
+            wt: true,
             completed: true
         },
         secondary:{
             goal: true,
             projects: true,
             programs: true,
-            percent: true,
+            wt: true,
             completed: true
         }
     };
@@ -39,10 +43,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
     $scope.relatedPrograms = [];
     $scope.MainrelatedPrograms = [];
     $scope.selectedStrategicComplete = 0;
-
-    $scope.min = 0;
-    $scope.max = 100;
-
 
 
     // start "added by heba"
@@ -78,7 +78,7 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
         
     };
 
-    $scope.printReport = function (printAllPrograms, reportForm) {
+    $scope.printReport = function (reportForm) {
         console.log("reportObj", $scope.reportForm)
         $ngConfirm({
             title: '',
@@ -87,30 +87,7 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
             rtl: true,
             columnClass: 'col-md-8 col-md-offset-3',
             onOpenBefore: function (scope) {
-                console.log("associations", $scope.associations)
-                scope.printAllPrograms = printAllPrograms;
-                scope.entityl1 = '';
-                scope.entityl2 = '';
-                scope.entityl3 = '';
-                scope.entityl4 = '';
-                if ($scope.selectedFirstLevelObject) {
-                    console.log("selectedFirstLevelObject", $scope.selectedFirstLevelObject)
-                    for (var x in $scope.associations) {
-                        if ($scope.selectedFirstLevelObject._id === $scope.associations[x]._id) {
-                            scope.entityl1 = $scope.associations[x].name;
-                            if ($scope.entitiesModel.secondLevel != undefined && $scope.entitiesModel.secondLevel != '') {
-                                scope.entityl2 = "| " + $scope.associations[x].children[$scope.entitiesModel.secondLevel].name;
-                                if ($scope.entitiesModel.thirdLevel != undefined && $scope.entitiesModel.thirdLevel != '') {
-                                    scope.entityl3 = "| " + $scope.associations[x].children[$scope.entitiesModel.secondLevel].children[$scope.entitiesModel.thirdLevel].name;
-                                    if ($scope.entitiesModel.fourthLevel != undefined && $scope.entitiesModel.fourthLevel != '') {
-                                        scope.entityl4 = "| " + $scope.associations[x].children[$scope.entitiesModel.secondLevel].children[$scope.entitiesModel.thirdLevel].children[$scope.entitiesModel.fourthLevel].name;
-                                    }
-                                }
-                            }
-
-                        }
-                    }
-                }
+                
             },
             buttons: {
                 add: {
@@ -148,9 +125,11 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
 
     $scope.renderGoals = function () {
         user.getGoals().then(function (goals) {
+            console.log("goals", goals);
             //debugger;
             $scope.strategicGoals = goals;
             $scope.selectedStrategicGoal = goals[$scope.selectedStrategicGoalIndex];
+            console.log("$scope.selectedStrategicGoal", $scope.selectedStrategicGoal);
 
         });
     };
@@ -183,6 +162,7 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
            data.map( Project => {$scope.MainarrayOfPrograms.includes(Project.program) ? finalData.push(Project) : "null" })
            return finalData
          }).then(data => {$scope.MainrelatedPrograms = data });
+
         $scope.secondaryGoalModel = '';
         $scope.relatedProjects = [];
         $scope.arrayOfPrograms = [];
