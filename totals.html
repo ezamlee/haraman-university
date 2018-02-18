@@ -123,35 +123,30 @@
         <div class="col-md-6">
             <div class="panel panel-flat">
                 <div class="panel-body height-70-vh">
-                    <div class="col-xs-10">
+                    <div class="col-xs-9">
                         <h2>نسبة تحقيق اﻷهداف اﻷسراتيجية للخطة</h2>
                     </div>
-                    <div class="col-xs-2">
-                        <h2>75%</h2>
+                    <div class="col-xs-3">
+                        <h2> {{completedGoals | number:2}}% </h2>
                     </div>
                     <div class="col-xs-12">
                         <h2>اﻷهداف اﻷسراتيجية</h2>
                     </div>
                     <div class="col-md-12">
-                        <table class="table table-hover">
+                        <table class="table table-hover table-bordered">
                             <thead>
-                              <tr>
-                                <th>العنوان</th>
-                                <th>الوزن</th>
-                                <th>التحقق</th>
-                              </tr>
+                                <tr>
+                                    <th>العنوان</th>
+                                    <th>الوزن</th>
+                                    <th>التحقق</th>
+                                </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td> بجودة الأداء الارتقاءالتعليمي والتعلمي بما يحقق الريادة والتميز للكلية</td>
-                                <td>30%</td>
-                                <td>25%</td>
-                              </tr>
-                              <tr>
-                                <td>تحقيق الاكتفاء الذاتي والاستقرار الاقتصادي للكلية</td>
-                                <td>30%</td>
-                                <td>25%</td>
-                              </tr>
+                                <tr ng-repeat="goal in strategicGoals">
+                                    <td> {{goal.name}} </td>
+                                    <td> {{goal.wt}} </td>
+                                    <td> {{goal.completed}} </td>
+                                </tr>
                             </tbody>
                           </table>
                     </div>
@@ -165,13 +160,13 @@
                         <h2>نسبة إنجاز برامج و مشاريع للخطة</h2>
                     </div>
                     <div class="col-xs-3">
-                        <h2>35%</h2>
+                        <h2> {{completedPrograms | number:2}}% </h2>
                     </div>
                     <div class="col-xs-12">
                         <h2>البرامج</h2>
                     </div>
                     <div class="col-md-12">
-                        <table class="table table-hover">
+                        <table class="table table-hover table-bordered">
                             <thead>
                               <tr>
                                 <th>العنوان</th>
@@ -181,21 +176,23 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>برنامج الجودة والاعتماد (أتقان)</td>
-                                <td>30%</td>
-                                <td>25%</td>
-                                <td>90%</td>
-                              </tr>
-                              <tr>
+                              <tr ng-repeat="program in programs">
+                                    <td> {{program.name}} </td>
+                                    <td> {{program.wt}} </td>
+                                    <td> {{program.completed}} </td>
+                                    <td> {{program.quality}} </td>
+                                </tr>
                             </tbody>
-                          </table>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+
+    </script>
 
     <!-- Footer -->
     <div class="footer text-muted">
@@ -212,4 +209,4 @@
 <!--</div>-->
 <!-- /page container -->
 <!--</body>-->
-<!--</html>
+<!--</html> -->
