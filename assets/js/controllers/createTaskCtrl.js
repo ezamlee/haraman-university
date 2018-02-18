@@ -4,8 +4,22 @@
 app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, user, $timeout, $ngConfirm) {
     console.log("Welcome to tasks screen");
 
+    
+    // start "added by heba"
     $scope.min = 0;
     $scope.max = 100;
+
+    $scope.result = false;
+    $scope.reportForm = {
+        mainData: true,
+        quality: true,
+        dates: true,
+        team: true,
+        kpis: true,
+        requirements: true,
+        users: true
+    };
+    //end "added by heba"
 
 
     $scope.goalsModel = {};
@@ -493,30 +507,6 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
 
     };
 
-
-    $scope.reportTempate = function () {
-        $ngConfirm({
-            title: 'إضافة فريق العمل',
-            contentUrl: 'task-report-template.html',
-            scope: $scope,
-            rtl: true,
-            buttons: {
-                // add: {
-                //     text: 'تم',
-                //     btnClass: 'btn-blue',
-                //     action: function (scope, button) {
-                //     }
-                // },
-                cancel: {
-                    text: 'إغلاق',
-                    btnClass: 'btn-red',
-                    action: function (scope, button) {
-                    }
-                }
-            }
-        });
-    };
-
     // end team modal "added by heba"
 
     $scope.internalTeamArr = [];
@@ -599,6 +589,41 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
             }
         });
     };
+    // start "added by heba"
+
+    $scope.reportTempate = function () {
+        $ngConfirm({
+            title: 'تقرير المهام',
+            contentUrl: 'task-report-template.html',
+            scope: $scope,
+            rtl: true,
+            columnClass: 'col-md-6 col-md-offset-3',
+            buttons: {
+                add: {
+                    text: 'طباعة',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+                        console.log("scope.result", scope.result)
+                        if(!scope.result){
+                            $scope.printReport(false);
+                        }else{
+                            $scope.printReport(true);
+                        }
+                    }
+                },
+                cancel: {
+                    text: 'إغلاق',
+                    btnClass: 'btn-red',
+                    action: function (scope, button) {
+                        console.log("Cancelled");
+                    }
+                }
+            }
+        });
+    };
+
+    // end "added by heba"
+
     $scope.exportReport = function () {
         if ($scope.selectedTask) {
             $.confirm({
