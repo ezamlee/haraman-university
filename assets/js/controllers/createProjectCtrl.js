@@ -32,7 +32,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         "entityl2": undefined,
         "entityl3": undefined,
         "entityl4": undefined
-    }; 
+    };
     //$scope.selectedEntitiesArray=[];
 
     $scope.updateFilterationModel = function () {
@@ -334,7 +334,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.updateUserFiltrationModel();
         $scope.renderUsers($scope.userFilterationModel);
     };
-    
+
     $scope.deleteProject = function () {
         if($scope.selectedProject){
         $.confirm({
@@ -843,6 +843,45 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
             }
         });
     };
+    $scope.deleteEntityFromProgram = function (type, key1, key2, key3, key4) {
+      $.confirm({
+        title: '',
+        content: 'هل ترغب بحذف الجهة من هذه القائمة؟',
+        buttons: {
+          confirm: {
+            text: 'حذف',
+            action: function () {
+              $timeout(function () {
+                if (type == "firstLevel") {
+                  delete $scope.selectedEntitiesArray[key1];
+
+                }
+                else if (type == "secondLevel") {
+                  delete $scope.selectedEntitiesArray[key1][key2];
+                }
+                else if (type == "thirdLevel") {
+                  delete $scope.selectedEntitiesArray[key1][key2][key3];
+                }
+                else if (type == "fourthLevel") {
+                  delete $scope.selectedEntitiesArray[key1][key2][key3][key4];
+                }
+                $log.debug("Entities after deleting item");
+                $log.debug($scope.selectedEntitiesArray);
+                $scope.$apply();
+              });
+
+            }
+          },
+          cancel: {
+            text: 'إلغاء',
+            action: function () {
+              console.log("Cancelled");
+            }
+          }
+
+        }
+      });
+    };
 
     // start team modal "added by heba"
     $scope.addTeamToProject = function () {
@@ -852,7 +891,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
             scope: $scope,
             rtl: true,
             buttons: {
-                
+
                 cancel: {
                     text: 'إغلاق',
                     btnClass: 'btn-red',
@@ -968,45 +1007,5 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         });
     }
     // end team modal "added by heba"
-    
-    $scope.deleteEntityFromProgram = function (type, key1, key2, key3, key4) {
-        $.confirm({
-            title: '',
-            content: 'هل ترغب بحذف الجهة من هذه القائمة؟',
-            buttons: {
-                confirm: {
-                    text: 'حذف',
-                    action: function () {
-                        $timeout(function () {
-                            if (type == "firstLevel") {
-                                delete $scope.selectedEntitiesArray[key1];
-
-                            }
-                            else if (type == "secondLevel") {
-                                delete $scope.selectedEntitiesArray[key1][key2];
-                            }
-                            else if (type == "thirdLevel") {
-                                delete $scope.selectedEntitiesArray[key1][key2][key3];
-                            }
-                            else if (type == "fourthLevel") {
-                                delete $scope.selectedEntitiesArray[key1][key2][key3][key4];
-                            }
-                            $log.debug("Entities after deleting item");
-                            $log.debug($scope.selectedEntitiesArray);
-                            $scope.$apply();
-                        });
-
-                    }
-                },
-                cancel: {
-                    text: 'إلغاء',
-                    action: function () {
-                        console.log("Cancelled");
-                    }
-                }
-
-            }
-        });
-    };
 
 });

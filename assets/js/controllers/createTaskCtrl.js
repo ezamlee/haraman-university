@@ -4,7 +4,7 @@
 app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, user, $timeout, $ngConfirm) {
     console.log("Welcome to tasks screen");
 
-    
+
     // start "added by heba"
     $scope.min = 0;
     $scope.max = 100;
@@ -21,6 +21,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
     };
     //end "added by heba"
 
+    $scope.entitiesModel = {};
 
     $scope.goalsModel = {};
     $scope.entitiesModel = {};
@@ -50,6 +51,30 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
     $scope.renderEntities = function () {
         user.getEntities().then(function (entities) {
             $scope.associations = entities;
+            if (entities) {
+                $scope.flatEntities = {};
+                for (var et in entities) {
+                    $scope.flatEntities[entities[et]._id] = entities[et].name;
+                    if (Object.keys(entities[et].children).length != 0) {
+                        for (var secondLevelChild in entities[et].children) {
+                            $scope.flatEntities[secondLevelChild] = entities[et].children[secondLevelChild].name;
+                            if (Object.keys(entities[et].children[secondLevelChild].children).length != 0) {
+                                for (var thirdLevelChild in entities[et].children[secondLevelChild].children) {
+                                    $scope.flatEntities[thirdLevelChild] = entities[et].children[secondLevelChild].children[thirdLevelChild].name;
+                                    if (Object.keys(entities[et].children[secondLevelChild].children[thirdLevelChild].children).length != 0) {
+                                        for (var fourthLevelChild in entities[et].children[secondLevelChild].children[thirdLevelChild].children) {
+                                            $scope.flatEntities[fourthLevelChild] = entities[et].children[secondLevelChild].children[thirdLevelChild].children[fourthLevelChild].name;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                $log.debug("Flat entities");
+                $log.debug($scope.flatEntities);
+
+            }
         });
     };
     $scope.renderEntities();
@@ -146,7 +171,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         });
     };
     $scope.renderProjects();
-    $scope.filterProjects = function () { 
+    $scope.filterProjects = function () {
         $scope.projectId = '';
         $scope.stageName = '';
         if ($scope.programId != undefined) {
@@ -265,7 +290,42 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         $scope.taskObject.wt = object.wt;
         $scope.taskObject.completed = object.completed;
         $scope.taskObject.quality = object.quality;
+        $scope.selectedEntitiesArray = {};
+        var lvls = object.entities;
 
+        var o = {};
+        if(lvls)
+        for (var i = 0; i < lvls.length; i++) {
+            var lvl = lvls[i];
+            var l1 = lvl.l1;
+            var l2 = lvl.l2;
+            var l3 = lvl.l3;
+            var l4 = lvl.l4;
+
+            if (l1 != undefined && l1 != "undefined") {
+                if (!(l1 in o)) { o[l1] = {}; }
+                var ol1 = o[l1];
+                if (l2 != undefined && l2 != "undefined") {
+                    if (!(l2 in ol1)) { ol1[l2] = {}; }
+                    var ol2 = ol1[l2];
+                    if (l3 != undefined && l3 != "undefined") {
+                        if (!(l3 in ol2)) { ol2[l3] = {}; }
+                        var ol3 = ol2[l3];
+
+                        if (l4 != undefined && l4 != "undefined") {
+                            if (!(l4 in ol3)) {
+                                ol3[l4] = null;
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        }
+        $log.debug("output entities array");
+        $log.debug(o);
+        $scope.selectedEntitiesArray = o;
     };
     $scope.onTaskClicked = function (task) {
         console.log(task)
@@ -334,6 +394,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         for (var index4 in $scope.externalTeamArr) {
             submittedForm.teamExt[index4] = $scope.externalTeamArr[index4]._id;
         }
+        submittedForm.entities = convert(serialize($scope.selectedEntitiesArray));
         submittedForm.description = taskObject.description ? taskObject.description : "";
         submittedForm.datePlannedStart = $rootScope.formatDate(taskObject.datePlannedStart);
         submittedForm.datePlannedEnd = $rootScope.formatDate(taskObject.datePlannedEnd);
@@ -725,4 +786,178 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
       console.log('hi')
     }
     $scope.passed = "10%"
+    function serialize(obj, lstCmpl, lstCrnt) {
+        lstCmpl = lstCmpl || [];
+        lstCrnt = lstCrnt || [];
+
+        for (var key in obj) {
+            var lstCrntSub = lstCrnt.slice();
+
+            lstCrntSub.push(key);
+
+            if (obj[key] && Object.keys(obj[key]).length > 0) {
+                serialize(obj[key], lstCmpl, lstCrntSub);
+            } else {
+                lstCmpl.push(lstCrntSub);
+            }
+        }
+
+        return lstCmpl;
+    };
+    function convert(arr) {
+        var res = [];
+
+        for (var i in arr) {
+            var obj = {};
+
+            for (var j in arr[i]) {
+                obj["l" + (Number(j) + 1)] = arr[i][j];
+            }
+
+            res.push(obj);
+        }
+
+        return res;
+    };
+    $scope.onEntitySelected = function (type) {
+        switch (type) {
+            case 'level1':
+                for (var index = 0; index < $scope.associations.length; index++) {
+                    if ($scope.associations[index]._id == $scope.entityl1) {
+                        $scope.selectedUniversity = $scope.associations[index];
+                    }
+                }
+                $scope.entityl2 = '';
+                $scope.entityl3 = '';
+                $scope.entityl4 = '';
+
+
+                break;
+            case 'level2':
+                $scope.selectedFaculty = $scope.selectedUniversity.children[$scope.entityl2];
+                $scope.entityl3 = '';
+                $scope.entityl4 = '';
+                break;
+            case 'level3':
+                $scope.selectedSector = $scope.selectedUniversity.children[$scope.entityl2].children[$scope.entityl3];
+                $scope.entityl4 = '';
+                break;
+            case 'level4':
+                $scope.selectedDepartmentKey = $scope.entityl4;
+                break;
+        }
+    };
+    $scope.addEntityToProgram = function () {
+        $ngConfirm({
+            title: 'إضافة جهة',
+            contentUrl: 'add-entity-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                add: {
+                    text: 'إضافة',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+                        if ($scope.entityl1 != undefined && $scope.entityl1 != '') {
+                            $timeout(function () {
+                                // var newEntityObject = {};
+                              //  debugger;
+                                if (!($scope.entityl1 in $scope.selectedEntitiesArray)) {
+                                    $scope.selectedEntitiesArray[$scope.entityl1] = null;
+                                }
+                                if ($scope.entityl2 != undefined && $scope.entityl2 != '') {
+                                    var secondLevel = $scope.selectedEntitiesArray[$scope.entityl1];
+                                    if (secondLevel == null || (!($scope.entityl2 in secondLevel))) {
+                                        if (secondLevel == null) {
+                                            secondLevel = {};
+                                        }
+                                        secondLevel[$scope.entityl2] = null;
+                                    }
+
+                                    if ($scope.entityl3 != undefined && $scope.entityl3 != '') {
+                                        var thirdLevel = secondLevel[$scope.entityl2];
+                                        if (thirdLevel == null || (!($scope.entityl3 in thirdLevel))) {
+                                            if (thirdLevel == null) {
+                                                thirdLevel = {};
+                                            }
+                                            thirdLevel[$scope.entityl3] = null;
+                                        }
+
+                                        if ($scope.entityl4 != undefined && $scope.entityl4 != '') {
+                                            var fourthLevel = thirdLevel[$scope.entityl3];
+                                            if (fourthLevel == null || (!($scope.entityl4 in fourthLevel))) {
+                                                if (fourthLevel == null) {
+                                                    fourthLevel = {};
+                                                }
+                                                fourthLevel[$scope.entityl4] = null;
+                                            }
+
+                                            thirdLevel[$scope.entityl3] = fourthLevel;
+
+                                        }
+                                        secondLevel[$scope.entityl2] = thirdLevel;
+
+                                    }
+                                    $scope.selectedEntitiesArray[$scope.entityl1] = secondLevel;
+                                }
+                                $log.debug("Entities object after adding");
+                                $log.debug($scope.selectedEntitiesArray);
+                                $scope.$apply();
+                            });
+                        }
+                        else {
+                            $ngConfirm('يجب اختيار المستوى الأول');
+                            return false;
+                        }
+                    }
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    btnClass: 'btn-red',
+                    action: function (scope, button) {
+                    }
+                },
+            }
+        });
+    };
+    $scope.deleteEntityFromProgram = function (type, key1, key2, key3, key4) {
+      $.confirm({
+        title: '',
+        content: 'هل ترغب بحذف الجهة من هذه القائمة؟',
+        buttons: {
+          confirm: {
+            text: 'حذف',
+            action: function () {
+              $timeout(function () {
+                if (type == "firstLevel") {
+                  delete $scope.selectedEntitiesArray[key1];
+
+                }
+                else if (type == "secondLevel") {
+                  delete $scope.selectedEntitiesArray[key1][key2];
+                }
+                else if (type == "thirdLevel") {
+                  delete $scope.selectedEntitiesArray[key1][key2][key3];
+                }
+                else if (type == "fourthLevel") {
+                  delete $scope.selectedEntitiesArray[key1][key2][key3][key4];
+                }
+                $log.debug("Entities after deleting item");
+                $log.debug($scope.selectedEntitiesArray);
+                $scope.$apply();
+              });
+
+            }
+          },
+          cancel: {
+            text: 'إلغاء',
+            action: function () {
+              console.log("Cancelled");
+            }
+          }
+
+        }
+      });
+    };
+
 });

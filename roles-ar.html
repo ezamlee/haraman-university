@@ -20,7 +20,7 @@
             <div class="page-title">
                 <!-- <h3> -->
                 <span style="font-size: 21px" class="text-semibold"> تعريف المهام </span>
-                <i class="fa fa-print fa-2x action-icon" style="float: left" ng-click="reportTempate()" aria-hidden="true"></i> 
+                <i class="fa fa-print fa-2x action-icon" style="float: left" ng-click="reportTempate()" aria-hidden="true"></i>
                 <!-- </h3> -->
             </div>
 
@@ -490,17 +490,42 @@
                       </div>
 
                       <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse"  href="#collapse10">
-                          <h4 class="panel-title">
-                            <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الجهات ذات العلاقة </a>
-                          </h4>
-                        </div>
-
-                        <div id="collapse10" class="panel-collapse collapse">
-                          <div class="panel-body">
-
+                          <div class="panel-heading" data-toggle="collapse"  href="#collapse10">
+                              <h4 class="panel-title">
+                                <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الجهات ذات العلاقة </a>
+                              </h4>
                           </div>
-                        </div>
+                          <div id="collapse10" class="panel-collapse collapse">
+                              <div class="panel-body">
+                                  <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label>الجهات المختارة</label>
+                                          <div class="form-control" style="height: 150px;padding: 7px; overflow: auto;">
+                                              <div ng-repeat="(key1,firstLevelValue) in selectedEntitiesArray" ng-if="flatEntities[key1] != undefined && flatEntities[key1] != '' && flatEntities[key1] != 'undefined'">
+                                                  <p style="font-weight: bold; cursor: pointer" ng-click="deleteEntityFromProgram('firstLevel',key1)">{{flatEntities[key1]}} </p>
+                                                  <div style="padding:5px" ng-repeat="(key2,secondLevelValue) in firstLevelValue" ng-if="flatEntities[key2] != undefined && flatEntities[key2] != '' && flatEntities[key2] != 'undefined'">
+                                                      <p style="margin:0 8px; cursor: pointer" ng-click="deleteEntityFromProgram('secondLevel',key1,key2)"> &rsaquo; {{flatEntities[key2]}} </p>
+                                                      <div style="padding:5px" ng-repeat="(key3,thirdLevelValue) in secondLevelValue" ng-if="flatEntities[key3] != undefined && flatEntities[key3] != '' && flatEntities[key3] != 'undefined'">
+                                                          <p style="margin:0 16px; cursor: pointer" ng-click="deleteEntityFromProgram('thirdLevel',key1,key2,key3)"> &rsaquo;&rsaquo; {{flatEntities[key3]}}</p>
+                                                          <div style="padding:5px" ng-repeat="(key4,fourthLevelValue) in thirdLevelValue" ng-if="flatEntities[key4] != undefined && flatEntities[key4] != '' && flatEntities[key4] != 'undefined'">
+                                                              <p style="margin:0 24px; cursor: pointer" ng-click="deleteEntityFromProgram('fourthLevel',key1,key2,key3,key4)"> &rsaquo;&rsaquo;&rsaquo; {{flatEntities[key4]}}</p>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+
+                                              </div>
+
+                                          </div>
+                                          <div class="text-right" style="margin-top: 8px">
+                                              <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="addEntityToProgram()"></i>
+                                              <!-- <i class="fa fa-floppy-o fa-2x action-icon" aria-hidden="true" ng-click="editProgram(programForm,newProgramForm.$valid)"></i> -->
+                                              <!-- <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteProgram()" aria-hidden="true"></i> -->
+                                          </div>
+                                      </div>
+                                  </div>
+
+                              </div>
+                          </div>
                       </div>
 
                       <div class="panel panel-default">
