@@ -121,7 +121,8 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                 break;
         }
         $scope.updateFilterationModel();
-        $scope.renderPrograms($scope.filterationModel);
+        // $scope.renderPrograms($scope.filterationModel);
+        $scope.renderProjects($scope.filterationModel);
 
     };
     $scope.renderGoals = function () {
@@ -948,7 +949,31 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                 }
             }
         });
+    }; 
+
+    $scope.filterProjectEntity = function () {
+        $ngConfirm({
+            title: '',
+            contentUrl: 'filter-project-entity-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                add: {
+                    text: 'تم',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {                            
+                        }
+                        else {
+                            $ngConfirm('يجب اختيار المستوى الأول');
+                            return false;
+                        }
+                    }
+                }
+            }
+        });
     };
+
     $scope.addTeamToProject = function () {
         $ngConfirm({
             title: 'إضافة فريق العمل',

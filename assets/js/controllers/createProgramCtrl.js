@@ -79,14 +79,16 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
     };
     $scope.renderEntities();
     $scope.onAssociationSelected = function (entityLevel) {
-
+        console.log("$scope.associations", $scope.associations)
         switch (entityLevel) {
             case 'level1':
                 $scope.selectedFirstLevelObject = $scope.associations[parseInt($scope.entitiesModel.firstLevel)];
+                console.log("$scope.selectedFirstLevelObject", $scope.selectedFirstLevelObject)
                 $scope.entitiesModel.secondLevel = '';
                 $scope.entitiesModel.thirdLevel = '';
                 $scope.entitiesModel.fourthLevel = '';
                 if ($scope.entitiesModel.firstLevel === "") {
+                    console.log("$scope.entitiesModel.firstLevel", $scope.entitiesModel.firstLevel)
                     $scope.disableSecondLevel = true;
                     $scope.disablethirdLevel = true;
                     $scope.disableFourthLevel = true;
@@ -98,6 +100,8 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                 break;
             case 'level2':
                 $scope.selectedSecondLevelObject = $scope.selectedFirstLevelObject.children[$scope.entitiesModel.secondLevel];
+                console.log("$scope.selectedSecondLevelObject", $scope.selectedSecondLevelObject)
+                
                 $scope.entitiesModel.thirdLevel = '';
                 $scope.entitiesModel.fourthLevel = '';
                 if ($scope.entitiesModel.secondLevel === "") {
@@ -120,6 +124,10 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                 break;
             case 'level4':
                 $scope.fourthLevelKey = $scope.entitiesModel.fourthLevel;
+                $scope.selectedForthLevelObject = $scope.selectedFirstLevelObject.children[$scope.entitiesModel.secondLevel].children[$scope.entitiesModel.thirdLevel].children[$scope.entitiesModel.fourthLevel];
+
+                console.log("$scope.fourthLevelKey", $scope.fourthLevelKey)
+
                 break;
         }
         console.log("$scope.filterationModel", $scope.filterationModel);
@@ -857,69 +865,15 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                     text: 'تم',
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
-                        //$scope.filterationModel
-                        // console.log("$scope.filterationModel['entities']['$elemMatch'].l1", $scope.filterationModel["entities"]["$elemMatch"].l1)
-                        // console.log("$scope.selectedEntitiesArray", $scope.selectedEntitiesArray);
-                        // console.log("$scope.flatEntities", $scope.flatEntities)
-                        // if ($scope.filterationModel["entities"]["$elemMatch"].l1 != undefined && $scope.filterationModel["entities"]["$elemMatch"].l1 != '') {
-                        //     $timeout(function () {
-                        //         // var newEntityObject = {};
-                        //       //  debugger;
-                        //         if (!($scope.filterationModel["entities"]["$elemMatch"].l1 in $scope.selectedEntitiesArray)) {
-                        //             $scope.selectedEntitiesArray[$scope.filterationModel["entities"]["$elemMatch"].l1] = null;
-                        //         }
-                        //         if ($scope.filterationModel["entities"]["$elemMatch"].l2 != undefined && $scope.filterationModel["entities"]["$elemMatch"].l2 != '') {
-                        //             var secondLevel = $scope.selectedEntitiesArray[$scope.filterationModel["entities"]["$elemMatch"].l1];
-                        //             if (secondLevel == null || (!($scope.filterationModel["entities"]["$elemMatch"].l2 in secondLevel))) {
-                        //                 if (secondLevel == null) {
-                        //                     secondLevel = {};
-                        //                 }
-                        //                 secondLevel[$scope.filterationModel["entities"]["$elemMatch"].l2] = null;
-                        //             }
-
-                        //             if ($scope.filterationModel["entities"]["$elemMatch"].l3 != undefined && $scope.filterationModel["entities"]["$elemMatch"].l3 != '') {
-                        //                 var thirdLevel = secondLevel[$scope.filterationModel["entities"]["$elemMatch"].l2];
-                        //                 if (thirdLevel == null || (!($scope.filterationModel["entities"]["$elemMatch"].l3 in thirdLevel))) {
-                        //                     if (thirdLevel == null) {
-                        //                         thirdLevel = {};
-                        //                     }
-                        //                     thirdLevel[$scope.filterationModel["entities"]["$elemMatch"].l3] = null;
-                        //                 }
-
-                        //                 if ($scope.filterationModel["entities"]["$elemMatch"].l4 != undefined && $scope.filterationModel["entities"]["$elemMatch"].l4 != '') {
-                        //                     var fourthLevel = thirdLevel[$scope.filterationModel["entities"]["$elemMatch"].l3];
-                        //                     if (fourthLevel == null || (!($scope.filterationModel["entities"]["$elemMatch"].l4 in fourthLevel))) {
-                        //                         if (fourthLevel == null) {
-                        //                             fourthLevel = {};
-                        //                         }
-                        //                         fourthLevel[$scope.filterationModel["entities"]["$elemMatch"].l4] = null;
-                        //                     }
-
-                        //                     thirdLevel[$scope.filterationModel["entities"]["$elemMatch"].l3] = fourthLevel;
-
-                        //                 }
-                        //                 secondLevel[$scope.filterationModel["entities"]["$elemMatch"].l2] = thirdLevel;
-
-                        //             }
-                        //             $scope.selectedEntitiesArray[$scope.filterationModel["entities"]["$elemMatch"].l1] = secondLevel;
-                        //         }
-                        //         $log.debug("Entities object after adding");
-                        //         $log.debug($scope.selectedEntitiesArray);
-                        //         $scope.$apply();
-                        //     });
-                        // }
-                        // else {
-                        //     $ngConfirm('يجب اختيار المستوى الأول');
-                        //     return false;
-                        // }
+                        console.log("$scope.entitiesModel", $scope.entitiesModel)
+                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {                            
+                        }
+                        else {
+                            $ngConfirm('يجب اختيار المستوى الأول');
+                            return false;
+                        }
                     }
-                },
-                // cancel: {
-                //     text: 'إغلاق',
-                //     btnClass: 'btn-red',
-                //     action: function (scope, button) {
-                //     }
-                // }
+                }
             }
         });
     };

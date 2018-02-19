@@ -123,7 +123,8 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                 break;
         }
         $scope.updateFilterationModel();
-        $scope.renderPrograms($scope.filterationModel);
+        // $scope.renderPrograms($scope.filterationModel);
+        $scope.renderTasks();
 
     };
     $scope.renderGoals = function () {
@@ -537,6 +538,29 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     text: 'تم',
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
+                    }
+                }
+            }
+        });
+    };
+
+    $scope.filterTaskEntity = function () {
+        $ngConfirm({
+            title: '',
+            contentUrl: 'filter-task-entity-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                add: {
+                    text: 'تم',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {                            
+                        }
+                        else {
+                            $ngConfirm('يجب اختيار المستوى الأول');
+                            return false;
+                        }
                     }
                 }
             }
