@@ -169,9 +169,8 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         user.getPrograms(filter).then(function (resolved) {
             $timeout(function () {
                 var freecard = false;
-                if(!$scope.currentState)
+                if(!$scope.currentState ||  $scope.currentState == 0)
                   var freecard = true;
-                  
                 resolved = resolved.filter( data => (data.status && data.status == $scope.currentState ) || freecard ? true : false)
                 console.log(resolved);
                 $scope.programs = resolved;

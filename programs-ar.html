@@ -149,6 +149,7 @@
                                         <label > الحاله الرهانه </label>
                                         <br><span style="color:white">-</span><br>
                                         <select style="margin-top:6px" name="select" class="form-control" ng-model="currentState">
+                                            <option value="0"> الكل </option>
                                             <option value="1"> تحت الدراسة والاعتماد </option>
                                             <option value="2"> لم يبدء بعد </option>
                                             <option value="3"> متوقف مؤقتاً</option>
@@ -191,7 +192,7 @@
                                           <label> نسبه الجوده </label>
                                           <br><label>من</label>
                                           <input type="number" name="select" class="form-control"
-                                          ng-disabled="(currentState != 7)" min="0" max="100"
+                                           min="0" max="100"
                                           ng-model="from_quality"
                                           ng-change="validateMinMax('from_quality',from_quality)">
                                       </div>
@@ -201,7 +202,7 @@
                                           <label style="color:white">-</label>
                                           <br><label>إلى</label>
                                           <input type="number" name="select" class="form-control"
-                                          ng-disabled="(currentState != 7)" min="0" max="100"
+                                           min="0" max="100"
                                           ng-model="to_quality"
                                           ng-change="validateMinMax('to_quality',to_quality)">
                                       </div>
