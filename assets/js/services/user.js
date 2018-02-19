@@ -514,6 +514,21 @@ app.factory('user', function ($q, $rootScope, $log, $timeout, connector) {
                 deferred.reject(rejected);
             });
             return deferred.promise;
+        },
+        'getAnalytics' : function(endPoint,PointId) {
+          var $this = this;
+          var deferred = $q.defer();
+          connector.send(null,`/analytics/${endPoint}/${PointId}`,'GET',null)
+            .then(function (resolved){
+              if(    resolved.data.message != "Reduce of empty array with no initial value"
+                && resolved.data.message != "Cannot read property 'dateActualStart' of null"
+              )
+                deferred.resolve(resolved.data);
+              },
+              function (reject){
+                deferred.reject(rejected);
+              });
+          return deferred.promise;
         }
 
     };
