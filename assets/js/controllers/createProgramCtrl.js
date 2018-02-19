@@ -168,6 +168,12 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
     $scope.renderPrograms = function (filter) {
         user.getPrograms(filter).then(function (resolved) {
             $timeout(function () {
+                var freecard = false;
+                if(!$scope.currentState)
+                  var freecard = true;
+                  
+                resolved = resolved.filter( data => (data.status && data.status == $scope.currentState ) || freecard ? true : false)
+                console.log(resolved);
                 $scope.programs = resolved;
                 $scope.$apply();
             });
@@ -271,9 +277,30 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $log.debug("output goals array");
         $log.debug(o);
         $scope.selectedGoalsArray = o;
-        $scope.programForm.wt = selectedProgram.wt;
+        $scope.programForm.wt = selectedProgram.wt || 0;
 
+        user.getAnalytics('program',selectedProgram._id).then(data => {
+          $scope.programForm.completed = data.WT || 0;
+          $scope.programForm.quality = data.QA || 0 ;
+        });
 
+        $scope.programForm.completed = selectedProgram.completed || 0;
+        $scope.programForm.quality = selectedProgram.quality || 0 ;
+        $scope.programForm.status = selectedProgram.status || "8";
+        if(   isNaN(new Date($scope.programForm.dateActualStart).getTime())
+           || isNaN(new Date($scope.programForm.datePlannedEnd).getTime())
+          ){
+          $scope.passed = "البيانات غير مكتمل"
+        }
+        else{
+          var today  = new Date().getTime();
+          var start  = new Date($scope.programForm.dateActualStart).getTime();
+          var end    = new Date($scope.programForm.datePlannedEnd).getTime();
+          var part   = today - start;
+          var total  = end - start;
+          var passed = Math.round((part / total) * 100)
+          $scope.passed = `${passed}`;
+        }
     };
     $scope.renderUsers = function (filter) {
         user.getUsers(filter).then(function (resolved) {
@@ -477,6 +504,10 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         for (var index4 in $scope.externalTeamArr) {
             newForm.teamExt[index4] = $scope.externalTeamArr[index4]._id;
         }
+        newForm.completed = programForm.completed;
+        newForm.quality = programForm.quality;
+        newForm.wt = programForm.wt;
+        newForm.status = programForm.status || "8";
         return newForm;
     };
     $scope.internalTeamArr = [];
@@ -789,7 +820,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                 }
             }
         });
-        
+
     };
 
     $scope.printReport = function (printAllPrograms, reportForm) {
@@ -965,4 +996,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.relatedProjects = data;
       })
     }
+    $scope.$watch("currentState",function(oldval,newval){
+      $scope.renderPrograms($scope.filterationModel);
+    })
 });
