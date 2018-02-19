@@ -101,7 +101,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
             case 'level2':
                 $scope.selectedSecondLevelObject = $scope.selectedFirstLevelObject.children[$scope.entitiesModel.secondLevel];
                 console.log("$scope.selectedSecondLevelObject", $scope.selectedSecondLevelObject)
-                
+
                 $scope.entitiesModel.thirdLevel = '';
                 $scope.entitiesModel.fourthLevel = '';
                 if ($scope.entitiesModel.secondLevel === "") {
@@ -176,16 +176,80 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
     $scope.renderPrograms = function (filter) {
         user.getPrograms(filter).then(function (resolved) {
             $timeout(function () {
+              //filter for program status
                 var freecard = false;
-                if(!$scope.currentState ||  $scope.currentState == 0)
+                if(!$scope.currentState ||  $scope.currentState == 0 ||  $scope.currentState == 8 )
                   var freecard = true;
                 resolved = resolved.filter( data => (data.status && data.status == $scope.currentState ) || freecard ? true : false)
+              //filter for from_complete status
+                var freecard2 = false;
+                if(!$scope.from_complete  || parseInt($scope.from_complete) == 0 || $scope.currentState != 8)
+                  var freecard2 = true;
+                resolved = resolved.filter( data => {
+
+                    return (parseInt(data.completed) >= parseInt($scope.from_complete) ) || freecard2 ? true : false
+                })
+              //filter for to_complete status
+                var freecard3 = false;
+                if(!$scope.to_complete  || parseInt($scope.to_complete) == 0 || $scope.currentState != 8)
+                    var freecard3 = true;
+                resolved = resolved.filter( data => {
+
+                    return (parseInt(data.completed) <= parseInt($scope.to_complete)) || freecard3 ? true : false
+                })
+
+              //filter for importance status
+                resolved = resolved.filter( data => {
+                    console.log(data.wt,$scope.importance)
+                    if($scope.importance == 20){
+                      return (parseInt(data.wt) > 0  && parseInt(data.wt) <= 20)? true : false;
+                    }
+                    else if($scope.importance == 60){
+                      return (parseInt(data.wt) > 20 && parseInt(data.wt) <= 60)? true : false;
+                    }
+                    else if($scope.importance == 100){
+                      return (parseInt(data.wt) > 60 && parseInt(data.wt) <= 100)? true : false;
+                    }else{
+                      return true
+                    }
+                })
+
+                //filter for quality
+                var freecard4 = false;
+                if(!$scope.from_quality || parseInt($scope.from_quality) == 0 )
+                  var freecard4 = true;
+
+                resolved = resolved.filter( data => {
+                  console.log("quality data: ",parseInt(data.wt),$scope.from_quality)
+                  if(freecard4){
+                    return true;
+                  }
+                  else if(parseInt(data.quality) >= parseInt($scope.from_quality)){
+                    return true;
+                  }else{
+                    return false;
+                  }
+                })
+
+                var freecard5 = false;
+                if(!$scope.to_quality || parseInt($scope.from_quality) == 0 )
+                  var freecard5 = true;
+
+                resolved = resolved.filter( data => {
+                  if(freecard5){
+                    return true;
+                  }
+                  else if(parseInt(data.quality) <= parseInt($scope.to_quality)){
+                    return true;
+                  }else{
+                    return false;
+                  }
+                })
+
                 console.log(resolved);
                 $scope.programs = resolved;
                 $scope.$apply();
             });
-
-
         });
     };
     $scope.renderPrograms();
@@ -865,7 +929,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
                         console.log("$scope.entitiesModel", $scope.entitiesModel)
-                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {                            
+                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {
                         }
                         else {
                             $ngConfirm('يجب اختيار المستوى الأول');
@@ -1106,6 +1170,21 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
       })
     }
     $scope.$watch("currentState",function(oldval,newval){
+      $scope.renderPrograms($scope.filterationModel);
+    })
+    $scope.$watch("from_complete",function(oldval,newval){
+      $scope.renderPrograms($scope.filterationModel);
+    })
+    $scope.$watch("to_complete",function(oldval,newval){
+      $scope.renderPrograms($scope.filterationModel);
+    })
+    $scope.$watch("from_quality",function(oldval,newval){
+      $scope.renderPrograms($scope.filterationModel);
+    })
+    $scope.$watch("to_quality",function(oldval,newval){
+      $scope.renderPrograms($scope.filterationModel);
+    })
+    $scope.$watch("importance",function(oldval,newval){
       $scope.renderPrograms($scope.filterationModel);
     })
 });

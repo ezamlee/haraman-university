@@ -157,7 +157,7 @@
                                             <option value="5"> متأخر</option>
                                             <option value="6"> ملغى</option>
                                             <option value="7"> منتهي</option>
-                                            <option value="7"> تعرف بنسب الانجاز </option>
+                                            <option value="8"> تعرف بنسب الانجاز </option>
                                         </select>
                                     </div>
                                 </div>
@@ -165,14 +165,14 @@
                                     <div class="form-group">
                                         <label> نسبه الإنجاز </label>
                                         <br><label>من</label>
-                                        <input type="number" name="select" class="form-control" ng-disabled="(currentState != 7)" min="0" max="100" ng-model="from_complete" ng-change="validateMinMax('from_complete',from_complete)">
+                                        <input type="number" name="select" class="form-control" ng-disabled="(currentState != 8)" min="0" max="100" ng-model="from_complete" ng-change="validateMinMax('from_complete',from_complete)">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label style="color:white">-</label>
                                         <br><label>إلى</label>
-                                        <input type="number" name="select" class="form-control" ng-disabled="(currentState != 7)" min="0" max="100" ng-model="to_complete" ng-change="validateMinMax('to_complete',to_complete)">
+                                        <input type="number" name="select" class="form-control" ng-disabled="(currentState != 8)" min="0" max="100" ng-model="to_complete" ng-change="validateMinMax('to_complete',to_complete)">
                                     </div>
                                 </div>
 
@@ -181,8 +181,9 @@
                                           <label>الحجم / الأهمية</label>
                                           <label style="color:white;padding-bottom:6px">-</label><br><br>
                                           <select name="select" class="form-control" ng-model="importance">
-                                            <option value="60"> كبير</option>
-                                            <option value="40"> متوسط </option>
+                                            <option value="0"> الكل</option>
+                                            <option value="100"> كبير</option>
+                                            <option value="60"> متوسط </option>
                                             <option value="20"> صغير </option>
                                           </select>
                                       </div>
@@ -249,7 +250,7 @@
                                             </div>
 
                                         </div>
-                                        
+
                                         <div class="text-right">
                                             <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterProgramEntity()"></i>
                                         </div>
