@@ -50,7 +50,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
     $scope.renderEntities = function () {
         user.getEntities().then(function (entities) {
             $scope.associations = entities;
-
             if (entities) {
                 $scope.flatEntities = {};
                 for (var et in entities) {
@@ -123,6 +122,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                 $scope.fourthLevelKey = $scope.entitiesModel.fourthLevel;
                 break;
         }
+        console.log("$scope.filterationModel", $scope.filterationModel);
         $scope.updateFilterationModel();
         $scope.renderPrograms($scope.filterationModel);
 
@@ -632,6 +632,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                     text: 'إضافة',
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
+                        console.log("selectedEntitiesArray", $scope.selectedEntitiesArray)
                         if ($scope.entityl1 != undefined && $scope.entityl1 != '') {
                             $timeout(function () {
                                 // var newEntityObject = {};
@@ -683,8 +684,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                             $ngConfirm('يجب اختيار المستوى الأول');
                             return false;
                         }
-
-
                     }
                 },
                 cancel: {
@@ -707,7 +706,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                         $timeout(function () {
                             if (type == "firstLevel") {
                                 delete $scope.selectedEntitiesArray[key1];
-
                             }
                             else if (type == "secondLevel") {
                                 delete $scope.selectedEntitiesArray[key1][key2];
@@ -722,7 +720,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                             $log.debug($scope.selectedEntitiesArray);
                             $scope.$apply();
                         });
-
                     }
                 },
                 cancel: {
@@ -737,6 +734,165 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
     };
 
     // start team modal "added by heba"
+
+
+    $scope.filterTeamArr = [];
+    $scope.filterUsingTeam = function (user) {
+        $.confirm({
+            title: '',
+            content: 'اختيار لﻷشخاص ذوي العلاقة',
+            buttons: {
+                add: {
+                    text: 'اختيار',
+                    action: function () {
+                        $timeout(function () {
+                            $scope.filterTeamArr.push(user);
+                            $scope.programs = $scope.programs.filter(prog => prog["teamInt"].indexOf(user._id) > -1 || prog["teamExt"].indexOf(user._id) > -1 );
+                            $log.debug("team arr");
+                            $log.debug($scope.filterTeamArr);
+                            $scope.$apply();
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    action: function () {
+                        console.log("Cancelled");
+                    }
+                }
+            }
+        });
+
+    };
+    $scope.deleteTeamMember = function (index) {
+        $.confirm({
+            title: '',
+            content: 'هل ترغب بحذف العضو من هذه القائمة؟',
+            buttons: {
+                confirm: {
+                    text: 'حذف',
+                    action: function () {
+                        $timeout(function () {
+                            $scope.filterTeamArr.splice(index, 1);
+                            if ($scope.filterTeamArr.length > 0) {
+                                var x = [];
+                                for (let i in $scope.filterTeamArr) {
+                                    $scope.renderPrograms();
+                                    x.push(...$scope.programs.filter(prog => prog["teamInt"].indexOf($scope.filterTeamArr[i]._id) > -1 || prog["teamExt"].indexOf($scope.filterTeamArr[i]._id) > -1 ));
+                                    $scope.programs = x;
+                                }
+                            }else{
+                                console.log("else")
+                                $scope.renderPrograms();
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    action: function () {
+                        console.log("Cancelled");
+                    }
+                }
+
+            }
+        });
+    };
+    $scope.filterProgramTeam = function () {
+        $ngConfirm({
+            title: '',
+            contentUrl: 'filter-program-team-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                add: {
+                    text: 'تم',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+                    }
+                }
+            }
+        });
+    };
+
+    $scope.filterProgramEntity = function () {
+        $ngConfirm({
+            title: '',
+            contentUrl: 'filter-program-entity-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                add: {
+                    text: 'تم',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+                        //$scope.filterationModel
+                        // console.log("$scope.filterationModel['entities']['$elemMatch'].l1", $scope.filterationModel["entities"]["$elemMatch"].l1)
+                        // console.log("$scope.selectedEntitiesArray", $scope.selectedEntitiesArray);
+                        // console.log("$scope.flatEntities", $scope.flatEntities)
+                        // if ($scope.filterationModel["entities"]["$elemMatch"].l1 != undefined && $scope.filterationModel["entities"]["$elemMatch"].l1 != '') {
+                        //     $timeout(function () {
+                        //         // var newEntityObject = {};
+                        //       //  debugger;
+                        //         if (!($scope.filterationModel["entities"]["$elemMatch"].l1 in $scope.selectedEntitiesArray)) {
+                        //             $scope.selectedEntitiesArray[$scope.filterationModel["entities"]["$elemMatch"].l1] = null;
+                        //         }
+                        //         if ($scope.filterationModel["entities"]["$elemMatch"].l2 != undefined && $scope.filterationModel["entities"]["$elemMatch"].l2 != '') {
+                        //             var secondLevel = $scope.selectedEntitiesArray[$scope.filterationModel["entities"]["$elemMatch"].l1];
+                        //             if (secondLevel == null || (!($scope.filterationModel["entities"]["$elemMatch"].l2 in secondLevel))) {
+                        //                 if (secondLevel == null) {
+                        //                     secondLevel = {};
+                        //                 }
+                        //                 secondLevel[$scope.filterationModel["entities"]["$elemMatch"].l2] = null;
+                        //             }
+
+                        //             if ($scope.filterationModel["entities"]["$elemMatch"].l3 != undefined && $scope.filterationModel["entities"]["$elemMatch"].l3 != '') {
+                        //                 var thirdLevel = secondLevel[$scope.filterationModel["entities"]["$elemMatch"].l2];
+                        //                 if (thirdLevel == null || (!($scope.filterationModel["entities"]["$elemMatch"].l3 in thirdLevel))) {
+                        //                     if (thirdLevel == null) {
+                        //                         thirdLevel = {};
+                        //                     }
+                        //                     thirdLevel[$scope.filterationModel["entities"]["$elemMatch"].l3] = null;
+                        //                 }
+
+                        //                 if ($scope.filterationModel["entities"]["$elemMatch"].l4 != undefined && $scope.filterationModel["entities"]["$elemMatch"].l4 != '') {
+                        //                     var fourthLevel = thirdLevel[$scope.filterationModel["entities"]["$elemMatch"].l3];
+                        //                     if (fourthLevel == null || (!($scope.filterationModel["entities"]["$elemMatch"].l4 in fourthLevel))) {
+                        //                         if (fourthLevel == null) {
+                        //                             fourthLevel = {};
+                        //                         }
+                        //                         fourthLevel[$scope.filterationModel["entities"]["$elemMatch"].l4] = null;
+                        //                     }
+
+                        //                     thirdLevel[$scope.filterationModel["entities"]["$elemMatch"].l3] = fourthLevel;
+
+                        //                 }
+                        //                 secondLevel[$scope.filterationModel["entities"]["$elemMatch"].l2] = thirdLevel;
+
+                        //             }
+                        //             $scope.selectedEntitiesArray[$scope.filterationModel["entities"]["$elemMatch"].l1] = secondLevel;
+                        //         }
+                        //         $log.debug("Entities object after adding");
+                        //         $log.debug($scope.selectedEntitiesArray);
+                        //         $scope.$apply();
+                        //     });
+                        // }
+                        // else {
+                        //     $ngConfirm('يجب اختيار المستوى الأول');
+                        //     return false;
+                        // }
+                    }
+                },
+                // cancel: {
+                //     text: 'إغلاق',
+                //     btnClass: 'btn-red',
+                //     action: function (scope, button) {
+                //     }
+                // }
+            }
+        });
+    };
+
     $scope.addTeamToProgram = function () {
         $ngConfirm({
             title: 'إضافة فريق العمل',

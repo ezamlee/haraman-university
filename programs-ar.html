@@ -222,9 +222,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>اﻷشخاص ذوي العلاقة</label>
-                                        <textarea rows="3" class="form-control"></textarea>
+                                        <select multiple="multiple" class="form-control" style="height: 214px">
+                                            <option ng-repeat="user in filterTeamArr track by $index" ng-click="deleteTeamMember($index)">{{user.name}}</option>
+                                        </select>
                                         <div class="text-right">
-                                            <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true"></i>
+                                            <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterProgramTeam()"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -232,8 +234,9 @@
                                     <div class="form-group">
                                         <label>الجهات ذات العلاقة</label>
                                         <textarea rows="3" class="form-control"></textarea>
+                                        
                                         <div class="text-right">
-                                            <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true"></i>
+                                            <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterProgramEntity()"></i>
                                         </div>
                                     </div>
                                 </div>

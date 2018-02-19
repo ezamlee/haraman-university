@@ -884,6 +884,71 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
     };
 
     // start team modal "added by heba"
+    $scope.filterTeamArr = [];
+    $scope.filterUsingTeam = function (user) {
+        $.confirm({
+            title: '',
+            content: 'اختيار لﻷشخاص ذوي العلاقة',
+            buttons: {
+                add: {
+                    text: 'اختيار',
+                    action: function () {
+                        $timeout(function () {
+                            $scope.filterTeamArr.push(user);
+                            $scope.projects = $scope.projects.filter(prog => prog["teamInt"].indexOf(user._id) > -1 || prog["teamExt"].indexOf(user._id) > -1 );
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    action: function () {
+                        console.log("Cancelled");
+                    }
+                }
+            }
+        });
+
+    };
+    $scope.deleteTeamMember = function (index) {
+        $.confirm({
+            title: '',
+            content: 'هل ترغب بحذف العضو من هذه القائمة؟',
+            buttons: {
+                confirm: {
+                    text: 'حذف',
+                    action: function () {
+                        $timeout(function () {
+                            $scope.filterTeamArr.splice(index, 1);
+                            $scope.renderProjects();
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    action: function () {
+                        console.log("Cancelled");
+                    }
+                }
+
+            }
+        });
+    };
+    $scope.filterProjectTeam = function () {
+        $ngConfirm({
+            title: '',
+            contentUrl: 'filter-project-team-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                add: {
+                    text: 'تم',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+                    }
+                }
+            }
+        });
+    };
     $scope.addTeamToProject = function () {
         $ngConfirm({
             title: 'إضافة فريق العمل',
