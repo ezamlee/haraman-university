@@ -1,0 +1,51 @@
+<div class="row">
+	<div class="col-md-6">
+        <div class="form-group">
+            <label> المستوى الأول </label>
+            <select name="select" class="form-control" ng-change="onAssociationSelected('level1')" ng-model="entitiesModel.firstLevel">
+                <option value="">جميع الجهات</option>
+                <option value="{{$index}}" ng-repeat="association in associations">
+                    {{association.name}}
+                </option>
+
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label> المستوى الثاني </label>
+            <select name="select" class="form-control" ng-model="entitiesModel.secondLevel" ng-change="onAssociationSelected('level2')"
+                ng-disabled="disableSecondLevel">
+                <option value="">جميع الجهات</option>
+                <option value="{{key}}" ng-repeat="(key, value) in selectedFirstLevelObject.children">
+                    {{value.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label> المستوى الثالث </label>
+            <select name="select" class="form-control" ng-model="entitiesModel.thirdLevel" ng-change="onAssociationSelected('level3')"
+                ng-disabled="disablethirdLevel">
+                <option value=""> جميع الجهات</option>
+                <option value="{{key}}" ng-repeat="(key, value) in selectedSecondLevelObject.children">
+                    {{value.name}}
+                </option>
+
+            </select>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label> المستوى الرابع </label>
+            <select name="select" class="form-control" ng-model="entitiesModel.fourthLevel" ng-change="onAssociationSelected('level4')"
+                ng-disabled="disableFourthLevel">
+                <option value=""> جميع الجهات</option>
+                <option value="{{key}}" ng-repeat="(key, value) in selectedThirdLevelObject.children">{{value.name}}
+                </option>
+
+            </select>
+        </div>
+    </div>
+</div>

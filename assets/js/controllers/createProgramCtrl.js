@@ -50,7 +50,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
     $scope.renderEntities = function () {
         user.getEntities().then(function (entities) {
             $scope.associations = entities;
-
             if (entities) {
                 $scope.flatEntities = {};
                 for (var et in entities) {
@@ -80,14 +79,16 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
     };
     $scope.renderEntities();
     $scope.onAssociationSelected = function (entityLevel) {
-
+        console.log("$scope.associations", $scope.associations)
         switch (entityLevel) {
             case 'level1':
                 $scope.selectedFirstLevelObject = $scope.associations[parseInt($scope.entitiesModel.firstLevel)];
+                console.log("$scope.selectedFirstLevelObject", $scope.selectedFirstLevelObject)
                 $scope.entitiesModel.secondLevel = '';
                 $scope.entitiesModel.thirdLevel = '';
                 $scope.entitiesModel.fourthLevel = '';
                 if ($scope.entitiesModel.firstLevel === "") {
+                    console.log("$scope.entitiesModel.firstLevel", $scope.entitiesModel.firstLevel)
                     $scope.disableSecondLevel = true;
                     $scope.disablethirdLevel = true;
                     $scope.disableFourthLevel = true;
@@ -99,6 +100,8 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                 break;
             case 'level2':
                 $scope.selectedSecondLevelObject = $scope.selectedFirstLevelObject.children[$scope.entitiesModel.secondLevel];
+                console.log("$scope.selectedSecondLevelObject", $scope.selectedSecondLevelObject)
+                
                 $scope.entitiesModel.thirdLevel = '';
                 $scope.entitiesModel.fourthLevel = '';
                 if ($scope.entitiesModel.secondLevel === "") {
@@ -121,8 +124,13 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                 break;
             case 'level4':
                 $scope.fourthLevelKey = $scope.entitiesModel.fourthLevel;
+                $scope.selectedForthLevelObject = $scope.selectedFirstLevelObject.children[$scope.entitiesModel.secondLevel].children[$scope.entitiesModel.thirdLevel].children[$scope.entitiesModel.fourthLevel];
+
+                console.log("$scope.fourthLevelKey", $scope.fourthLevelKey)
+
                 break;
         }
+        console.log("$scope.filterationModel", $scope.filterationModel);
         $scope.updateFilterationModel();
         $scope.renderPrograms($scope.filterationModel);
 
@@ -662,6 +670,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                     text: 'إضافة',
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
+                        console.log("selectedEntitiesArray", $scope.selectedEntitiesArray)
                         if ($scope.entityl1 != undefined && $scope.entityl1 != '') {
                             $timeout(function () {
                                 // var newEntityObject = {};
@@ -713,8 +722,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                             $ngConfirm('يجب اختيار المستوى الأول');
                             return false;
                         }
-
-
                     }
                 },
                 cancel: {
@@ -737,7 +744,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                         $timeout(function () {
                             if (type == "firstLevel") {
                                 delete $scope.selectedEntitiesArray[key1];
-
                             }
                             else if (type == "secondLevel") {
                                 delete $scope.selectedEntitiesArray[key1][key2];
@@ -752,7 +758,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                             $log.debug($scope.selectedEntitiesArray);
                             $scope.$apply();
                         });
-
                     }
                 },
                 cancel: {
@@ -767,6 +772,111 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
     };
 
     // start team modal "added by heba"
+
+
+    $scope.filterTeamArr = [];
+    $scope.filterUsingTeam = function (user) {
+        $.confirm({
+            title: '',
+            content: 'اختيار لﻷشخاص ذوي العلاقة',
+            buttons: {
+                add: {
+                    text: 'اختيار',
+                    action: function () {
+                        $timeout(function () {
+                            $scope.filterTeamArr.push(user);
+                            $scope.programs = $scope.programs.filter(prog => prog["teamInt"].indexOf(user._id) > -1 || prog["teamExt"].indexOf(user._id) > -1 );
+                            $log.debug("team arr");
+                            $log.debug($scope.filterTeamArr);
+                            $scope.$apply();
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    action: function () {
+                        console.log("Cancelled");
+                    }
+                }
+            }
+        });
+
+    };
+    $scope.deleteTeamMember = function (index) {
+        $.confirm({
+            title: '',
+            content: 'هل ترغب بحذف العضو من هذه القائمة؟',
+            buttons: {
+                confirm: {
+                    text: 'حذف',
+                    action: function () {
+                        $timeout(function () {
+                            $scope.filterTeamArr.splice(index, 1);
+                            if ($scope.filterTeamArr.length > 0) {
+                                var x = [];
+                                for (let i in $scope.filterTeamArr) {
+                                    $scope.renderPrograms();
+                                    x.push(...$scope.programs.filter(prog => prog["teamInt"].indexOf($scope.filterTeamArr[i]._id) > -1 || prog["teamExt"].indexOf($scope.filterTeamArr[i]._id) > -1 ));
+                                    $scope.programs = x;
+                                }
+                            }else{
+                                console.log("else")
+                                $scope.renderPrograms();
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    action: function () {
+                        console.log("Cancelled");
+                    }
+                }
+
+            }
+        });
+    };
+    $scope.filterProgramTeam = function () {
+        $ngConfirm({
+            title: '',
+            contentUrl: 'filter-program-team-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                add: {
+                    text: 'تم',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+                    }
+                }
+            }
+        });
+    };
+
+    $scope.filterProgramEntity = function () {
+        $ngConfirm({
+            title: '',
+            contentUrl: 'filter-program-entity-template.html',
+            scope: $scope,
+            rtl: true,
+            buttons: {
+                add: {
+                    text: 'تم',
+                    btnClass: 'btn-blue',
+                    action: function (scope, button) {
+                        console.log("$scope.entitiesModel", $scope.entitiesModel)
+                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {                            
+                        }
+                        else {
+                            $ngConfirm('يجب اختيار المستوى الأول');
+                            return false;
+                        }
+                    }
+                }
+            }
+        });
+    };
+
     $scope.addTeamToProgram = function () {
         $ngConfirm({
             title: 'إضافة فريق العمل',

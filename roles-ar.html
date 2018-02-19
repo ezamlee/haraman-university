@@ -57,69 +57,12 @@
                             </div>
                           </div>
                         </div>
-                        <!-- List of level of association -->
-                        <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse"  href="#collapse2">
-                            <h4 class="panel-title">
-                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> المستويات </a>
-                            </h4>
-                          </div>
-                          <div id="collapse2" class="panel-collapse collapse">
-                            <div class="panel-body">
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> المستوى الأول </label>
-                                      <select name="select" class="form-control" ng-change="onAssociationSelected('level1')" ng-model="entitiesModel.firstLevel">
-                                          <option value="">جميع الجهات</option>
-                                          <option value="{{$index}}" ng-repeat="association in associations">
-                                              {{association.name}}
-                                          </option>
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> المستوى الثاني </label>
-                                      <select name="select" class="form-control" ng-model="entitiesModel.secondLevel" ng-change="onAssociationSelected('level2')"
-                                          ng-disabled="disableSecondLevel">
-                                          <option value="">جميع الجهات</option>
-                                          <option value="{{key}}" ng-repeat="(key, value) in selectedFirstLevelObject.children">
-                                              {{value.name}}
-                                          </option>
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> المستوى الثالث </label>
-                                      <select name="select" class="form-control" ng-model="entitiesModel.thirdLevel" ng-change="onAssociationSelected('level3')"
-                                          ng-disabled="disablethirdLevel">
-                                          <option value=""> جميع الجهات</option>
-                                          <option value="{{key}}" ng-repeat="(key, value) in selectedSecondLevelObject.children">
-                                              {{value.name}}
-                                          </option>
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> المستوى الرابع </label>
-                                      <select name="select" class="form-control" ng-model="entitiesModel.fourthLevel" ng-change="onAssociationSelected('level4')"
-                                          ng-disabled="disableFourthLevel">
-                                          <option value=""> جميع الجهات</option>
-                                          <option value="{{key}}" ng-repeat="(key, value) in selectedThirdLevelObject.children">{{value.name}}
-                                          </option>
-                                      </select>
-                                  </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        
                         <!-- List of filters -->
                         <div class="panel panel-default">
                           <div class="panel-heading" data-toggle="collapse"  href="#collapse3">
                             <h4 class="panel-title">
-                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الفلتره </a>
+                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷهداف </a>
                             </h4>
                           </div>
 
@@ -147,6 +90,18 @@
                                       </select>
                                   </div>
                               </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading" data-toggle="collapse"  href="#collapse13">
+                            <h4 class="panel-title">
+                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> البرامج </a>
+                            </h4>
+                          </div>
+
+                          <div id="collapse13" class="panel-collapse collapse">
+                            <div class="panel-body">
                               <div class="col-md-12">
                                   <div class="form-group">
                                       <label> البرنامج </label>
@@ -157,6 +112,18 @@
                                       </select>
                                   </div>
                               </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading" data-toggle="collapse"  href="#collapse14">
+                            <h4 class="panel-title">
+                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> المشاريع </a>
+                            </h4>
+                          </div>
+
+                          <div id="collapse14" class="panel-collapse collapse">
+                            <div class="panel-body">
                               <div class="col-md-12">
                                   <div class="form-group">
                                       <label> المشروع </label>
@@ -167,6 +134,18 @@
                                       </select>
                                   </div>
                               </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading" data-toggle="collapse"  href="#collapse15">
+                            <h4 class="panel-title">
+                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> المراحل </a>
+                            </h4>
+                          </div>
+
+                          <div id="collapse15" class="panel-collapse collapse">
+                            <div class="panel-body">
                               <div class="col-md-12">
                                   <div class="form-group">
                                       <label> المرحلة </label>
@@ -237,6 +216,111 @@
                             </div>
                           </div>
                         </div>
+                        <!-- List of level of association -->
+                        <!-- <div class="panel panel-default">
+                          <div class="panel-heading" data-toggle="collapse"  href="#collapse2">
+                            <h4 class="panel-title">
+                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> المستويات </a>
+                            </h4>
+                          </div>
+                          <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label> المستوى الأول </label>
+                                      <select name="select" class="form-control" ng-change="onAssociationSelected('level1')" ng-model="entitiesModel.firstLevel">
+                                          <option value="">جميع الجهات</option>
+                                          <option value="{{$index}}" ng-repeat="association in associations">
+                                              {{association.name}}
+                                          </option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label> المستوى الثاني </label>
+                                      <select name="select" class="form-control" ng-model="entitiesModel.secondLevel" ng-change="onAssociationSelected('level2')"
+                                          ng-disabled="disableSecondLevel">
+                                          <option value="">جميع الجهات</option>
+                                          <option value="{{key}}" ng-repeat="(key, value) in selectedFirstLevelObject.children">
+                                              {{value.name}}
+                                          </option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label> المستوى الثالث </label>
+                                      <select name="select" class="form-control" ng-model="entitiesModel.thirdLevel" ng-change="onAssociationSelected('level3')"
+                                          ng-disabled="disablethirdLevel">
+                                          <option value=""> جميع الجهات</option>
+                                          <option value="{{key}}" ng-repeat="(key, value) in selectedSecondLevelObject.children">
+                                              {{value.name}}
+                                          </option>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group">
+                                      <label> المستوى الرابع </label>
+                                      <select name="select" class="form-control" ng-model="entitiesModel.fourthLevel" ng-change="onAssociationSelected('level4')"
+                                          ng-disabled="disableFourthLevel">
+                                          <option value=""> جميع الجهات</option>
+                                          <option value="{{key}}" ng-repeat="(key, value) in selectedThirdLevelObject.children">{{value.name}}
+                                          </option>
+                                      </select>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                        <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse"  href="#collapse2">
+                            <h4 class="panel-title">
+                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷشخاص والجهات ذوي العلاقة </a>
+                            </h4>
+                        </div>
+
+                        <div id="collapse2" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>اﻷشخاص ذوي العلاقة</label>
+                                        <select multiple="multiple" class="form-control" style="height: 214px">
+                                            <option ng-repeat="user in filterTeamArr track by $index" ng-click="deleteTeamMember($index)">{{user.name}}</option>
+                                        </select>
+                                        <div class="text-right">
+                                            <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterTaskTeam()"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>الجهات ذات العلاقة</label>
+                                        <div class="form-control clearborder" style="height: 150px;padding: 7px; overflow: auto;">
+                                          <div ng-if="entitiesModel.firstLevel">
+                                              <p ng-if="entitiesModel.firstLevel== 0" style="font-weight: bold;">{{selectedFirstLevelObject.name}}</p>
+                                          </div>
+                                          <div ng-if="entitiesModel.secondLevel">
+                                              <p>&rsaquo;{{selectedSecondLevelObject.name}}</p>
+                                          </div>
+                                          <div ng-if="entitiesModel.thirdLevel">
+                                              <p>&rsaquo;&rsaquo;{{selectedThirdLevelObject.name}}</p>
+                                          </div>
+                                          <div ng-if="entitiesModel.fourthLevel">
+                                              <p>&rsaquo;&rsaquo;&rsaquo;{{selectedForthLevelObject.name}}</p>
+                                          </div>
+
+                                        </div>
+                                        
+                                        <div class="text-right">
+                                            <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterTaskEntity()"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </form>
@@ -514,7 +598,6 @@
                                                   </div>
 
                                               </div>
-
                                           </div>
                                           <div class="text-right" style="margin-top: 8px">
                                               <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="addEntityToProgram()"></i>

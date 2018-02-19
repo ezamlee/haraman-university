@@ -346,18 +346,34 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>اﻷشخاص ذوي العلاقة</label>
-                                            <textarea rows="3" class="form-control"></textarea>
+                                            <select multiple="multiple" class="form-control" style="height: 214px">
+                                              <option ng-repeat="user in filterTeamArr track by $index" ng-click="deleteTeamMember($index)">{{user.name}}</option>
+                                            </select>
                                             <div class="text-right">
-                                                <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true"></i>
+                                                <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterProjectTeam()"></i>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>الجهات ذات العلاقة</label>
-                                            <textarea rows="3" class="form-control"></textarea>
+                                            <div class="form-control clearborder" style="height: 150px;padding: 7px; overflow: auto;">
+                                              <div ng-if="entitiesModel.firstLevel">
+                                                  <p ng-if="entitiesModel.firstLevel== 0" style="font-weight: bold;">{{selectedFirstLevelObject.name}}</p>
+                                              </div>
+                                              <div ng-if="entitiesModel.secondLevel">
+                                                  <p>&rsaquo;{{selectedSecondLevelObject.name}}</p>
+                                              </div>
+                                              <div ng-if="entitiesModel.thirdLevel">
+                                                  <p>&rsaquo;&rsaquo;{{selectedThirdLevelObject.name}}</p>
+                                              </div>
+                                              <div ng-if="entitiesModel.fourthLevel">
+                                                  <p>&rsaquo;&rsaquo;&rsaquo;{{selectedForthLevelObject.name}}</p>
+                                              </div>
+
+                                            </div>
                                             <div class="text-right">
-                                                <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true"></i>
+                                                <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterProjectEntity()"></i>
                                             </div>
                                         </div>
                                     </div>
