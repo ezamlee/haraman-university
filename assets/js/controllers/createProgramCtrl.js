@@ -1187,4 +1187,28 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
     $scope.$watch("importance",function(oldval,newval){
       $scope.renderPrograms($scope.filterationModel);
     })
+    $scope.$watch("isAuto",function(oldval,newval){
+      if($scope.isAuto){
+        console.log("in if")
+        if($scope.programForm){
+          console.log("in if 2")
+          if(    isNaN(new Date($scope.programForm.dateActualStart).getTime())
+              || isNaN(new Date($scope.programForm.datePlannedEnd).getTime())){
+            console.log("in if 3")
+            $scope.programForm.status = "8";
+          }
+          else if(parseFloat($scope.programForm.completed) / parseFloat($scope.passed) >= 0.85){
+            console.log("in elseif 1")
+            $scope.programForm.status = "4";
+          }else if(parseFloat($scope.programForm.completed) / parseFloat($scope.passed) < 0.85){
+            console.log("in elseif 2")
+            $scope.programForm.status = "5";
+          }
+        }
+      }else{
+
+      }
+      console.log($scope.programForm.status);
+    })
+
 });
