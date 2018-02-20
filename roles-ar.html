@@ -1,20 +1,4 @@
-﻿<!-- Content area -->
-<!--
-  <div class="panel panel-default">
-    <div class="panel-heading" data-toggle="collapse"  href="#collapse#">
-      <h4 class="panel-title">
-        <a > <i class="fa fa-arrow-up" aria-hidden="true"></i> الفلتره </a>
-      </h4>
-    </div>
-
-    <div id="collapse#" class="panel-collapse collapse">
-      <div class="panel-body">
-
-      </div>
-    </div>
-  </div>
--->
-<div class="content">
+﻿<div class="content">
     <div class="">
         <div class="page-header-content">
             <div class="page-title">
@@ -38,12 +22,12 @@
                               <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> المهمة </a>
                             </h4>
                           </div>
-                          <div id="collapse1" class="panel-collapse collapse">
+                          <div id="collapse1" class="panel-collapse">
                             <div class="panel-body">
                               <div class="col-md-12">
                                   <div class="form-group">
 
-                                      <select multiple="multiple" class="form-control">
+                                      <select multiple="multiple" class="form-control clearborder">
                                           <option ng-repeat="task in tasks" ng-click="onTaskClicked(task)"> {{task.name}} </option>
                                       </select>
                                   </div>
@@ -57,7 +41,7 @@
                             </div>
                           </div>
                         </div>
-                        
+
                         <!-- List of filters -->
                         <div class="panel panel-default">
                           <div class="panel-heading" data-toggle="collapse"  href="#collapse3">
@@ -160,62 +144,82 @@
                         </div>
                         <!-- List of Importance and Achievements -->
                         <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse"  href="#collapse4">
-                            <h4 class="panel-title">
-                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الاهميه ،الإنجاز و الجوده </a>
-                            </h4>
-                          </div>
-
-                          <div id="collapse4" class="panel-collapse collapse">
-                            <div class="panel-body">
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> الحجم/اﻷهمية (بالنسبة للمشروع)</label>
-                                      <br/><br/>
-                                      <input ng-model="filterWt" type="number" class="form-control" step="5" min="0" max="100">
-                                  </div>
-                              </div>
-                              <div class="col-md-3">
-                                  <label> نسبه الإنجاز </label>
-                                  <div class="form-group">
-                                      <span>من</span><input ng-model="filterCompleteFrom" type="number" class="form-control" step="5" min="0" max="100">
-                                  </div>
-                              </div>
-                              <div class="col-md-3">
-                                  <label> <br/> </label>
-                                  <div class="form-group">
-                                      <span> إلى</span><input ng-model="filterCompleteTo" type="number" class="form-control" step="5" min="0" max="100">
-                                  </div>
-                              </div>
-
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> الحاله الرهانه </label>
-                                      <br/><br/>
-                                      <select name="select" class="form-control" ng-change="fn(item)" ng-model="value">
-                                          <option value="" ng-disabled>إختر الحاله </option>
-                                          <option value="{{$index}}" ng-repeat="item in [' لم تبدء بعد',' تحت التنفيذ تبعاً للمخطط ',' تحت التنفيذ وتسبق المخطط ','تحت التنفيذ ولكن متأخرة','تحت الدراسة والاعتماد ','تحت الدراسة والاعتماد','لم تبدء بعدت',' متوقفة مؤقتاً ',' ملغاه ','منتهية ']">
-                                              {{item}}
-                                          </option>
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="col-md-3">
-                                  <label> نسبه الجوده </label>
-                                  <div class="form-group">
-                                      <span>من</span><input ng-model="filterQualityFrom" type="number" class="form-control" step="5" min="0" max="100">
-                                  </div>
-                              </div>
-                              <div class="col-md-3">
-                                  <label> <br/> </label>
-                                  <div class="form-group">
-                                      <span> إلى</span><input ng-model="filterQualityTo" type="number" class="form-control" step="5" min="0" max="100">
-                                  </div>
-                              </div>
-
+                            <div class="panel-heading" data-toggle="collapse"  href="#collapse4">
+                                <h4 class="panel-title">
+                                    <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الاهميه ،الإنجاز و الجوده </a>
+                                </h4>
                             </div>
-                          </div>
-                        </div>
+
+                            <div id="collapse4" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label > الحاله الرهانه </label>
+                                            <br><span style="color:white">-</span><br>
+                                            <select style="margin-top:6px" name="select" class="form-control" ng-model="currentState">
+                                                <option value="0"> الكل </option>
+                                                <option value="1"> تحت الدراسة والاعتماد </option>
+                                                <option value="2"> لم يبدء بعد </option>
+                                                <option value="3"> متوقف مؤقتاً</option>
+                                                <option value="4"> منتظم </option>
+                                                <option value="5"> متأخر</option>
+                                                <option value="6"> ملغى</option>
+                                                <option value="7"> منتهي</option>
+                                                <option value="8"> تعرف بنسب الانجاز </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label> نسبه الإنجاز </label>
+                                            <br><label>من</label>
+                                            <input type="number" name="select" class="form-control" ng-disabled="(currentState != 8)" min="0" max="100" ng-model="from_complete" ng-change="validateMinMax('from_complete',from_complete)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label style="color:white">-</label>
+                                            <br><label>إلى</label>
+                                            <input type="number" name="select" class="form-control" ng-disabled="(currentState != 8)" min="0" max="100" ng-model="to_complete" ng-change="validateMinMax('to_complete',to_complete)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                          <div class="form-group">
+                                              <label>الحجم / الأهمية</label>
+                                              <label style="color:white;padding-bottom:6px">-</label><br><br>
+                                              <select name="select" class="form-control" ng-model="importance">
+                                                <option value="0"> الكل</option>
+                                                <option value="100"> كبير</option>
+                                                <option value="60"> متوسط </option>
+                                                <option value="20"> صغير </option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <div class="form-group">
+                                              <label> نسبه الجوده </label>
+                                              <br><label>من</label>
+                                              <input type="number" name="select" class="form-control"
+                                               min="0" max="100"
+                                              ng-model="from_quality"
+                                              ng-change="validateMinMax('from_quality',from_quality)">
+                                          </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                          <div class="form-group">
+                                              <label style="color:white">-</label>
+                                              <br><label>إلى</label>
+                                              <input type="number" name="select" class="form-control"
+                                               min="0" max="100"
+                                              ng-model="to_quality"
+                                              ng-change="validateMinMax('to_quality',to_quality)">
+                                          </div>
+                                      </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
                         <!-- List of level of association -->
                         <!-- <div class="panel panel-default">
                           <div class="panel-heading" data-toggle="collapse"  href="#collapse2">
@@ -312,7 +316,7 @@
                                           </div>
 
                                         </div>
-                                        
+
                                         <div class="text-right">
                                             <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterTaskEntity()"></i>
                                         </div>
@@ -330,23 +334,7 @@
                 <div class="panel panel-flat">
                     <div class="panel-body height-70-vh">
 
-                      <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse"  href="#collapse5">
-                          <h4 class="panel-title">
-                            <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> عنوان مهمة </a>
-                          </h4>
-                        </div>
-
-                        <div id="collapse5" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            <div class="col-md-12">
-                              <div class="form-group">
-                                  <input type="text" class="form-control" placeholder="مهمة " required ng-model="taskObject.name">
-                              </div>
-                          </div>
-                          </div>
-                        </div>
-                      </div>
+                    <input style="outline: none!important;border:0px;font-size:20px;font-weight:600" type="text" class="form-control" placeholder="مهمة جديده" required ng-model="taskObject.name">
 
                       <div class="panel panel-default">
                         <div class="panel-heading" data-toggle="collapse"  href="#collapse6">
@@ -359,21 +347,20 @@
                           <div class="panel-body">
 
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label> حالة المهمة </label>
-                                    <select name="select" class="form-control" ng-model="taskObject.active">
-                                        <option value="" disabled> حالة المهمة </option>
-                                        <option value="true"> نشطة</option>
-                                        <option value="false">تمت</option>
-                                    </select>
-                                </div>
+                              <div class="form-group">
+                                <label> مدير المهمة </label>
+                                <select name="select" class="form-control" ng-model="taskObject.manager">
+                                  <option value="" disabled> مدير المهمة</option>
+                                  <option ng-repeat="user in usersList" value="{{user._id}}">{{user.name}}</option>
+                                </select>
+                              </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label> مدير المهمة </label>
-                                    <select name="select" class="form-control" ng-model="taskObject.manager">
-                                        <option value="" disabled> مدير المهمة</option>
-                                        <option ng-repeat="user in usersList" value="{{user._id}}">{{user.name}}</option>
+                                    <label> مساعد مدير المهمه </label>
+                                    <select name="select" class="form-control" ng-model="taskObject.managerHelp">
+                                      <option value="" disabled>مساعد  مدير المهمة</option>
+                                      <option ng-repeat="user in usersList" value="{{user._id}}">{{user.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -408,7 +395,7 @@
                           <div class="panel-body">
                               <div class="col-md-6">
                                   <div class="form-group">
-                                      <label> الحجم/اﻷهمية (بالنسبة للمشروع) </label>
+                                      <label> الحجم/الأهمية بالنسبة لكامل المشروع </label>
                                       <span><input type="checkbox" ng-model="isDigital">
                                         يعرف رقميا</span>
                                       <select name="select"  ng-model="taskObject.wt" class="form-control" ng-disabled="!isDigital ? false : true">
@@ -421,7 +408,7 @@
                                       <select>
                                   </div>
                                   <div class="form-group">
-                                      <label> الوزن النسبي(من المشروع) </label><br/>
+                                      <label>الوزن النسبي من كامل المشروع </label><br/>
                                       <input class="form-control" type="text" ng-disabled="isDigital ? false : true"  name="" ng-model="taskObject.wt">
                                   </div>
                                   <div class="form-group">
@@ -435,20 +422,18 @@
                                       <input type="text" class="form-control" placeholder="0" required>
                                   </div> -->
                                   <div class="form-group">
-                                      <label> حالة البرنامج </label>
+                                      <label>الحالة الراهنة للمهمة </label>
                                       <span><input type="checkbox" ng-model="isAuto" ng-change="calcAuto()">
                                         يحسب اتوماتيكيا</span>
                                       <select ng-model="taskObject.status" name="select" class="form-control" ng-disabled="!isAuto ? false : true">
-                                          <option value="" ng-disabled="">حالة البرنامج</option>
-                                          <option ng-show="isAuto"  value="1"> لم تبدء بعد</option>
-                                          <option ng-show="isAuto"  value="2"> تحت التنفيذ تبعاً للمخطط </option>
-                                          <option ng-show="isAuto"  value="3"> تحت التنفيذ وتسبق المخطط </option>
-                                          <option ng-show="isAuto"  value="4">تحت التنفيذ ولكن متأخرة </option>
-                                          <option ng-show="isAuto"  value="5">تحت الدراسة والاعتماد </option>
-                                          <option ng-show="!isAuto" value="6"> لم تبدء بعدت </option>
-                                          <option ng-show="!isAuto" value="7"> متوقفة مؤقتاً  </option>
-                                          <option ng-show="!isAuto" value="8"> ملغاه </option>
-                                          <option ng-show="!isAuto" value="9"> منتهية  </option>
+                                        <option value="1"> تحت الدراسة والاعتماد </option>
+                                        <option value="2"> لم يبدء بعد </option>
+                                        <option value="3"> متوقف مؤقتاً</option>
+                                        <option value="4"> منتظم </option>
+                                        <option value="5"> متأخر</option>
+                                        <option value="6"> ملغى</option>
+                                        <option value="7"> منتهي</option>
+                                        <option value="8"> البيانات غير مكتملة</option>
                                       </select>
                                   </div>
                                   <div class="form-group">
@@ -628,7 +613,7 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label> مطالب التنفيذ - الأدوات </label>
+                                    <label>متطلبات التنفيذ </label>
                                     <textarea rows="3" class="form-control" ng-model="taskObject.requirements"></textarea>
                                 </div>
                             </div>
@@ -653,6 +638,25 @@
                           </div>
                         </div>
                       </div>
+
+                      <div class="panel panel-default">
+                        <div class="panel-heading" data-toggle="collapse"  href="#collapse19">
+                          <h4 class="panel-title">
+                            <a > <i class="fa fa-arrow-down" aria-hidden="true"></i>مؤشرات الإنجاز </a>
+                          </h4>
+                        </div>
+
+                        <div id="collapse19" class="panel-collapse collapse">
+                          <div class="panel-body">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="3" class="form-control" ng-model="taskObject.acheive"></textarea>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
                 </div>
             </form>

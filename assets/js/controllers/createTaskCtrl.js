@@ -191,10 +191,82 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
 
     };
     $scope.renderTasks = function (projectId, stageName) {
-        user.getTasks(projectId, stageName).then(function (tasks) {
+        user.getTasks(projectId, stageName).then(function (resolved) {
             $timeout(function () {
                 console.log(tasks);
-                $scope.tasks = tasks;
+                //filter for program status
+                  var freecard = false;
+                  if(!$scope.currentState ||  $scope.currentState == 0 ||  $scope.currentState == 8 )
+                    var freecard = true;
+                  resolved = resolved.filter( data => (data.status && data.status == $scope.currentState ) || freecard ? true : false)
+                //filter for from_complete status
+                  var freecard2 = false;
+                  if(!$scope.from_complete  || parseInt($scope.from_complete) == 0 || $scope.currentState != 8)
+                    var freecard2 = true;
+                  resolved = resolved.filter( data => {
+
+                      return (parseInt(data.completed) >= parseInt($scope.from_complete) ) || freecard2 ? true : false
+                  })
+                //filter for to_complete status
+                  var freecard3 = false;
+                  if(!$scope.to_complete  || parseInt($scope.to_complete) == 0 || $scope.currentState != 8)
+                      var freecard3 = true;
+                  resolved = resolved.filter( data => {
+
+                      return (parseInt(data.completed) <= parseInt($scope.to_complete)) || freecard3 ? true : false
+                  })
+
+                //filter for importance status
+                  resolved = resolved.filter( data => {
+                      console.log(data.wt,$scope.importance)
+                      if($scope.importance == 20){
+                        return (parseInt(data.wt) > 0  && parseInt(data.wt) <= 20)? true : false;
+                      }
+                      else if($scope.importance == 60){
+                        return (parseInt(data.wt) > 20 && parseInt(data.wt) <= 60)? true : false;
+                      }
+                      else if($scope.importance == 100){
+                        return (parseInt(data.wt) > 60 && parseInt(data.wt) <= 100)? true : false;
+                      }else{
+                        return true
+                      }
+                  })
+
+                  //filter for quality
+                  var freecard4 = false;
+                  if(!$scope.from_quality || parseInt($scope.from_quality) == 0 )
+                    var freecard4 = true;
+
+                  resolved = resolved.filter( data => {
+                    console.log("quality data: ",parseInt(data.wt),$scope.from_quality)
+                    if(freecard4){
+                      return true;
+                    }
+                    else if(parseInt(data.quality) >= parseInt($scope.from_quality)){
+                      return true;
+                    }else{
+                      return false;
+                    }
+                  })
+
+                  var freecard5 = false;
+                  if(!$scope.to_quality || parseInt($scope.from_quality) == 0 )
+                    var freecard5 = true;
+
+                  resolved = resolved.filter( data => {
+                    if(freecard5){
+                      return true;
+                    }
+                    else if(parseInt(data.quality) <= parseInt($scope.to_quality)){
+                      return true;
+                    }else{
+                      return false;
+                    }
+                  })
+
+
+
+                $scope.tasks = resolved;
                 $scope.$apply();
             });
         });
@@ -291,6 +363,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         $scope.taskObject.wt = object.wt;
         $scope.taskObject.completed = object.completed;
         $scope.taskObject.quality = object.quality;
+        $scope.taskObject.managerHelp = object.managerHelp;
         $scope.selectedEntitiesArray = {};
         var lvls = object.entities;
 
@@ -327,6 +400,25 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         $log.debug("output entities array");
         $log.debug(o);
         $scope.selectedEntitiesArray = o;
+
+        $scope.taskObject.status = object.status || "8";
+        if(   isNaN(new Date($scope.taskObject.dateActualStart).getTime())
+           || isNaN(new Date($scope.taskObject.datePlannedEnd).getTime())
+          ){
+          $scope.passed = "البيانات غير مكتمل"
+        }
+        else{
+          var today  = new Date().getTime();
+          var start  = new Date($scope.taskObject.dateActualStart).getTime();
+          var end    = new Date($scope.taskObject.datePlannedEnd).getTime();
+          var part   = today - start;
+          var total  = end - start;
+          var passed = Math.round((part / total) * 100)
+          passed = Math.min(passed ,100);
+          $scope.passed = `${passed}`;
+        }
+
+        $scope.taskObject.acheive = object.acheive
     };
     $scope.onTaskClicked = function (task) {
         console.log(task)
@@ -406,6 +498,8 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         submittedForm.kpis = taskObject.kpis ? taskObject.kpis : "";
         submittedForm.stage = taskObject.stage ? taskObject.stage : "";
         submittedForm.project = $scope.projectId ? $scope.projectId : "";
+        submittedForm.acheive = taskObject.acheive;
+        submittedForm.managerHelp = taskObject.managerHelp;
         return submittedForm;
     };
     $scope.editTask = function (taskObject, valid) {
@@ -555,7 +649,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     text: 'تم',
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
-                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {                            
+                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {
                         }
                         else {
                             $ngConfirm('يجب اختيار المستوى الأول');
@@ -1050,5 +1144,52 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         }
       });
     };
+    $scope.validateMinMax=function(val,obj){
+      if(obj  > 100)    $scope[val] =100;
+      else if (obj < 0) $scope[val] =0;
+      if (!$scope[val]) $scope[val] = 0;
+    }
+
+        $scope.$watch("currentState",function(oldval,newval){
+          $scope.renderTasks($scope.projectId,$scope.stageName);
+        })
+        $scope.$watch("from_complete",function(oldval,newval){
+          $scope.renderTasks($scope.projectId,$scope.stageName);
+        })
+        $scope.$watch("to_complete",function(oldval,newval){
+          $scope.renderTasks($scope.projectId,$scope.stageName);
+        })
+        $scope.$watch("from_quality",function(oldval,newval){
+          $scope.renderTasks($scope.projectId,$scope.stageName);
+        })
+        $scope.$watch("to_quality",function(oldval,newval){
+          $scope.renderTasks($scope.projectId,$scope.stageName);
+        })
+        $scope.$watch("importance",function(oldval,newval){
+          $scope.renderTasks($scope.projectId,$scope.stageName);
+        })
+        $scope.$watch("isAuto",function(oldval,newval){
+          if($scope.isAuto){
+            console.log("in if")
+            if($scope.taskObject){
+              console.log("in if 2")
+              if(    isNaN(new Date($scope.taskObject.dateActualStart).getTime())
+                  || isNaN(new Date($scope.taskObject.datePlannedEnd).getTime())){
+                console.log("in if 3")
+                $scope.taskObject.status = "8";
+              }
+              else if(parseFloat($scope.taskObject.completed) / parseFloat($scope.passed) >= 0.85){
+                console.log("in elseif 1")
+                $scope.taskObject.status = "4";
+              }else if(parseFloat($scope.taskObject.completed) / parseFloat($scope.passed) < 0.85){
+                console.log("in elseif 2")
+                $scope.taskObject.status = "5";
+              }
+            }
+          }else{
+
+          }
+          //console.log($scope.programForm.status);
+        })
 
 });

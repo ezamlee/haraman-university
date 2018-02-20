@@ -22,13 +22,13 @@
                                 </h4>
                             </div>
 
-                            <div id="collapse1" class="panel-collapse collapse">
+                            <div id="collapse1" class="panel-collapse">
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <hr>
                                         <div class="form-group">
                                             <label> </label>
-                                            <select multiple="multiple" class="form-control height-45-vh">
+                                            <select multiple="multiple" class="form-control height-45-vh clearborder">
                                                 <option ng-repeat="mainGoal in strategicGoals" ng-click="onStrategicGoalSelected(mainGoal,$index)">
                                                     {{mainGoal.name}}
                                                 </option>
@@ -177,12 +177,12 @@
                                 </h4>
                             </div>
 
-                            <div id="collapse7" class="panel-collapse collapse">
+                            <div id="collapse7" class="panel-collapse">
                                 <div class="panel-body">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label></label>
-                                            <select multiple="multiple" class="form-control height-45-vh">
+                                            <select multiple="multiple" class="form-control height-45-vh clearborder">
                                                 <option ng-repeat="(key, value) in selectedStrategicGoal.subgoals" ng-click="onSecondaryGoalSelected(key,$index,value)">
                                                     {{value.name}}
                                                 </option>
