@@ -154,7 +154,6 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
     $scope.renderPrograms = function (filter) {
         user.getPrograms(filter).then(function (resolved) {
             $timeout(function () {
-                //debugger;
                 $scope.programs = resolved;
                 $scope.$apply();
             });
@@ -164,9 +163,81 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
     $scope.renderPrograms();
     $scope.renderProjects = function (filtrationProgram) {
 
-        user.getProjects(filtrationProgram).then(function (projects) {
+        user.getProjects(filtrationProgram).then(function (resolved) {
             $timeout(function () {
-                $scope.projects = projects;
+
+
+              //filter for program status
+                var freecard = false;
+                if(!$scope.currentState ||  $scope.currentState == 0 ||  $scope.currentState == 8 )
+                  var freecard = true;
+                resolved = resolved.filter( data => (data.status && data.status == $scope.currentState ) || freecard ? true : false)
+              //filter for from_complete status
+                var freecard2 = false;
+                if(!$scope.from_complete  || parseInt($scope.from_complete) == 0 || $scope.currentState != 8)
+                  var freecard2 = true;
+                resolved = resolved.filter( data => {
+
+                    return (parseInt(data.completed) >= parseInt($scope.from_complete) ) || freecard2 ? true : false
+                })
+              //filter for to_complete status
+                var freecard3 = false;
+                if(!$scope.to_complete  || parseInt($scope.to_complete) == 0 || $scope.currentState != 8)
+                    var freecard3 = true;
+                resolved = resolved.filter( data => {
+
+                    return (parseInt(data.completed) <= parseInt($scope.to_complete)) || freecard3 ? true : false
+                })
+
+              //filter for importance status
+                resolved = resolved.filter( data => {
+                    console.log(data.wt,$scope.importance)
+                    if($scope.importance == 20){
+                      return (parseInt(data.wt) > 0  && parseInt(data.wt) <= 20)? true : false;
+                    }
+                    else if($scope.importance == 60){
+                      return (parseInt(data.wt) > 20 && parseInt(data.wt) <= 60)? true : false;
+                    }
+                    else if($scope.importance == 100){
+                      return (parseInt(data.wt) > 60 && parseInt(data.wt) <= 100)? true : false;
+                    }else{
+                      return true
+                    }
+                })
+
+                //filter for quality
+                var freecard4 = false;
+                if(!$scope.from_quality || parseInt($scope.from_quality) == 0 )
+                  var freecard4 = true;
+
+                resolved = resolved.filter( data => {
+                  console.log("quality data: ",parseInt(data.wt),$scope.from_quality)
+                  if(freecard4){
+                    return true;
+                  }
+                  else if(parseInt(data.quality) >= parseInt($scope.from_quality)){
+                    return true;
+                  }else{
+                    return false;
+                  }
+                })
+
+                var freecard5 = false;
+                if(!$scope.to_quality || parseInt($scope.from_quality) == 0 )
+                  var freecard5 = true;
+
+                resolved = resolved.filter( data => {
+                  if(freecard5){
+                    return true;
+                  }
+                  else if(parseInt(data.quality) <= parseInt($scope.to_quality)){
+                    return true;
+                  }else{
+                    return false;
+                  }
+                })
+
+                $scope.projects = resolved;
                 $scope.$apply();
             });
 
@@ -193,7 +264,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.projectObject.name = object.name;
         $scope.projectObject.program = object.program;
         $scope.projectObject.manager = object.manager;
-        $scope.projectObject.active = object.active ? "true" : "false";
+        $scope.projectObject.fund = object.fund || "";
         $scope.projectObject.approxCost = object.approxCost;
         $scope.projectObject.datePlannedStart = new Date(object.datePlannedStart);
         $scope.projectObject.datePlannedEnd = new Date(object.datePlannedEnd);
@@ -218,8 +289,29 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
           $scope.projectObject.outputs = object.outputs[0] || null;
         $scope.projectObject.stages = object.stages;
         $scope.projectObject.wt = object.wt;
-        $scope.projectObject.completed = object.completed;
-        $scope.projectObject.quality = object.quality;
+
+                user.getAnalytics('project',object._id).then(data => {
+                  $scope.projectObject.completed = data.WT || 0;
+                  $scope.projectObject.quality = data.QA || 0 ;
+                });
+                $scope.projectObject.status = object.status || "8";
+                if(   isNaN(new Date($scope.projectObject.dateActualStart).getTime())
+                   || isNaN(new Date($scope.projectObject.datePlannedEnd).getTime())
+                  ){
+                  $scope.passed = "البيانات غير مكتمل"
+                }
+                else{
+                  var today  = new Date().getTime();
+                  var start  = new Date($scope.projectObject.dateActualStart).getTime();
+                  var end    = new Date($scope.projectObject.datePlannedEnd).getTime();
+                  var part   = today - start;
+                  var total  = end - start;
+                  var passed = Math.round((part / total) * 100)
+                  passed = Math.min(passed ,100);
+                  $scope.passed = `${passed}`;
+                }
+
+
         $scope.selectedEntitiesArray = {};
         var lvls = object.entities;
 
@@ -378,8 +470,6 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.projectObject.outputs = [];
         delete $scope.selectedProject;
         delete $scope.selectedProjectStage;
-        // internalTeamSelect.val([]).trigger('change');
-        // externalTeamSelect.val([]).trigger('change');
         $scope.internalTeamArr = [];
         $scope.externalTeamArr = [];
         $scope.indicatorName = "";
@@ -387,31 +477,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.actualValue = "";
         $scope.stageName = "";
         $scope.outputName = "";
-        // if (valid) {
-        //     var submittedForm = angular.copy(newProjectObject);
-        //     submittedForm._id = new Date().getTime() + '';
-        //     submittedForm.manager = newProjectObject.manager ? newProjectObject.manager : "";
-        //     submittedForm.approxCost = newProjectObject.approxCost ? newProjectObject.approxCost : 0;
-        //     submittedForm.teamInt = newProjectObject.teamInt ? newProjectObject.teamInt : [];
-        //     submittedForm.teamExt = newProjectObject.teamExt ? newProjectObject.teamExt : [];
-        //     submittedForm.description = newProjectObject.description ? newProjectObject.description : "";
-        //     submittedForm.stages = newProjectObject.stages ? newProjectObject.stages : [];
-        //     submittedForm.datePlannedStart = $rootScope.formatDate(newProjectObject.datePlannedStart);
-        //     submittedForm.datePlannedEnd = $rootScope.formatDate(newProjectObject.datePlannedEnd);
-        //     submittedForm.dateActualStart = $rootScope.formatDate(newProjectObject.dateActualStart);
-        //     submittedForm.dateActualEnd = $rootScope.formatDate(newProjectObject.dateActualEnd);
-        //     submittedForm.active = newProjectObject.active === "true";
-        //     submittedForm.outputs = [];
-        //     submittedForm.outputs[0] = newProjectObject.outputs ? newProjectObject.outputs : "";
-        //     $log.debug("Submit program form");
-        //     $log.debug(submittedForm);
-        //     user.addProject(submittedForm).then(function (resolved) {
-        //         $scope.renderProjects();
-        //     });
-        // }
-        // else {
-        //     window.alert("من فضلك تأكد من إكمال البيانات المطلوبة");
-        // }
+
     };
     $scope.initializeProjectForm = function (projectObject) {
         var submittedForm = angular.copy(projectObject);
@@ -435,7 +501,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         submittedForm.datePlannedEnd = $rootScope.formatDate(projectObject.datePlannedEnd);
         submittedForm.dateActualStart = $rootScope.formatDate(projectObject.dateActualStart);
         submittedForm.dateActualEnd = $rootScope.formatDate(projectObject.dateActualEnd);
-        submittedForm.active = projectObject.active === "true";
+        submittedForm.fund = projectObject.fund ;
         submittedForm.outputs = [];
         submittedForm.outputs[0] = projectObject.outputs ? projectObject.outputs : "";
         return submittedForm;
@@ -949,7 +1015,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                 }
             }
         });
-    }; 
+    };
 
     $scope.filterProjectEntity = function () {
         $ngConfirm({
@@ -962,7 +1028,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                     text: 'تم',
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
-                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {                            
+                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {
                         }
                         else {
                             $ngConfirm('يجب اختيار المستوى الأول');
@@ -1097,5 +1163,51 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         });
     }
     // end team modal "added by heba"
+    $scope.validateMinMax=function(val,obj){
+      if(obj  > 100)    $scope[val] =100;
+      else if (obj < 0) $scope[val] =0;
+      if (!$scope[val]) $scope[val] = 0;
+    }
+    $scope.$watch("currentState",function(oldval,newval){
+      $scope.renderProjects($scope.filtrationProgram);
+    })
+    $scope.$watch("from_complete",function(oldval,newval){
+      $scope.renderProjects($scope.filtrationProgram);
+    })
+    $scope.$watch("to_complete",function(oldval,newval){
+      $scope.renderProjects($scope.filtrationProgram);
+    })
+    $scope.$watch("from_quality",function(oldval,newval){
+      $scope.renderProjects($scope.filtrationProgram);
+    })
+    $scope.$watch("to_quality",function(oldval,newval){
+      $scope.renderProjects($scope.filtrationProgram);
+    })
+    $scope.$watch("importance",function(oldval,newval){
+      $scope.renderProjects($scope.filtrationProgram);
+    })
+    $scope.$watch("isAuto",function(oldval,newval){
+      if($scope.isAuto){
+        console.log("in if")
+        if($scope.projectObject){
+          console.log("in if 2")
+          if(    isNaN(new Date($scope.projectObject.dateActualStart).getTime())
+              || isNaN(new Date($scope.projectObject.datePlannedEnd).getTime())){
+            console.log("in if 3")
+            $scope.projectObject.status = "8";
+          }
+          else if(parseFloat($scope.projectObject.completed) / parseFloat($scope.passed) >= 0.85){
+            console.log("in elseif 1")
+            $scope.projectObject.status = "4";
+          }else if(parseFloat($scope.projectObject.completed) / parseFloat($scope.passed) < 0.85){
+            console.log("in elseif 2")
+            $scope.projectObject.status = "5";
+          }
+        }
+      }else{
+
+      }
+      console.log($scope.projectObject.status);
+    })
 
 });

@@ -354,9 +354,6 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
           $scope.programForm.completed = data.WT || 0;
           $scope.programForm.quality = data.QA || 0 ;
         });
-
-        $scope.programForm.completed = selectedProgram.completed || 0;
-        $scope.programForm.quality = selectedProgram.quality || 0 ;
         $scope.programForm.status = selectedProgram.status || "8";
         if(   isNaN(new Date($scope.programForm.dateActualStart).getTime())
            || isNaN(new Date($scope.programForm.datePlannedEnd).getTime())
@@ -370,6 +367,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
           var part   = today - start;
           var total  = end - start;
           var passed = Math.round((part / total) * 100)
+          passed = Math.min(passed ,100);
           $scope.passed = `${passed}`;
         }
     };
@@ -1169,6 +1167,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.relatedProjects = data;
       })
     }
+
     $scope.$watch("currentState",function(oldval,newval){
       $scope.renderPrograms($scope.filterationModel);
     })
