@@ -369,7 +369,10 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
           var passed = Math.round((part / total) * 100)
           passed = Math.min(passed ,100);
           $scope.passed = `${passed}`;
+
         }
+        console.log("check the auto",$scope.isAuto,$scope.selectedProgram.isAuto);
+        $scope.isAuto = $scope.selectedProgram.isAuto || false;
     };
     $scope.renderUsers = function (filter) {
         user.getUsers(filter).then(function (resolved) {
@@ -577,6 +580,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         newForm.quality = programForm.quality;
         newForm.wt = programForm.wt;
         newForm.status = programForm.status || "8";
+        newForm.isAuto = $scope.isAuto || false;
         return newForm;
     };
     $scope.internalTeamArr = [];

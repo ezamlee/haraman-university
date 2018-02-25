@@ -311,6 +311,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                   $scope.passed = `${passed}`;
                 }
 
+        $scope.isAuto = object.isAuto || false;
 
         $scope.selectedEntitiesArray = {};
         var lvls = object.entities;
@@ -504,6 +505,8 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         submittedForm.fund = projectObject.fund ;
         submittedForm.outputs = [];
         submittedForm.outputs[0] = projectObject.outputs ? projectObject.outputs : "";
+        submittedForm.isAuto = $scope.isAuto || false;
+
         return submittedForm;
     };
     $scope.editProject = function (projectObject, valid) {
