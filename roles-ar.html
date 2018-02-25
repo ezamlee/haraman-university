@@ -1,162 +1,163 @@
-﻿<div class="content">
-    <div class="">
-        <div class="page-header-content">
-            <div class="page-title">
-                <!-- <h3> -->
-                <span style="font-size: 21px" class="text-semibold"> تعريف المهام </span>
-                <i class="fa fa-print fa-2x action-icon" style="float: left" ng-click="reportTempate()" aria-hidden="true"></i>
-                <!-- </h3> -->
-            </div>
 
-        </div>
+<div class="content">
+  <div class="">
+    <div class="page-header-content">
+      <div class="page-title">
+        <!-- <h3> -->
+        <span style="font-size: 21px" class="text-semibold"> تعريف المهام </span>
+        <i class="fa fa-print fa-2x action-icon" style="float: left" ng-click="reportTempate()" aria-hidden="true"></i>
+        <!-- </h3> -->
+      </div>
+
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <form>
-                <div class="panel panel-flat">
-                    <div class="panel-body height-70-vh">
-                        <!-- List of tasks -->
-                        <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse"  href="#collapse1">
-                            <h4 class="panel-title">
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <form>
+        <div class="panel panel-flat">
+          <div class="panel-body height-70-vh">
+            <!-- List of tasks -->
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse1">
+                <h4 class="panel-title">
                               <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> المهمة </a>
                             </h4>
-                          </div>
-                          <div id="collapse1" class="panel-collapse">
-                            <div class="panel-body">
-                              <div class="col-md-12">
-                                  <div class="form-group">
+              </div>
+              <div id="collapse1" class="panel-collapse">
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="form-group">
 
-                                      <select multiple="multiple" class="form-control clearborder">
+                      <select multiple="multiple" class="form-control clearborder">
                                           <option ng-repeat="task in tasks" ng-click="onTaskClicked(task)"> {{task.name}} </option>
                                       </select>
-                                  </div>
-                              </div>
-                              <div class="text-right">
-                                  <i class="fa fa-plus fa-2x text-green action-icon" ng-click="addNewTask()" aria-hidden="true"></i>
-                                  <i class="fa fa-floppy-o fa-2x action-icon" ng-click="editTask(taskObject,taskForm.$valid)" aria-hidden="true"></i>
-                                  <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteTask()" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <i class="fa fa-plus fa-2x text-green action-icon" ng-click="addNewTask()" aria-hidden="true"></i>
+                    <i class="fa fa-floppy-o fa-2x action-icon" ng-click="editTask(taskObject,taskForm.$valid)" aria-hidden="true"></i>
+                    <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteTask()" aria-hidden="true"></i>
 
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                        <!-- List of filters -->
-                        <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse"  href="#collapse3">
-                            <h4 class="panel-title">
+            <!-- List of filters -->
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse3">
+                <h4 class="panel-title">
                               <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷهداف </a>
                             </h4>
-                          </div>
+              </div>
 
-                          <div id="collapse3" class="panel-collapse collapse">
-                            <div class="panel-body">
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> اختيار الهدف الإستراتيجي </label>
-                                      <select name="select" class="form-control" ng-model="goalsModel.strategicGoal" ng-change="onStrategicGoalSelected()">
+              <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> اختيار الهدف الإستراتيجي </label>
+                      <select name="select" class="form-control" ng-model="goalsModel.strategicGoal" ng-change="onStrategicGoalSelected()">
                                           <option value="">جميع الأهداف الاستراتيجية</option>
                                           <option value="{{$index}}" ng-repeat="mainGoal in strategicGoals">
                                               {{mainGoal.name}}
                                           </option>
                                       </select>
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> اختيار الهدف التفصيلي </label>
-                                      <select name="select" class="form-control" ng-model="goalsModel.secondaryGoal" ng-change="onSecondaryGoalSelected()" ng-disabled="disableSecondaryGoal">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> اختيار الهدف التفصيلي </label>
+                      <select name="select" class="form-control" ng-model="goalsModel.secondaryGoal" ng-change="onSecondaryGoalSelected()" ng-disabled="disableSecondaryGoal">
                                           <option value="">جميع الأهداف التفصيلية</option>
                                           <option value="{{key}}" ng-repeat="(key, value) in selectedStrategicGoal.subgoals">
                                               {{value.name}}
                                           </option>
                                       </select>
-                                  </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse"  href="#collapse13">
-                            <h4 class="panel-title">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse13">
+                <h4 class="panel-title">
                               <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> البرامج </a>
                             </h4>
-                          </div>
+              </div>
 
-                          <div id="collapse13" class="panel-collapse collapse">
-                            <div class="panel-body">
-                              <div class="col-md-12">
-                                  <div class="form-group">
-                                      <label> البرنامج </label>
-                                      <select name="select" class="form-control" ng-model="programId" ng-change="filterProjects()">
+              <div id="collapse13" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label> البرنامج </label>
+                      <select name="select" class="form-control" ng-model="programId" ng-change="filterProjects()">
                                           <option value="">جميع البرامج</option>
                                           <option ng-repeat="program in programs" value="{{program._id}}">{{program.name}}
                                           </option>
                                       </select>
-                                  </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse"  href="#collapse14">
-                            <h4 class="panel-title">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse14">
+                <h4 class="panel-title">
                               <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> المشاريع </a>
                             </h4>
-                          </div>
+              </div>
 
-                          <div id="collapse14" class="panel-collapse collapse">
-                            <div class="panel-body">
-                              <div class="col-md-12">
-                                  <div class="form-group">
-                                      <label> المشروع </label>
-                                      <select name="select" class="form-control" ng-model="projectId" ng-change="onProjectSelected()">
+              <div id="collapse14" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label> المشروع </label>
+                      <select name="select" class="form-control" ng-model="projectId" ng-change="onProjectSelected()">
                                           <option value="">جميع المشاريع</option>
                                           <option ng-repeat="project in projects" value="{{project._id}}">{{project.name}}
                                           </option>
                                       </select>
-                                  </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse"  href="#collapse15">
-                            <h4 class="panel-title">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse15">
+                <h4 class="panel-title">
                               <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> المراحل </a>
                             </h4>
-                          </div>
+              </div>
 
-                          <div id="collapse15" class="panel-collapse collapse">
-                            <div class="panel-body">
-                              <div class="col-md-12">
-                                  <div class="form-group">
-                                      <label> المرحلة </label>
-                                      <select name="select" class="form-control" ng-model="stageName" ng-change="onStageSelected()">
+              <div id="collapse15" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label> المرحلة </label>
+                      <select name="select" class="form-control" ng-model="stageName" ng-change="onStageSelected()">
                                           <option value=""> جميع المراحل</option>
                                           <option ng-repeat="stage in selectedProject.stages" value="{{stage.name}}">{{stage.name}}</option>
                                       </select>
-                                  </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- List of Importance and Achievements -->
-                        <div class="panel panel-default">
-                            <div class="panel-heading" data-toggle="collapse"  href="#collapse4">
-                                <h4 class="panel-title">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- List of Importance and Achievements -->
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse4">
+                <h4 class="panel-title">
                                     <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الاهميه ،الإنجاز و الجوده </a>
                                 </h4>
-                            </div>
+              </div>
 
-                            <div id="collapse4" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label > الحاله الرهانه </label>
-                                            <br><span style="color:white">-</span><br>
-                                            <select style="margin-top:6px" name="select" class="form-control" ng-model="currentState">
+              <div id="collapse4" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> الحاله الرهانه </label>
+                      <br><span style="color:white">-</span><br>
+                      <select style="margin-top:6px" name="select" class="form-control" ng-model="currentState">
                                                 <option value="0"> الكل </option>
                                                 <option value="1"> تحت الدراسة والاعتماد </option>
                                                 <option value="2"> لم يبدء بعد </option>
@@ -167,238 +168,187 @@
                                                 <option value="7"> منتهي</option>
                                                 <option value="8"> تعرف بنسب الانجاز </option>
                                             </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label> نسبه الإنجاز </label>
-                                            <br><label>من</label>
-                                            <input type="number" name="select" class="form-control" ng-disabled="(currentState != 8)" min="0" max="100" ng-model="from_complete" ng-change="validateMinMax('from_complete',from_complete)">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label style="color:white">-</label>
-                                            <br><label>إلى</label>
-                                            <input type="number" name="select" class="form-control" ng-disabled="(currentState != 8)" min="0" max="100" ng-model="to_complete" ng-change="validateMinMax('to_complete',to_complete)">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                          <div class="form-group">
-                                              <label>الحجم / الأهمية</label>
-                                              <label style="color:white;padding-bottom:6px">-</label><br><br>
-                                              <select name="select" class="form-control" ng-model="importance">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label> نسبه الإنجاز </label>
+                      <br><label>من</label>
+                      <input type="number" name="select" class="form-control" ng-disabled="(currentState != 8)" min="0" max="100" ng-model="from_complete" ng-change="validateMinMax('from_complete',from_complete)">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label style="color:white">-</label>
+                      <br><label>إلى</label>
+                      <input type="number" name="select" class="form-control" ng-disabled="(currentState != 8)" min="0" max="100" ng-model="to_complete" ng-change="validateMinMax('to_complete',to_complete)">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>الحجم / الأهمية</label>
+                      <label style="color:white;padding-bottom:6px">-</label><br><br>
+                      <select name="select" class="form-control" ng-model="importance">
                                                 <option value="0"> الكل</option>
                                                 <option value="100"> كبير</option>
                                                 <option value="60"> متوسط </option>
                                                 <option value="20"> صغير </option>
                                               </select>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <div class="form-group">
-                                              <label> نسبه الجوده </label>
-                                              <br><label>من</label>
-                                              <input type="number" name="select" class="form-control"
-                                               min="0" max="100"
-                                              ng-model="from_quality"
-                                              ng-change="validateMinMax('from_quality',from_quality)">
-                                          </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                          <div class="form-group">
-                                              <label style="color:white">-</label>
-                                              <br><label>إلى</label>
-                                              <input type="number" name="select" class="form-control"
-                                               min="0" max="100"
-                                              ng-model="to_quality"
-                                              ng-change="validateMinMax('to_quality',to_quality)">
-                                          </div>
-                                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label> نسبه الجوده </label>
+                      <br><label>من</label>
+                      <input type="number" name="select" class="form-control" min="0" max="100" ng-model="from_quality" ng-change="validateMinMax('from_quality',from_quality)">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label style="color:white">-</label>
+                      <br><label>إلى</label>
+                      <input type="number" name="select" class="form-control" min="0" max="100" ng-model="to_quality" ng-change="validateMinMax('to_quality',to_quality)">
+                    </div>
+                  </div>
 
-                                    </div>
-                                </div>
-                            </div>
+                </div>
+              </div>
+            </div>
 
-                        <!-- List of level of association -->
-                        <!-- <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse"  href="#collapse2">
-                            <h4 class="panel-title">
-                              <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> المستويات </a>
-                            </h4>
-                          </div>
-                          <div id="collapse2" class="panel-collapse collapse">
-                            <div class="panel-body">
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> المستوى الأول </label>
-                                      <select name="select" class="form-control" ng-change="onAssociationSelected('level1')" ng-model="entitiesModel.firstLevel">
-                                          <option value="">جميع الجهات</option>
-                                          <option value="{{$index}}" ng-repeat="association in associations">
-                                              {{association.name}}
-                                          </option>
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> المستوى الثاني </label>
-                                      <select name="select" class="form-control" ng-model="entitiesModel.secondLevel" ng-change="onAssociationSelected('level2')"
-                                          ng-disabled="disableSecondLevel">
-                                          <option value="">جميع الجهات</option>
-                                          <option value="{{key}}" ng-repeat="(key, value) in selectedFirstLevelObject.children">
-                                              {{value.name}}
-                                          </option>
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> المستوى الثالث </label>
-                                      <select name="select" class="form-control" ng-model="entitiesModel.thirdLevel" ng-change="onAssociationSelected('level3')"
-                                          ng-disabled="disablethirdLevel">
-                                          <option value=""> جميع الجهات</option>
-                                          <option value="{{key}}" ng-repeat="(key, value) in selectedSecondLevelObject.children">
-                                              {{value.name}}
-                                          </option>
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> المستوى الرابع </label>
-                                      <select name="select" class="form-control" ng-model="entitiesModel.fourthLevel" ng-change="onAssociationSelected('level4')"
-                                          ng-disabled="disableFourthLevel">
-                                          <option value=""> جميع الجهات</option>
-                                          <option value="{{key}}" ng-repeat="(key, value) in selectedThirdLevelObject.children">{{value.name}}
-                                          </option>
-                                      </select>
-                                  </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> -->
-                        <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse"  href="#collapse2">
-                            <h4 class="panel-title">
+
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse2">
+                <h4 class="panel-title">
                               <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷشخاص والجهات ذوي العلاقة </a>
                             </h4>
-                        </div>
+              </div>
 
-                        <div id="collapse2" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>اﻷشخاص ذوي العلاقة</label>
-                                        <select multiple="multiple" class="form-control" style="height: 214px">
+              <div id="collapse2" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>اﻷشخاص ذوي العلاقة</label>
+                      <select multiple="multiple" class="form-control" style="height: 214px">
                                             <option ng-repeat="user in filterTeamArr track by $index" ng-click="deleteTeamMember($index)">{{user.name}}</option>
                                         </select>
-                                        <div class="text-right">
-                                            <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterTaskTeam()"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>الجهات ذات العلاقة</label>
-                                        <div class="form-control clearborder" style="height: 150px;padding: 7px; overflow: auto;">
-                                          <div ng-if="entitiesModel.firstLevel">
-                                              <p ng-if="entitiesModel.firstLevel== 0" style="font-weight: bold;">{{selectedFirstLevelObject.name}}</p>
-                                          </div>
-                                          <div ng-if="entitiesModel.secondLevel">
-                                              <p>&rsaquo;{{selectedSecondLevelObject.name}}</p>
-                                          </div>
-                                          <div ng-if="entitiesModel.thirdLevel">
-                                              <p>&rsaquo;&rsaquo;{{selectedThirdLevelObject.name}}</p>
-                                          </div>
-                                          <div ng-if="entitiesModel.fourthLevel">
-                                              <p>&rsaquo;&rsaquo;&rsaquo;{{selectedForthLevelObject.name}}</p>
-                                          </div>
-
-                                        </div>
-
-                                        <div class="text-right">
-                                            <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterTaskEntity()"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                      <div class="text-right">
+                        <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterTaskTeam()"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>الجهات ذات العلاقة</label>
+                      <div class="form-control clearborder" style="height: 150px;padding: 7px; overflow: auto;">
+                        <div ng-if="entitiesModel.firstLevel">
+                          <p ng-if="entitiesModel.firstLevel== 0" style="font-weight: bold;">{{selectedFirstLevelObject.name}}</p>
                         </div>
+                        <div ng-if="entitiesModel.secondLevel">
+                          <p>&rsaquo;{{selectedSecondLevelObject.name}}</p>
+                        </div>
+                        <div ng-if="entitiesModel.thirdLevel">
+                          <p>&rsaquo;&rsaquo;{{selectedThirdLevelObject.name}}</p>
+                        </div>
+                        <div ng-if="entitiesModel.fourthLevel">
+                          <p>&rsaquo;&rsaquo;&rsaquo;{{selectedForthLevelObject.name}}</p>
+                        </div>
+
+                      </div>
+
+                      <div class="text-right">
+                        <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="filterTaskEntity()"></i>
+                      </div>
                     </div>
-                    </div>
+                  </div>
                 </div>
-            </form>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-6">
-            <form name="taskForm">
-                <div class="panel panel-flat">
-                    <div class="panel-body height-70-vh">
+      </form>
+    </div>
+    <div class="col-md-6">
+      <form name="taskForm">
+        <div class="panel panel-flat">
+          <div class="panel-body height-70-vh">
 
-                    <input style="outline: none!important;border:0px;font-size:20px;font-weight:600" type="text" class="form-control" placeholder="مهمة جديده" required ng-model="taskObject.name">
+            <input style="outline: none!important;border:0px;font-size:20px;font-weight:600" type="text" class="form-control" placeholder="مهمة جديده" required ng-model="taskObject.name">
 
-                      <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse"  href="#collapse6">
-                          <h4 class="panel-title">
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse6">
+                <h4 class="panel-title">
                             <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> البيانات الاساسية </a>
                           </h4>
-                        </div>
+              </div>
 
-                        <div id="collapse6" class="panel-collapse collapse">
-                          <div class="panel-body">
+              <div id="collapse6" class="panel-collapse collapse">
+                <div class="panel-body">
 
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label> مدير المهمة </label>
-                                <select name="select" class="form-control" ng-model="taskObject.manager">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> مدير المهمة </label>
+                      <select name="select" class="form-control" ng-model="taskObject.manager">
                                   <option value="" disabled> مدير المهمة</option>
                                   <option ng-repeat="user in usersList" value="{{user._id}}">{{user.name}}</option>
                                 </select>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label> مساعد مدير المهمه </label>
-                                    <select name="select" class="form-control" ng-model="taskObject.managerHelp">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> مساعد مدير المهمه </label>
+                      <select name="select" class="form-control" ng-model="taskObject.managerHelp">
                                       <option value="" disabled>مساعد  مدير المهمة</option>
                                       <option ng-repeat="user in usersList" value="{{user._id}}">{{user.name}}</option>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label> المرحلة </label>
-                                    <select name="select" class="form-control" ng-model="taskObject.stage">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                       <label> المشروع </label>
+                      <!--<input type="checkbox" ng-model="makeChanges" style="padding:0px 2px;margin:0px"> -->
+                      <!-- <span>تحرير</span> -->
+                      <select name="select" class="form-control" ng-model="taskObject.project" ng-disabled="!(makeChanges)?true:false" ng-change ="filterProjectsForNewTask()">
+                                        <option value=""> غير محدد</option>
+                                        <option ng-repeat="project in projects" value="{{project._id}}"> {{project.name}} </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> المرحلة </label>
+                      <!-- <label style="color:white;margin-bottom:12px">-</label> -->
+                      <select name="select" class="form-control" ng-model="taskObject.stage">
                                         <option value=""> غير محدد</option>
                                         <option ng-repeat="stage in selectedProject.stages" value="{{stage.name}}">{{stage.name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label> التكلفة التقديرية </label>
-                                    <input type="number" class="form-control" placeholder="10,000" ng-model="taskObject.approxCost">
-                                </div>
-                            </div>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label> التكلفة التقديرية </label>
+                      <input type="number" class="form-control" placeholder="10,000" ng-model="taskObject.approxCost">
+                    </div>
+                  </div>
 
-                          </div>
-                        </div>
-                      </div>
+                </div>
+              </div>
+            </div>
 
-                      <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse"  href="#collapse7">
-                          <h4 class="panel-title">
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse7">
+                <h4 class="panel-title">
                             <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> اﻷهمية، الانجاز والجودة </a>
                           </h4>
-                        </div>
+              </div>
 
-                        <div id="collapse7" class="panel-collapse collapse">
-                          <div class="panel-body">
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> الحجم/الأهمية بالنسبة لكامل المشروع </label>
-                                      <span><input type="checkbox" ng-model="isDigital">
+              <div id="collapse7" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> الحجم/الأهمية بالنسبة لكامل المشروع </label>
+                      <span><input type="checkbox" ng-model="isDigital">
                                         يعرف رقميا</span>
-                                      <select name="select"  ng-model="taskObject.wt" class="form-control" ng-disabled="!isDigital ? false : true">
+                      <select name="select" ng-model="taskObject.wt" class="form-control" ng-disabled="!isDigital ? false : true">
                                           <option value="0" selected disabled>غير محدد</option>
                                           <option value="80">كبير جدا</option>
                                           <option value="60">كبير</option>
@@ -435,250 +385,249 @@
                                         <option value="7"> منتهي</option>
                                         <option value="8"> البيانات غير مكتملة</option>
                                       </select>
-                                  </div>
-                                  <div class="form-group">
-                                      <label> نسبة الجودة </label>
-                                      <input type="number" class="form-control" name="quality" min="{{min}}" max="{{max}}" ng-model="taskObject.quality" required step="10" />
-                                      <div style="color: #ff0000" role="alert" ng-if="taskForm.quality.$dirty">
-                                          <div ng-show="taskForm.quality.$error.required">يجب ادخال قيمة</div>
-                                          <div ng-show="taskForm.quality.$error.min">اقل قيمة يمكن ادخالها {{min}}.</div>
-                                          <div ng-show="taskForm.quality.$error.max">أكبر قيمة يمكن ادخالها {{max}}.</div>
-                                          <div ng-show="taskForm.quality.$error.number">يجب ادخال ارقام فقط.</div>
-                                      </div>
-                                  </div>
-
-                                  <div class="form-group">
-                                      <label> نسبة الإنجاز </label>
-                                      <input type="number" class="form-control" name="acheive" min="{{min}}" max="{{max}}" ng-model="taskObject.completed" required step="10" />
-                                      <div style="color: #ff0000" role="alert" ng-if="taskForm.acheive.$dirty">
-                                          <div ng-show="taskForm.acheive.$error.required">يجب ادخال قيمة</div>
-                                          <div ng-show="taskForm.acheive.$error.min">اقل قيمة يمكن ادخالها {{min}}.</div>
-                                          <div ng-show="taskForm.acheive.$error.max">أكبر قيمة يمكن ادخالها {{max}}.</div>
-                                          <div ng-show="taskForm.acheive.$error.number">يجب ادخال ارقام فقط.</div>
-                                      </div>
-                                  </div>
-                              </div>
-
-                          </div>
-                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label> نسبة الجودة </label>
+                      <input type="number" class="form-control" name="quality" min="{{min}}" max="{{max}}" ng-model="taskObject.quality" required step="10" />
+                      <div style="color: #ff0000" role="alert" ng-if="taskForm.quality.$dirty">
+                        <div ng-show="taskForm.quality.$error.required">يجب ادخال قيمة</div>
+                        <div ng-show="taskForm.quality.$error.min">اقل قيمة يمكن ادخالها {{min}}.</div>
+                        <div ng-show="taskForm.quality.$error.max">أكبر قيمة يمكن ادخالها {{max}}.</div>
+                        <div ng-show="taskForm.quality.$error.number">يجب ادخال ارقام فقط.</div>
                       </div>
+                    </div>
 
-                      <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse"  href="#collapse8">
-                          <h4 class="panel-title">
+                    <div class="form-group">
+                      <label> نسبة الإنجاز </label>
+                      <input type="number" class="form-control" name="acheive" min="{{min}}" max="{{max}}" ng-model="taskObject.completed" required step="10" />
+                      <div style="color: #ff0000" role="alert" ng-if="taskForm.acheive.$dirty">
+                        <div ng-show="taskForm.acheive.$error.required">يجب ادخال قيمة</div>
+                        <div ng-show="taskForm.acheive.$error.min">اقل قيمة يمكن ادخالها {{min}}.</div>
+                        <div ng-show="taskForm.acheive.$error.max">أكبر قيمة يمكن ادخالها {{max}}.</div>
+                        <div ng-show="taskForm.acheive.$error.number">يجب ادخال ارقام فقط.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse8">
+                <h4 class="panel-title">
                             <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> تواريخ البداية والنهارة </a>
                           </h4>
-                        </div>
+              </div>
 
-                        <div id="collapse8" class="panel-collapse collapse">
-                          <div class="panel-body">
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> تاريخ البداية المخطط </label>
+              <div id="collapse8" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> تاريخ البداية المخطط </label>
 
-                                      <div class="input-group">
-                                          <span class="input-group-addon">
+                      <div class="input-group">
+                        <span class="input-group-addon">
                                               <i class="icon-calendar22"></i>
                                           </span>
-                                          <input type="date" class="form-control daterange-single" ng-model="taskObject.datePlannedStart">
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> تاريخ النهاية المخطط </label>
-
-                                      <div class="input-group">
-                                          <span class="input-group-addon">
-                                              <i class="icon-calendar22"></i>
-                                          </span>
-                                          <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.datePlannedEnd">
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> تاريخ البداية الفعلي </label>
-
-                                      <div class="input-group">
-                                          <span class="input-group-addon">
-                                              <i class="icon-calendar22"></i>
-                                          </span>
-                                          <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.dateActualStart">
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label> تاريخ النهاية الفعلي </label>
-
-                                      <div class="input-group">
-                                          <span class="input-group-addon">
-                                              <i class="icon-calendar22"></i>
-                                          </span>
-                                          <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.dateActualEnd">
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                        </div>
+                        <input type="date" class="form-control daterange-single" ng-model="taskObject.datePlannedStart">
                       </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> تاريخ النهاية المخطط </label>
 
-                      <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse"  href="#collapse9">
-                          <h4 class="panel-title">
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                                              <i class="icon-calendar22"></i>
+                                          </span>
+                        <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.datePlannedEnd">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> تاريخ البداية الفعلي </label>
+
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                                              <i class="icon-calendar22"></i>
+                                          </span>
+                        <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.dateActualStart">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label> تاريخ النهاية الفعلي </label>
+
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                                              <i class="icon-calendar22"></i>
+                                          </span>
+                        <input type="date" class="form-control daterange-single" placeholder="03/18/2013" ng-model="taskObject.dateActualEnd">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse9">
+                <h4 class="panel-title">
                             <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> فريق العمل </a>
                           </h4>
-                        </div>
+              </div>
 
-                        <div id="collapse9" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                  <label>فريق العمل داخليا</label>
-                                  <select multiple="multiple" class="form-control">
+              <div id="collapse9" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>فريق العمل داخليا</label>
+                      <select multiple="multiple" class="form-control">
                                       <option ng-repeat="user in internalTeamArr track by $index" ng-click="deleteMember($index,'internal')">{{user.name}}</option>
                                   </select>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                  <label>فريق العمل خارجياً</label>
-                                  <select multiple="multiple" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>فريق العمل خارجياً</label>
+                      <select multiple="multiple" class="form-control">
                                       <option ng-repeat="user in externalTeamArr track by $index" ng-click="deleteMember($index,'external')">{{user.name}}</option>
                                   </select>
-                              </div>
-                            </div>
-                            <div class="col-md-12">
-                              <div class="text-right" style="margin-top: 8px">
-                                <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="addTeamToTask()"></i>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="text-right" style="margin-top: 8px">
+                      <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="addTeamToTask()"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                      <div class="panel panel-default">
-                          <div class="panel-heading" data-toggle="collapse"  href="#collapse10">
-                              <h4 class="panel-title">
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse10">
+                <h4 class="panel-title">
                                 <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> الجهات ذات العلاقة </a>
                               </h4>
-                          </div>
-                          <div id="collapse10" class="panel-collapse collapse">
-                              <div class="panel-body">
-                                  <div class="col-md-12">
-                                      <div class="form-group">
-                                          <label>الجهات المختارة</label>
-                                          <div class="form-control" style="height: 150px;padding: 7px; overflow: auto;">
-                                              <div ng-repeat="(key1,firstLevelValue) in selectedEntitiesArray" ng-if="flatEntities[key1] != undefined && flatEntities[key1] != '' && flatEntities[key1] != 'undefined'">
-                                                  <p style="font-weight: bold; cursor: pointer" ng-click="deleteEntityFromProgram('firstLevel',key1)">{{flatEntities[key1]}} </p>
-                                                  <div style="padding:5px" ng-repeat="(key2,secondLevelValue) in firstLevelValue" ng-if="flatEntities[key2] != undefined && flatEntities[key2] != '' && flatEntities[key2] != 'undefined'">
-                                                      <p style="margin:0 8px; cursor: pointer" ng-click="deleteEntityFromProgram('secondLevel',key1,key2)"> &rsaquo; {{flatEntities[key2]}} </p>
-                                                      <div style="padding:5px" ng-repeat="(key3,thirdLevelValue) in secondLevelValue" ng-if="flatEntities[key3] != undefined && flatEntities[key3] != '' && flatEntities[key3] != 'undefined'">
-                                                          <p style="margin:0 16px; cursor: pointer" ng-click="deleteEntityFromProgram('thirdLevel',key1,key2,key3)"> &rsaquo;&rsaquo; {{flatEntities[key3]}}</p>
-                                                          <div style="padding:5px" ng-repeat="(key4,fourthLevelValue) in thirdLevelValue" ng-if="flatEntities[key4] != undefined && flatEntities[key4] != '' && flatEntities[key4] != 'undefined'">
-                                                              <p style="margin:0 24px; cursor: pointer" ng-click="deleteEntityFromProgram('fourthLevel',key1,key2,key3,key4)"> &rsaquo;&rsaquo;&rsaquo; {{flatEntities[key4]}}</p>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-
-                                              </div>
-                                          </div>
-                                          <div class="text-right" style="margin-top: 8px">
-                                              <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="addEntityToProgram()"></i>
-                                              <!-- <i class="fa fa-floppy-o fa-2x action-icon" aria-hidden="true" ng-click="editProgram(programForm,newProgramForm.$valid)"></i> -->
-                                              <!-- <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteProgram()" aria-hidden="true"></i> -->
-                                          </div>
-                                      </div>
-                                  </div>
-
+              </div>
+              <div id="collapse10" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>الجهات المختارة</label>
+                      <div class="form-control" style="height: 150px;padding: 7px; overflow: auto;">
+                        <div ng-repeat="(key1,firstLevelValue) in selectedEntitiesArray" ng-if="flatEntities[key1] != undefined && flatEntities[key1] != '' && flatEntities[key1] != 'undefined'">
+                          <p style="font-weight: bold; cursor: pointer" ng-click="deleteEntityFromProgram('firstLevel',key1)">{{flatEntities[key1]}} </p>
+                          <div style="padding:5px" ng-repeat="(key2,secondLevelValue) in firstLevelValue" ng-if="flatEntities[key2] != undefined && flatEntities[key2] != '' && flatEntities[key2] != 'undefined'">
+                            <p style="margin:0 8px; cursor: pointer" ng-click="deleteEntityFromProgram('secondLevel',key1,key2)"> &rsaquo; {{flatEntities[key2]}} </p>
+                            <div style="padding:5px" ng-repeat="(key3,thirdLevelValue) in secondLevelValue" ng-if="flatEntities[key3] != undefined && flatEntities[key3] != '' && flatEntities[key3] != 'undefined'">
+                              <p style="margin:0 16px; cursor: pointer" ng-click="deleteEntityFromProgram('thirdLevel',key1,key2,key3)"> &rsaquo;&rsaquo; {{flatEntities[key3]}}</p>
+                              <div style="padding:5px" ng-repeat="(key4,fourthLevelValue) in thirdLevelValue" ng-if="flatEntities[key4] != undefined && flatEntities[key4] != '' && flatEntities[key4] != 'undefined'">
+                                <p style="margin:0 24px; cursor: pointer" ng-click="deleteEntityFromProgram('fourthLevel',key1,key2,key3,key4)"> &rsaquo;&rsaquo;&rsaquo; {{flatEntities[key4]}}</p>
                               </div>
+                            </div>
                           </div>
-                      </div>
 
-                      <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse"  href="#collapse11">
-                          <h4 class="panel-title">
+                        </div>
+                      </div>
+                      <div class="text-right" style="margin-top: 8px">
+                        <i class="fa fa-plus fa-2x text-green action-icon" aria-hidden="true" ng-click="addEntityToProgram()"></i>
+                        <!-- <i class="fa fa-floppy-o fa-2x action-icon" aria-hidden="true" ng-click="editProgram(programForm,newProgramForm.$valid)"></i> -->
+                        <!-- <i class="fa fa-times fa-2x text-danger action-icon" ng-click="deleteProgram()" aria-hidden="true"></i> -->
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse11">
+                <h4 class="panel-title">
                             <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> التفصيلات ومطالب التنفيذ </a>
                           </h4>
-                        </div>
+              </div>
 
-                        <div id="collapse11" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label> تفصيلات المهمة والخطوات التنفيذية </label>
-                                    <textarea rows="3" class="form-control" ng-model="taskObject.description"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>متطلبات التنفيذ </label>
-                                    <textarea rows="3" class="form-control" ng-model="taskObject.requirements"></textarea>
-                                </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+              <div id="collapse11" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label> تفصيلات المهمة والخطوات التنفيذية </label>
+                      <textarea rows="3" class="form-control" ng-model="taskObject.description"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>متطلبات التنفيذ </label>
+                      <textarea rows="3" class="form-control" ng-model="taskObject.requirements"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                      <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse"  href="#collapse12">
-                          <h4 class="panel-title">
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse12">
+                <h4 class="panel-title">
                             <a > <i class="fa fa-arrow-down" aria-hidden="true"></i> مؤشرات اﻷداء </a>
                           </h4>
-                        </div>
+              </div>
 
-                        <div id="collapse12" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <textarea rows="3" class="form-control" ng-model="taskObject.kpis"></textarea>
-                                </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+              <div id="collapse12" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <textarea rows="3" class="form-control" ng-model="taskObject.kpis"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                      <div class="panel panel-default">
-                        <div class="panel-heading" data-toggle="collapse"  href="#collapse19">
-                          <h4 class="panel-title">
+            <div class="panel panel-default">
+              <div class="panel-heading" data-toggle="collapse" href="#collapse19">
+                <h4 class="panel-title">
                             <a > <i class="fa fa-arrow-down" aria-hidden="true"></i>مؤشرات الإنجاز </a>
                           </h4>
-                        </div>
+              </div>
 
-                        <div id="collapse19" class="panel-collapse collapse">
-                          <div class="panel-body">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <textarea rows="3" class="form-control" ng-model="taskObject.acheive"></textarea>
-                                </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
+              <div id="collapse19" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <textarea rows="3" class="form-control" ng-model="taskObject.acheive"></textarea>
                     </div>
+                  </div>
                 </div>
-            </form>
+              </div>
+            </div>
+
+          </div>
         </div>
-        <script>
-
-        $(".collapse").on('show.bs.collapse', function(){
-            $($(this).siblings().find("h4 > a > i.fa")[0]).removeClass("fa-arrow-down");
-            $($(this).siblings().find("h4 > a > i.fa")[0]).addClass("fa-arrow-up");
-         });
-         $(".collapse").on('hide.bs.collapse', function(){
-            $($(this).siblings().find("h4 > a > i.fa")[0]).removeClass("fa-arrow-up");
-            $($(this).siblings().find("h4 > a > i.fa")[0]).addClass("fa-arrow-down");
-          });
-          $(".collapse").collapse("hide");
-        </script>
+      </form>
     </div>
+    <script>
+      $(".collapse").on('show.bs.collapse', function() {
+        $($(this).siblings().find("h4 > a > i.fa")[0]).removeClass("fa-arrow-down");
+        $($(this).siblings().find("h4 > a > i.fa")[0]).addClass("fa-arrow-up");
+      });
+      $(".collapse").on('hide.bs.collapse', function() {
+        $($(this).siblings().find("h4 > a > i.fa")[0]).removeClass("fa-arrow-up");
+        $($(this).siblings().find("h4 > a > i.fa")[0]).addClass("fa-arrow-down");
+      });
+      $(".collapse").collapse("hide");
+    </script>
+  </div>
 
 
-    <!-- Footer -->
-    <div class="footer text-muted">
-        &copy; 2017. كلية المسجد النبوي - </a> جميع الحقوق محفوظة.
-    </div>
-    <!-- /footer -->
+  <!-- Footer -->
+  <div class="footer text-muted">
+    &copy; 2017. كلية المسجد النبوي - </a> جميع الحقوق محفوظة.
+  </div>
+  <!-- /footer -->
 </div>

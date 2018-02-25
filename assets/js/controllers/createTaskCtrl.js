@@ -20,7 +20,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         users: true
     };
     //end "added by heba"
-
+    $scope.makeChanges = false;
     $scope.entitiesModel = {};
 
     $scope.goalsModel = {};
@@ -422,8 +422,10 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
     };
     $scope.onTaskClicked = function (task) {
         console.log(task)
+        $scope.makeChanges = false;
         $scope.selectedTask = task;
         $scope.taskObject = task;
+        //$scope.project._id = null;
         $log.debug("Clicked task");
         $log.debug(task);
         $scope.setTaskObject($scope.selectedTask);
@@ -474,6 +476,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         delete $scope.selectedTask;
         $scope.internalTeamArr = [];
         $scope.externalTeamArr = [];
+        $scope.makeChanges = true;
     };
     $scope.initializeTaskForm = function (taskObject) {
         var submittedForm = angular.copy(taskObject);
@@ -497,12 +500,13 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         submittedForm.requirements = taskObject.requirements ? taskObject.requirements : "";
         submittedForm.kpis = taskObject.kpis ? taskObject.kpis : "";
         submittedForm.stage = taskObject.stage ? taskObject.stage : "";
-        submittedForm.project = $scope.projectId ? $scope.projectId : "";
+        submittedForm.project = taskObject.project // null//$scope.projectId ? $scope.projectId : "";
         submittedForm.acheive = taskObject.acheive;
         submittedForm.managerHelp = taskObject.managerHelp;
         return submittedForm;
     };
     $scope.editTask = function (taskObject, valid) {
+        $scope.makeChanges = false;
         if (valid || 1) {
             if ($scope.selectedTask == undefined) {
                 $.confirm({
@@ -1191,5 +1195,15 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
           }
           //console.log($scope.programForm.status);
         })
+    $scope.filterProjectsForNewTask = function(){
+      console.log($scope.taskObject,$scope.projects);
+      $scope.projects.filter((project) => project._id == $scope.taskObject.project)
+                     .map((project) => {
+                       
+                       if(!$scope.selectedProject)
+                        $scope.selectedProject={}
+                       $scope.selectedProject.stages = project.stages
+                     })
 
+    }
 });
