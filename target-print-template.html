@@ -19,10 +19,10 @@
         </div>
         
         <div ng-if="reportForm.strategic.wt">
-            <p style="font-weight: bold;">النسبة المئوية من كامل الخطة: {{selectedStrategicGoal.wt}}</p>
+            <p><span style="font-weight: bold;">النسبة المئوية من كامل الخطة: </span>{{selectedStrategicGoal.wt}}</p>
         </div>
         <div ng-if="reportForm.strategic.completed">
-            <p style="font-weight: bold;">نسبة التحقق: {{selectedStrategicComplete * 100}} %</p>
+            <p><span style="font-weight: bold;">نسبة التحقق:</span> {{selectedStrategicComplete * 100}} %</p>
         </div>
 
         <div ng-if="reportForm.strategic.programs">
@@ -51,12 +51,12 @@
             </p>
         </div>
         
-        <div ng-if="reportForm.secondary.wt">
-            <p style="font-weight: bold;">النسبة المئوية من الهدف الأستراتيجي: {{selectedsecondaryGoal.wt}}</p>
+        <!-- <div ng-if="reportForm.secondary.wt">
+            <p><span style="font-weight: bold;">النسبة المئوية من الهدف الأستراتيجي:</span> {{selectedsecondaryGoal.wt}}</p>
         </div>
         <div ng-if="reportForm.secondary.completed">
-            <p style="font-weight: bold;">نسبة التحقق: {{selectedSecondaryGoal.completed * 100}} %</p>
-        </div>
+            <p><span style="font-weight: bold;">نسبة التحقق:</span> {{selectedSecondaryGoal.completed * 100}} %</p>
+        </div> -->
 
         <div ng-if="reportForm.secondary.programs">
             <p ng-if="relatedProjects.length > 0" style="font-weight: bold">البرامج المرتبطة</p>

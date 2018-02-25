@@ -24,166 +24,308 @@
         <div ng-repeat="task in tasks">
             <p style="font-weight: bold;color: blue"> عنوان المهمة: {{task.name}} </p>
             
-            <div ng-if="reportForm.mainData">
-                <p>
-                    حالة المهمة: {{task.active ? 'نشطة':'تمت'}}
-                </p>
+            <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.mainData">
+                <h5>البيانات اﻷساسية</h5>
                 <p ng-repeat="user in allUsers" ng-if="user._id == task.manager">
-                    مدير المهمة: {{user.name}}
+                    <span style="font-weight: bold">مدير المشروع:</span> <span>{{user.name}}</span>
                 </p>
-                <p ng-if="task.approxCost != 0">
-                    التكلفة التقديرية {{task.approxCost}}
+                <p ng-repeat="user in allUsers" ng-if="user._id == task.managerHelp">
+                    <span style="font-weight: bold">مدير المشروع:</span> <span>{{user.name}}</span>
+                </p>
+                <!-- <p ng-if="selectedProject != undefined">
+                    <span style="font-weight: bold">المشروع:</span> {{selectedProject.name}}
+                </p> -->
+                <p>
+                    <span style="font-weight: bold">المرحلة:</span> {{task.stage}}
+                </p>
+                <p>
+                    <span style="font-weight: bold">التكلفة التقديرية:</span> <span>{{task.approxCost}}</span>
+                </p>
+
+            </div>
+
+            <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.quality">
+                <h5>اﻷهمية،الإنجاز والجودة</h5>
+                <p ng-if="task.status != ''">
+                    <span style="font-weight: bold">حالة البرنامج: </span>
+                    <span ng-if="task.status == 0 || task.status == ''"> غير محدد </span>
+                    <span ng-if="task.status == 1"> تحت الدراسة والاعتماد </span>
+                    <span ng-if="task.status == 2"> لم يبدء بعد </span>
+                    <span ng-if="task.status == 3"> متوقف مؤقتاً</span>
+                    <span ng-if="task.status == 4"> منتظم </span>
+                    <span ng-if="task.status == 5"> متأخر</span>
+                    <span ng-if="task.status == 6"> ملغى</span>
+                    <span ng-if="task.status == 7"> منتهي</span>
+                    <span ng-if="task.status == 8"> البيانات غير مكتملة </span>
+                </p>
+                <p>
+                    <span style="font-weight: bold">نسبة الجودة: </span>
+                    <span ng-if="task.quality != ''">{{task.quality}}</span>
+                    <span ng-if="task.quality == ''">غير محدد</span>
+                </p>
+                <p>
+                    <span style="font-weight: bold">نسبة الإنجاز: </span>
+                    <span ng-if="task.completed != ''">{{task.completed}}</span>
+                    <span ng-if="task.completed == ''">غير محدد</span>
+                </p>
+                <p ng-if="task.wt != ''">
+                    <span style="font-weight: bold">الحجم بالنسبة لكامل المشروع : </span>
+                    <span ng-if="task.wt == 0 || !task.wt || task.wt == ''">غير محدد</span>
+                    <span ng-if="task.wt == 80">كبير جدا</span>
+                    <span ng-if="task.wt == 60">كبير</span>
+                    <span ng-if="task.wt == 40">متوسط</span>
+                    <span ng-if="task.wt == 20">صغير</span>
+                    <span ng-if="task.wt == 5">صغير جدا</span>
+                </p>
+                
+                <p ng-if="task.completed == '' && task.wt == '' && task.quality == '' && task.quality == ''">لا يوجد</p>
+            </div>
+
+            <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.dates">
+                <h5>تواريخ البداية والنهاية</h5>
+                <p style="font-weight: bold">
+                    تاريخ البداية المخطط: 
+                    <span ng-if="task.datePlannedStart != 'NaN-NaN-NaN' && task.datePlannedStart != ''">{{task.datePlannedStart}}</span>
+                    <span ng-if="task.datePlannedStart == 'NaN-NaN-NaN' || task.datePlannedStart == ''">لا يوجد</span>
+                </p>
+                <p style="font-weight: bold">
+                    تاريخ النهاية المخطط: 
+                    <span ng-if="task.datePlannedEnd != 'NaN-NaN-NaN' && task.datePlannedEnd != ''">{{task.datePlannedEnd}}</span>
+                    <span ng-if="task.datePlannedEnd == 'NaN-NaN-NaN' || task.datePlannedEnd == ''">لا يوجد</span>
+                </p>
+                <p style="font-weight: bold">
+                    تاريخ البداية الفعلي: 
+                    <span ng-if="task.dateActualStart != 'NaN-NaN-NaN' && task.dateActualStart != ''">{{task.dateActualStart}}</span>
+                    <span ng-if="task.dateActualStart == 'NaN-NaN-NaN' || task.dateActualStart == ''">لا يوجد</span>
+
+                </p>
+                <p style="font-weight: bold">
+                    تاريخ النهاية الفعلي: 
+                    <span ng-if="task.dateActualEnd != 'NaN-NaN-NaN' && task.dateActualEnd != ''">{{task.dateActualEnd}}</span>
+                    <span ng-if="task.dateActualEnd == 'NaN-NaN-NaN' || task.dateActualEnd == ''">لا يوجد</span>
+
                 </p>
             </div>
 
-            <div ng-if="reportForm.dated">
-                <p ng-if="task.datePlannedStart != 'NaN-NaN-NaN' && task.datePlannedStart != ''">
-                    تاريخ البداية المخطط: {{task.datePlannedStart}}
-                </p>
-                <p ng-if="task.datePlannedEnd != 'NaN-NaN-NaN' && task.datePlannedEnd != ''">
-                    تاريخ النهاية المخطط: {{task.datePlannedEnd}}
-                </p>
-                <p ng-if="task.dateActualStart != 'NaN-NaN-NaN' && task.dateActualStart != ''">
-                    تاريخ البداية الفعلي: {{task.dateActualStart}}
-                </p>
-                <p ng-if="task.dateActualEnd != 'NaN-NaN-NaN' && task.dateActualEnd != ''">
-                    تاريخ النهاية الفعلي: {{task.dateActualEnd}}
-                </p>
-            </div>
-
-            <div ng-if="reportForm.team">
-                <p ng-if="task.teamInt.length > 0" style="font-weight: bold">فريق العمل داخليا</p>
-                <div style="margin: 10px" ng-repeat="member in task.teamInt">
+            <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.team">
+            
+                <h5>فريق العمل داخليا</h5>
+                <div ng-if="task.teamInt.length > 0" style="margin: 10px" ng-repeat="member in task.teamInt">
                     <div ng-repeat="user in allUsers" ng-if="member == user._id">
                         <p>
                             {{user.name}}
                         </p>
                     </div>
                 </div>
-                <p ng-if="task.teamExt.length > 0" style="font-weight: bold">فريق العمل خارجيا</p>
-                <div style="margin: 10px" ng-repeat="member in task.teamExt">
+                <p ng-if="task.teamInt.length == 0">لا يوجد</p>
+
+                <h5>فريق العمل خارجيا</h5>
+                <div ng-if="task.teamExt.length > 0" style="margin: 10px" ng-repeat="member in task.teamExt">
                     <div ng-repeat="user in allUsers" ng-if="member == user._id">
                         <p>
                             {{user.name}}
                         </p>
                     </div>
                 </div>
+                <p ng-if="task.teamExt.length == 0">لا يوجد</p>
+
             </div>
 
-            <div ng-if="reportForm.requirements">
-                <p ng-if="task.description != ''">
-                    تفصيلات المهمة والخطوات التنفيذية: {{task.description}}
-                </p>
-                <p ng-if="task.requirements != ''">
-                    مطالب التنفيذ - الأدوات: {{task.requirements}}
-                </p>
-            </div>
-            <div ng-if="reportForm.kpis">
-                <p ng-if="task.kpis != ''">
-                    مؤشرات الأداء: {{task.kpis}}
-                </p>
-            </div>
-            <div ng-if="reportForm.quality">
-                <p ng-if="selectedTask.wt != ''">
-                    الوزن النسبي: {{selectedTask.wt}}
-                </p>
-                <p ng-if="selectedTask.status != ''">
-                    حالة البرنامج: {{selectedTask.status}}
-                </p>
-                <p ng-if="selectedTask.quality != ''">
-                    نسبة الجودة: {{selectedTask.quality}}
-                </p>
-                <p ng-if="selectedTask.acheive != ''">
-                    نسبة الإنجاز: {{selectedTask.acheive}}
+            <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.entity">
+                <h5>الجهات ذات العلاقة</h5>
+                <div ng-repeat="(key1,firstLevelValue) in task.entities" ng-if="flatEntities[firstLevelValue.l1] != undefined && flatEntities[firstLevelValue.l1] != '' && flatEntities[firstLevelValue.l1] != 'undefined'">
+                    <p style="font-weight: bold;">{{flatEntities[firstLevelValue.l1]}}</p>
+                    <div style="padding:5px" ng-if="flatEntities[firstLevelValue.l2] != undefined && flatEntities[firstLevelValue.l2] != '' && flatEntities[firstLevelValue.l2] != 'undefined'">
+                        <p style="margin:0 8px;"> &rsaquo; {{flatEntities[firstLevelValue.l2]}} </p>
+                        <div style="padding:5px" ng-if="flatEntities[firstLevelValue.l3] != undefined && flatEntities[firstLevelValue.l3] != '' && flatEntities[firstLevelValue.l3] != 'undefined'">
+                            <p style="margin:0 16px;"> &rsaquo;&rsaquo; {{flatEntities[firstLevelValue.l3]}}</p>
+                            <div style="padding:5px" ng-if="flatEntities[firstLevelValue.l4] != undefined && flatEntities[firstLevelValue.l4] != '' && flatEntities[firstLevelValue.l4] != 'undefined'">
+                                <p style="margin:0 24px;"> &rsaquo;&rsaquo;&rsaquo; {{flatEntities[firstLevelValue.l4]}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <p ng-if="!task.entities || task.entities.length == 0">
+                    لا يوجد
                 </p>
             </div>
+
+            <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.requirements">
+                <h5>التفصيلات ومطالب التنفيذ </h5>
+                <p>
+                    <span style="font-weight: bold;">تفصيلات المهمة والخطوات التنفيذية:</span> 
+                    <span ng-if="task.description != ''">{{task.description}}</span>
+                    <span ng-if="task.description == ''">لا يوجد</span>
+                </p>
+                <p>
+                    <span style="font-weight: bold;">مطالب التنفيذ - الأدوات:</span> 
+                    <span ng-if="task.requirements != ''">{{task.requirements}}</span>
+                    <span ng-if="task.requirements == ''">لا يوجد</span>
+                </p>
+            </div>
+            <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.kpis">
+                <h5>مؤشرات الأداء:</h5>
+                <p>
+                    <!-- <span style="font-weight: bold;">مؤشرات الأداء:</span>  -->
+                    <span ng-if="task.kpis != ''">{{task.kpis}}</span>
+                    <span ng-if="task.kpis == ''">لا يوجد</span>
+                </p>
+            </div>
+            
         </div>
 
     </div>
     <div ng-if="!printAllTasks" style="margin:8px">
-        
-        
-        <div ng-if="reportForm.mainData">
-            <p style="font-weight: bold;color: blue;margin: 8px">
-                المرحلة: {{selectedTask.stage}}
+
+        <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.mainData">
+            <h5>البيانات اﻷساسية</h5>
+            <p ng-repeat="user in allUsers" ng-if="user._id == selectedTask.manager">
+                <span style="font-weight: bold">مدير المشروع:</span> <span>{{user.name}}</span>
             </p>
-            <p style="font-weight: bold;color: blue;" ng-if="selectedProject != undefined">
-                المشروع: {{selectedProject.name}}
+            <p ng-repeat="user in allUsers" ng-if="user._id == selectedTask.managerHelp">
+                <span style="font-weight: bold">مدير المشروع:</span> <span>{{user.name}}</span>
+            </p>
+            <p ng-if="selectedProject != undefined">
+                <span style="font-weight: bold">المشروع:</span> {{selectedProject.name}}
             </p>
             <p>
-                حالة المهمة: {{selectedTask.active ? 'نشطة':'تمت'}}
+                <span style="font-weight: bold">المرحلة:</span> {{selectedTask.stage}}
             </p>
-            <p ng-repeat="user in allUsers" ng-if="user._id == selectedTask.manager">
-                مدير المهمة: {{user.name}}
+            <p>
+                <span style="font-weight: bold">التكلفة التقديرية:</span> <span>{{selectedTask.approxCost}}</span>
             </p>
-            <p ng-if="selectedTask.approxCost != 0">
-                التكلفة التقديرية {{selectedTask.approxCost}}
-            </p>
-        </div>
-
-        <div ng-if="reportForm.dates">
-            <p ng-if="selectedTask.datePlannedStart != 'NaN-NaN-NaN' && selectedTask.datePlannedStart != ''">
-                تاريخ البداية المخطط: {{selectedTask.datePlannedStart}}
-            </p>
-            <p ng-if="selectedTask.datePlannedEnd != 'NaN-NaN-NaN' && selectedTask.datePlannedEnd != ''">
-                تاريخ النهاية المخطط: {{selectedTask.datePlannedEnd}}
-            </p>
-            <p ng-if="selectedTask.dateActualStart != 'NaN-NaN-NaN' && selectedTask.dateActualStart != ''">
-                تاريخ البداية الفعلي: {{selectedTask.dateActualStart}}
-            </p>
-            <p ng-if="selectedTask.dateActualEnd != 'NaN-NaN-NaN' && selectedTask.dateActualEnd != ''">
-                تاريخ النهاية الفعلي: {{selectedTask.dateActualEnd}}
-            </p>
-        </div>
-
-        <div ng-if="reportForm.team">
-            <p ng-if="selectedTask.teamInt.length > 0" style="font-weight: bold">فريق العمل داخليا</p>
-            <div style="margin: 10px" ng-repeat="member in selectedTask.teamInt">
-                <div ng-repeat="user in allUsers" ng-if="member == user._id">
-                    <p>
-                        {{user.name}}
-                    </p>
-                </div>
-            </div>
-            <p ng-if="selectedTask.teamExt.length > 0" style="font-weight: bold">فريق العمل خارجيا</p>
-            <div style="margin: 10px" ng-repeat="member in selectedTask.teamExt">
-                <div ng-repeat="user in allUsers" ng-if="member == user._id">
-                    <p>
-                        {{user.name}}
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div ng-if="reportForm.requirements">
-            <p ng-if="selectedTask.description != ''">
-                تفصيلات المهمة والخطوات التنفيذية: {{selectedTask.description}}
-            </p>
-            <p ng-if="selectedTask.requirements != ''">
-                مطالب التنفيذ - الأدوات: {{selectedTask.requirements}}
-            </p>
-        </div>
-        <div ng-if="reportForm.kpis">
-            <p ng-if="selectedTask.kpis != ''">
-                مؤشرات الأداء: {{selectedTask.kpis}}
-            </p>
-        </div>
-
-        <div ng-if="reportForm.users">
 
         </div>
-        <div ng-if="reportForm.quality">
+
+        <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.quality">
+            <h5>اﻷهمية،الإنجاز والجودة</h5>
+            <p>
+                <span style="font-weight: bold">حالة البرنامج: </span>
+                <span ng-if="selectedTask.status == 0 || selectedTask.status == ''"> غير محدد </span>
+                <span ng-if="selectedTask.status == 1"> تحت الدراسة والاعتماد </span>
+                <span ng-if="selectedTask.status == 2"> لم يبدء بعد </span>
+                <span ng-if="selectedTask.status == 3"> متوقف مؤقتاً</span>
+                <span ng-if="selectedTask.status == 4"> منتظم </span>
+                <span ng-if="selectedTask.status == 5"> متأخر</span>
+                <span ng-if="selectedTask.status == 6"> ملغى</span>
+                <span ng-if="selectedTask.status == 7"> منتهي</span>
+                <span ng-if="selectedTask.status == 8"> البيانات غير مكتملة </span>
+            </p>
+            <p>
+                <span style="font-weight: bold">نسبة الجودة: </span>
+                <span ng-if="selectedTask.quality != ''">{{selectedTask.quality}}</span>
+                <span ng-if="selectedTask.quality == ''">غير محدد</span>
+            </p>
+            <p>
+                <span style="font-weight: bold">نسبة الإنجاز: </span>
+                <span ng-if="selectedTask.completed != ''">{{selectedTask.completed}}</span>
+                <span ng-if="selectedTask.completed == ''">غير محدد</span>
+            </p>
             <p ng-if="selectedTask.wt != ''">
-                الوزن النسبي: {{selectedTask.wt}}
+                <span style="font-weight: bold">الحجم بالنسبة لكامل المشروع : </span>
+                <span ng-if="selectedTask.wt == 0 || !selectedTask.wt || selectedTask.wt == ''">غير محدد</span>
+                <span ng-if="selectedTask.wt == 80">كبير جدا</span>
+                <span ng-if="selectedTask.wt == 60">كبير</span>
+                <span ng-if="selectedTask.wt == 40">متوسط</span>
+                <span ng-if="selectedTask.wt == 20">صغير</span>
+                <span ng-if="selectedTask.wt == 5">صغير جدا</span>
             </p>
-            <p ng-if="selectedTask.status != ''">
-                حالة البرنامج: {{selectedTask.status}}
+            
+            <p ng-if="selectedTask.completed == '' && selectedTask.wt == '' && selectedTask.quality == '' && selectedTask.quality == ''">لا يوجد</p>
+        </div>
+
+        <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.dates">
+            <h5>تواريخ البداية والنهاية</h5>
+            <p style="font-weight: bold">
+                تاريخ البداية المخطط: 
+                <span ng-if="selectedTask.datePlannedStart != 'NaN-NaN-NaN' && selectedTask.datePlannedStart != ''">{{selectedTask.datePlannedStart}}</span>
+                <span ng-if="selectedTask.datePlannedStart == 'NaN-NaN-NaN' || selectedTask.datePlannedStart == ''">لا يوجد</span>
             </p>
-            <p ng-if="selectedTask.quality != ''">
-                نسبة الجودة: {{selectedTask.quality}}
+            <p style="font-weight: bold">
+                تاريخ النهاية المخطط: 
+                <span ng-if="selectedTask.datePlannedEnd != 'NaN-NaN-NaN' && selectedTask.datePlannedEnd != ''">{{selectedTask.datePlannedEnd}}</span>
+                <span ng-if="selectedTask.datePlannedEnd == 'NaN-NaN-NaN' || selectedTask.datePlannedEnd == ''">لا يوجد</span>
             </p>
-            <p ng-if="selectedTask.acheive != ''">
-                نسبة الإنجاز: {{selectedTask.acheive}}
+            <p style="font-weight: bold">
+                تاريخ البداية الفعلي: 
+                <span ng-if="selectedTask.dateActualStart != 'NaN-NaN-NaN' && selectedTask.dateActualStart != ''">{{selectedTask.dateActualStart}}</span>
+                <span ng-if="selectedTask.dateActualStart == 'NaN-NaN-NaN' || selectedTask.dateActualStart == ''">لا يوجد</span>
+
+            </p>
+            <p style="font-weight: bold">
+                تاريخ النهاية الفعلي: 
+                <span ng-if="selectedTask.dateActualEnd != 'NaN-NaN-NaN' && selectedTask.dateActualEnd != ''">{{selectedTask.dateActualEnd}}</span>
+                <span ng-if="selectedTask.dateActualEnd == 'NaN-NaN-NaN' || selectedTask.dateActualEnd == ''">لا يوجد</span>
+
+            </p>
+        </div>
+
+        <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.team">
+            
+            <h5>فريق العمل داخليا</h5>
+            <div ng-if="selectedTask.teamInt.length > 0" style="margin: 10px" ng-repeat="member in selectedTask.teamInt">
+                <div ng-repeat="user in allUsers" ng-if="member == user._id">
+                    <p>
+                        {{user.name}}
+                    </p>
+                </div>
+            </div>
+            <p ng-if="selectedTask.teamInt.length == 0">لا يوجد</p>
+
+            <h5>فريق العمل خارجيا</h5>
+            <div ng-if="selectedTask.teamExt.length > 0" style="margin: 10px" ng-repeat="member in selectedTask.teamExt">
+                <div ng-repeat="user in allUsers" ng-if="member == user._id">
+                    <p>
+                        {{user.name}}
+                    </p>
+                </div>
+            </div>
+            <p ng-if="selectedTask.teamExt.length == 0">لا يوجد</p>
+
+        </div>
+
+        <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.entity">
+            <h5>الجهات ذات العلاقة</h5>
+            <div ng-if="selectedTask['entities'].length > 0">
+                <div ng-repeat="(key1,firstLevelValue) in selectedEntitiesArray" ng-if="flatEntities[key1] != undefined && flatEntities[key1] != '' && flatEntities[key1] != 'undefined'">
+                    <p style="font-weight: bold;">{{flatEntities[key1]}} </p>
+                    <div style="padding:5px" ng-repeat="(key2,secondLevelValue) in firstLevelValue" ng-if="flatEntities[key2] != undefined && flatEntities[key2] != '' && flatEntities[key2] != 'undefined'">
+                        <p style="margin:0 8px;"> &rsaquo; {{flatEntities[key2]}} </p>
+                        <div style="padding:5px" ng-repeat="(key3,thirdLevelValue) in secondLevelValue" ng-if="flatEntities[key3] != undefined && flatEntities[key3] != '' && flatEntities[key3] != 'undefined'">
+                            <p style="margin:0 16px;"> &rsaquo;&rsaquo; {{flatEntities[key3]}}</p>
+                            <div style="padding:5px" ng-repeat="(key4,fourthLevelValue) in thirdLevelValue" ng-if="flatEntities[key4] != undefined && flatEntities[key4] != '' && flatEntities[key4] != 'undefined'">
+                                <p style="margin:0 24px;"> &rsaquo;&rsaquo;&rsaquo; {{flatEntities[key4]}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <p style="border-bottom: 1px solid #ddd;" ng-if="!selectedTask.entities || selectedTask.entities.length == 0">
+                لا يوجد
+            </p>
+        </div>
+
+        <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.requirements">
+            <h5>التفصيلات ومطالب التنفيذ </h5>
+            <p>
+                <span style="font-weight: bold;">تفصيلات المهمة والخطوات التنفيذية:</span> 
+                <span ng-if="selectedTask.description != ''">{{selectedTask.description}}</span>
+                <span ng-if="selectedTask.description == ''">لا يوجد</span>
+            </p>
+            <p>
+                <span style="font-weight: bold;">مطالب التنفيذ - الأدوات:</span> 
+                <span ng-if="selectedTask.requirements != ''">{{selectedTask.requirements}}</span>
+                <span ng-if="selectedTask.requirements == ''">لا يوجد</span>
+            </p>
+        </div>
+        <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.kpis">
+            <h5>مؤشرات الأداء:</h5>
+            <p>
+                <!-- <span style="font-weight: bold;">مؤشرات الأداء:</span>  -->
+                <span ng-if="selectedTask.kpis != ''">{{selectedTask.kpis}}</span>
+                <span ng-if="selectedTask.kpis == ''">لا يوجد</span>
             </p>
         </div>
 

@@ -17,7 +17,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         team: true,
         kpis: true,
         requirements: true,
-        users: true
+        entity: true
     };
     //end "added by heba"
     $scope.makeChanges = false;

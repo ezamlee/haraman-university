@@ -45,22 +45,40 @@
 
             <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.quality">
                 <h5>اﻷهمية،الإنجاز والجودة</h5>
-                <p style="font-weight: bold" ng-if="program.status != ''">حالة البرنامج: 
-                    <span ng-if="program.status == 1"> تحت الدراسة والاعتماد </span>
-                    <span ng-if="program.status == 2"> لم يبدء بعد </span>
-                    <span ng-if="program.status == 3"> متوقف مؤقتاً</span>
-                    <span ng-if="program.status == 4"> منتظم </span>
-                    <span ng-if="program.status == 5"> متأخر</span>
-                    <span ng-if="program.status == 6"> ملغى</span>
-                    <span ng-if="program.status == 7"> منتهي</span>
-                    <span ng-if="program.status == 8"> البيانات غير مكتملة </span>
+                <p>
+                    <span style="font-weight: bold">حالة البرنامج: </span>
+                    <span ng-if="program.status != ''">
+                        <span ng-if="program.status == 1"> تحت الدراسة والاعتماد </span>
+                        <span ng-if="program.status == 2"> لم يبدء بعد </span>
+                        <span ng-if="program.status == 3"> متوقف مؤقتاً</span>
+                        <span ng-if="program.status == 4"> منتظم </span>
+                        <span ng-if="program.status == 5"> متأخر</span>
+                        <span ng-if="program.status == 6"> ملغى</span>
+                        <span ng-if="program.status == 7"> منتهي</span>
+                        <span ng-if="program.status == 8"> البيانات غير مكتملة </span>
+                    </span>
+                    <p ng-if="program.status == ''">غير محدد</p>
                 </p>
-                <p style="font-weight: bold" ng-if="program.quality != ''">نسبة الجودة: <span>{{program.quality}}</span></p>
-                <p style="font-weight: bold" ng-if="program.completed != ''">نسبة الإنجاز: <span>{{program.completed}}</span></p>
-                <p style="font-weight: bold" ng-if="program.wt != ''">الوزن النسبي: <span>{{program.wt}}</span></p>
+                <p>
+                    <span style="font-weight: bold">نسبة الجودة:</span>
+                    <span ng-if="program.quality != ''">{{program.quality}}</span>
+                    <span ng-if="program.quality == ''">غير محدد</span>
+                </p>
+                <p>
+                    <span style="font-weight: bold">نسبة الإنجاز: </span>
+                    <span ng-if="program.completed != ''">{{program.completed}}</span>
+                    <span ng-if="program.completed == ''">غير محدد</span>
+                </p>
+                <p>
+                    <span style="font-weight: bold">الوزن النسبي: </span>
+                    <span ng-if="program.wt == 0 || program.wt == ''">غير محدد</span>
+                    <span ng-if="program.wt == 60">كبير</span>
+                    <span ng-if="program.wt == 40">متوسط</span>
+                    <span ng-if="program.wt == 20">صغير</span>
+                </p>
                 <p style="font-weight: bold" ng-if="program.passed != ''">المنقضي من وقت التنفيذ: <span>{{program.passed}}</span></p>
                 
-                <p ng-if="program.passed != '' && program.completed != '' && program.wt != '' && program.quality != '' && program.quality != ''">لا يوجد</p>
+                <p ng-if="program.passed == '' && program.completed == '' && program.wt == '' && program.quality == '' && program.quality == ''">لا يوجد</p>
             </div>
 
             <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.desc">
@@ -186,20 +204,37 @@
         </div>
         <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.quality">
             <h5>اﻷهمية،الإنجاز والجودة</h5>
-            <!-- <p>حالة البرنامج: {{selectedProgram.active ? 'نشطة':'تمت'}}</p> -->
-            <p ng-if="selectedProgram.status != ''"><span style="font-weight: bold">حالة البرنامج:</span> 
-                <span ng-if="selectedProgram.status == 1"> تحت الدراسة والاعتماد </span>
-                <span ng-if="selectedProgram.status == 2"> لم يبدء بعد </span>
-                <span ng-if="selectedProgram.status == 3"> متوقف مؤقتاً</span>
-                <span ng-if="selectedProgram.status == 4"> منتظم </span>
-                <span ng-if="selectedProgram.status == 5"> متأخر</span>
-                <span ng-if="selectedProgram.status == 6"> ملغى</span>
-                <span ng-if="selectedProgram.status == 7"> منتهي</span>
-                <span ng-if="selectedProgram.status == 8"> البيانات غير مكتملة </span>
+            <p>
+                <span style="font-weight: bold">حالة البرنامج: </span>
+                <span ng-if="selectedProgram.status != ''">
+                    <span ng-if="selectedProgram.status == 1"> تحت الدراسة والاعتماد </span>
+                    <span ng-if="selectedProgram.status == 2"> لم يبدء بعد </span>
+                    <span ng-if="selectedProgram.status == 3"> متوقف مؤقتاً</span>
+                    <span ng-if="selectedProgram.status == 4"> منتظم </span>
+                    <span ng-if="selectedProgram.status == 5"> متأخر</span>
+                    <span ng-if="selectedProgram.status == 6"> ملغى</span>
+                    <span ng-if="selectedProgram.status == 7"> منتهي</span>
+                    <span ng-if="selectedProgram.status == 8"> البيانات غير مكتملة </span>
+                </span>
+                <p ng-if="selectedProgram.status == ''">غير محدد</p>
             </p>
-            <p ng-if="selectedProgram.quality != ''"><span style="font-weight: bold">نسبة الجودة:</span> <span>{{selectedProgram.quality}}</span></p>
-            <p ng-if="selectedProgram.completed != ''"><span style="font-weight: bold">نسبة الإنجاز:</span> <span>{{selectedProgram.completed}}</span></p>
-            <p ng-if="selectedProgram.wt != ''"><span style="font-weight: bold">الوزن النسبي:</span> <span>{{selectedProgram.wt}}</span></p>
+            <p>
+                <span style="font-weight: bold">نسبة الجودة:</span>
+                <span ng-if="selectedProgram.quality != ''">{{selectedProgram.quality}}</span>
+                <span ng-if="selectedProgram.quality == ''">غير محدد</span>
+            </p>
+            <p>
+                <span style="font-weight: bold">نسبة الإنجاز: </span>
+                <span ng-if="selectedProgram.completed != ''">{{selectedProgram.completed}}</span>
+                <span ng-if="selectedProgram.completed == ''">غير محدد</span>
+            </p>
+            <p>
+                <span style="font-weight: bold">الوزن النسبي: </span>
+                <span ng-if="selectedProgram.wt == 0 || selectedProgram.wt == ''">غير محدد</span>
+                <span ng-if="selectedProgram.wt == 60">كبير</span>
+                <span ng-if="selectedProgram.wt == 40">متوسط</span>
+                <span ng-if="selectedProgram.wt == 20">صغير</span>
+            </p>
             <p ng-if="selectedProgram.passed != ''"><span style="font-weight: bold">المنقضي من وقت التنفيذ:</span> <span>{{selectedProgram.passed}}</span></p>
 
             <p ng-if="selectedProgram.passed != '' && selectedProgram.completed != '' && selectedProgram.wt != '' && selectedProgram.quality != '' && selectedProgram.quality != ''">لا يوجد</p>
