@@ -38,7 +38,16 @@
 
             <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.quality">
                 <h5>اﻷهمية،الإنجاز والجودة</h5>
-                <p ng-if="project.status != ''"><span style="font-weight: bold">حالة المشروع:</span> <span>{{project.status}}</span></p>
+                <p ng-if="project.status != ''"><span style="font-weight: bold">حالة المشروع:</span> 
+                    <span ng-if="project.status == 1"> تحت الدراسة والاعتماد </span>
+                    <span ng-if="project.status == 2"> لم يبدء بعد </span>
+                    <span ng-if="project.status == 3"> متوقف مؤقتاً</span>
+                    <span ng-if="project.status == 4"> منتظم </span>
+                    <span ng-if="project.status == 5"> متأخر</span>
+                    <span ng-if="project.status == 6"> ملغى</span>
+                    <span ng-if="project.status == 7"> منتهي</span>
+                    <span ng-if="project.status == 8"> البيانات غير مكتملة </span>
+                </p>
                 <p ng-if="project.quality != ''"><span style="font-weight: bold">نسبة الجودة:</span> <span>{{project.quality}}</span></p>
                 <p ng-if="project.completed != ''"><span style="font-weight: bold">نسبة الإنجاز:</span> <span>{{project.completed}}</span></p>
                 <p ng-if="project.wt != ''"><span style="font-weight: bold">الوزن النسبي:</span> <span>{{project.wt}}</span></p>
@@ -169,7 +178,16 @@
         <div style="border-bottom: 1px solid #ddd;" ng-if="reportForm.quality">
             <h5>اﻷهمية،الإنجاز والجودة</h5>
             <!-- <p>حالة البرنامج: {{selectedProject.active ? 'نشطة':'تمت'}}</p> -->
-            <p ng-if="selectedProject.status != ''"><span style="font-weight: bold">حالة المشروع:</span> <span>{{selectedProject.status}}</span></p>
+            <p ng-if="selectedProject.status != ''"><span style="font-weight: bold">حالة المشروع:</span> 
+                <span ng-if="selectedProject.status == 1"> تحت الدراسة والاعتماد </span>
+                <span ng-if="selectedProject.status == 2"> لم يبدء بعد </span>
+                <span ng-if="selectedProject.status == 3"> متوقف مؤقتاً</span>
+                <span ng-if="selectedProject.status == 4"> منتظم </span>
+                <span ng-if="selectedProject.status == 5"> متأخر</span>
+                <span ng-if="selectedProject.status == 6"> ملغى</span>
+                <span ng-if="selectedProject.status == 7"> منتهي</span>
+                <span ng-if="selectedProject.status == 8"> البيانات غير مكتملة </span>
+            </p>
             <p ng-if="selectedProject.quality != ''"><span style="font-weight: bold">نسبة الجودة:</span> <span>{{selectedProject.quality}}</span></p>
             <p ng-if="selectedProject.completed != ''"><span style="font-weight: bold">نسبة الإنجاز:</span> <span>{{selectedProject.completed}}</span></p>
             <p ng-if="selectedProject.wt != ''"><span style="font-weight: bold">الوزن النسبي:</span> <span>{{selectedProject.wt}}</span></p>
