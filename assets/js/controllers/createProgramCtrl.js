@@ -358,7 +358,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         if(   isNaN(new Date($scope.programForm.dateActualStart).getTime())
            || isNaN(new Date($scope.programForm.datePlannedEnd).getTime())
           ){
-          $scope.passed = "البيانات غير مكتمل"
+          $scope.programForm.passed = "البيانات غير مكتمل"
         }
         else{
           var today  = new Date().getTime();
@@ -368,7 +368,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
           var total  = end - start;
           var passed = Math.round((part / total) * 100)
           passed = Math.min(passed ,100);
-          $scope.passed = `${passed}`;
+          $scope.programForm.passed = `${passed}`;
 
         }
         console.log("check the auto",$scope.isAuto,$scope.selectedProgram.isAuto);
@@ -581,6 +581,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         newForm.wt = programForm.wt;
         newForm.status = programForm.status || "8";
         newForm.isAuto = $scope.isAuto || false;
+        newForm.passed = $scope.programForm.passed;
         return newForm;
     };
     $scope.internalTeamArr = [];
@@ -1200,10 +1201,10 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
             console.log("in if 3")
             $scope.programForm.status = "8";
           }
-          else if(parseFloat($scope.programForm.completed) / parseFloat($scope.passed) >= 0.85){
+          else if(parseFloat($scope.programForm.completed) / parseFloat($scope.programForm.passed) >= 0.85){
             console.log("in elseif 1")
             $scope.programForm.status = "4";
-          }else if(parseFloat($scope.programForm.completed) / parseFloat($scope.passed) < 0.85){
+          }else if(parseFloat($scope.programForm.completed) / parseFloat($scope.programForm.passed) < 0.85){
             console.log("in elseif 2")
             $scope.programForm.status = "5";
           }
