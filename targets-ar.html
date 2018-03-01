@@ -29,7 +29,7 @@
                                             <label> </label>
                                             <select multiple="multiple" class="form-control height-45-vh clearborder">
                                                 <option ng-repeat="mainGoal in strategicGoals" ng-click="onStrategicGoalSelected(mainGoal,$index)">
-                                                    {{mainGoal.name}}
+                                                  {{$index + 1}} - {{mainGoal.name}}
                                                 </option>
                                             </select>
                                         </div>
@@ -183,7 +183,7 @@
                                             <label></label>
                                             <select multiple="multiple" class="form-control height-45-vh clearborder">
                                                 <option ng-repeat="(key, value) in selectedStrategicGoal.subgoals" ng-click="onSecondaryGoalSelected(key,$index,value)">
-                                                    {{value.name}}
+                                                   {{$index + 1}} - {{value.name}}
                                                 </option>
                                             </select>
                                         </div>

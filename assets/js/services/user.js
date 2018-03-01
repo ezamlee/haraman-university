@@ -326,8 +326,7 @@ app.factory('user', function ($q, $rootScope, $log, $timeout, connector) {
             var deferred = $q.defer();
 
             connector.send(project, '/project', 'POST', null).then(function (resolved) {
-                $log.debug('Add Project response');
-                $log.debug(resolved.data);
+                console.log("project sent is : ",project);
                 if (resolved.data.message === "OK") {
                     deferred.resolve(resolved.data);
                 }

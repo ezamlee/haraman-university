@@ -164,9 +164,8 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
     $scope.renderProjects = function (filtrationProgram) {
 
         user.getProjects(filtrationProgram).then(function (resolved) {
+            console.log(resolved)
             $timeout(function () {
-
-
               //filter for program status
                 var freecard = false;
                 if(!$scope.currentState ||  $scope.currentState == 0 ||  $scope.currentState == 8 )
@@ -276,10 +275,10 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.externalTeamArr = [];
         if ($scope.allUsers != undefined) {
             for (var userIndex in $scope.allUsers) {
-                if (object.teamInt.indexOf($scope.allUsers[userIndex]._id) > -1) {
+                if (object && object.teamInt && object.teamInt.indexOf($scope.allUsers[userIndex]._id) > -1) {
                     $scope.internalTeamArr.push($scope.allUsers[userIndex]);
                 }
-                if (object.teamExt.indexOf($scope.allUsers[userIndex]._id) > -1) {
+                if (object && object.teamInt && object.teamExt.indexOf($scope.allUsers[userIndex]._id) > -1) {
                     $scope.externalTeamArr.push($scope.allUsers[userIndex]);
                 }
             }
@@ -356,8 +355,6 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.selectedProject = project;
         $scope.projectObject = project;
         $scope.projectObject = $scope.selectedProject;
-        $log.debug("Clicked project");
-        $log.debug(project);
         $scope.setProjectObject($scope.selectedProject);
 
     };
@@ -510,9 +507,12 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         return submittedForm;
     };
     $scope.editProject = function (projectObject, valid) {
-        console.log("from editProject: ProjectObject is: " , projectObject)
+
+        console.log("from selected project: ProjectObject is: " , $scope.selectedProject)
+        
         if (valid || 1) {
-            if ($scope.selectedProject == undefined) {
+            if ($scope.selectedProject._id == undefined) {
+                projectObject = $scope.selectedProject;
                 $.confirm({
                     title: '',
                     content: 'تأكيد إضافة مشروع؟',
@@ -520,10 +520,10 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                         confirm:{
                             text: 'تأكيد',
                             action: function(){
+                                console.log("The current object being created is: ",projectObject);
                                 var submittedForm = $scope.initializeProjectForm(projectObject);
-                                submittedForm._id = new Date().getTime() + '';
-                                 $log.debug("Submit program form");
-                                 $log.debug(submittedForm);
+                                submittedForm._id = (new Date().getTime()).toString();
+                                console.log("the new id is: ",submittedForm._id);
                                  user.addProject(submittedForm).then(function (resolved) {
                                      $scope.filterProjects();
                                      $.alert("تمت إضافة مشروع بنجاح!");
@@ -551,8 +551,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                             action: function(){
                                 var submittedForm = $scope.initializeProjectForm(projectObject);
                                 submittedForm._id = $scope.selectedProject._id;
-                                $log.debug("Submit program form");
-                                $log.debug(submittedForm);
+                                
                                 user.editProject(submittedForm).then(function (resolved) {
                                     $scope.filterProjects();
                                     $.alert("تم تعديل المشروع بنجاح!");
