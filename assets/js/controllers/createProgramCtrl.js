@@ -529,6 +529,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                             action: function () {
                                 var submittedForm = $scope.initializeProgramForm(programForm);
                                 submittedForm._id = $scope.selectedProgram._id;
+                                console.log("")
                                 $log.debug("Submit program form");
                                 $log.debug(submittedForm);
                                 user.editProgram(submittedForm).then(function (resolved) {
@@ -581,7 +582,8 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         newForm.wt = programForm.wt;
         newForm.status = programForm.status || "8";
         newForm.isAuto = $scope.isAuto || false;
-        newForm.passed = $scope.programForm.passed;
+        newForm.passed = programForm.passed;
+        console.log("the program form is : ",programForm)
         return newForm;
     };
     $scope.internalTeamArr = [];
