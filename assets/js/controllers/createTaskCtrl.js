@@ -28,8 +28,20 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
     $scope.taskObject = {};
     $scope.userFilterEntitiesModel = {};
     $scope.filterationModel = {
-        "entities": { "$elemMatch": { "l1": undefined, "l2": undefined, "l3": undefined, "l4": undefined } },
-        "goals": { "$elemMatch": { "l1": undefined, "l2": undefined } }
+        "entities": {
+            "$elemMatch": {
+                "l1": undefined,
+                "l2": undefined,
+                "l3": undefined,
+                "l4": undefined
+            }
+        },
+        "goals": {
+            "$elemMatch": {
+                "l1": undefined,
+                "l2": undefined
+            }
+        }
     };
     $scope.userFilterationModel = {
         "entityl1": undefined,
@@ -90,8 +102,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     $scope.disableSecondLevel = true;
                     $scope.disablethirdLevel = true;
                     $scope.disableFourthLevel = true;
-                }
-                else {
+                } else {
                     $scope.disableSecondLevel = false;
                 }
 
@@ -103,8 +114,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                 if ($scope.entitiesModel.secondLevel === "") {
                     $scope.disablethirdLevel = true;
                     $scope.disableFourthLevel = true;
-                }
-                else {
+                } else {
                     $scope.disablethirdLevel = false;
                 }
                 break;
@@ -113,8 +123,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                 $scope.entitiesModel.fourthLevel = '';
                 if ($scope.entitiesModel.thirdLevel === "") {
                     $scope.disableFourthLevel = true;
-                }
-                else {
+                } else {
                     $scope.disableFourthLevel = false;
                 }
                 break;
@@ -138,8 +147,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         $scope.goalsModel.secondaryGoal = '';
         if ($scope.goalsModel.strategicGoal === "") {
             $scope.disableSecondaryGoal = true;
-        }
-        else {
+        } else {
             $scope.disableSecondaryGoal = false;
         }
         $scope.updateFilterationModel();
@@ -179,13 +187,13 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
             if ($scope.programId === "") {
                 $scope.renderProjects();
                 $scope.renderTasks();
-            }
-            else {
-                var object = { "program": $scope.programId }
+            } else {
+                var object = {
+                    "program": $scope.programId
+                }
                 $scope.renderProjects(object);
             }
-        }
-        else {
+        } else {
             $scope.renderProjects();
         }
 
@@ -195,74 +203,70 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
             $timeout(function () {
                 console.log(tasks);
                 //filter for program status
-                  var freecard = false;
-                  if(!$scope.currentState ||  $scope.currentState == 0 ||  $scope.currentState == 8 )
+                var freecard = false;
+                if (!$scope.currentState || $scope.currentState == 0 || $scope.currentState == 8)
                     var freecard = true;
-                  resolved = resolved.filter( data => (data.status && data.status == $scope.currentState ) || freecard ? true : false)
+                resolved = resolved.filter(data => (data.status && data.status == $scope.currentState) || freecard ? true : false)
                 //filter for from_complete status
-                  var freecard2 = false;
-                  if(!$scope.from_complete  || parseInt($scope.from_complete) == 0 || $scope.currentState != 8)
+                var freecard2 = false;
+                if (!$scope.from_complete || parseInt($scope.from_complete) == 0 || $scope.currentState != 8)
                     var freecard2 = true;
-                  resolved = resolved.filter( data => {
+                resolved = resolved.filter(data => {
 
-                      return (parseInt(data.completed) >= parseInt($scope.from_complete) ) || freecard2 ? true : false
-                  })
+                    return (parseInt(data.completed) >= parseInt($scope.from_complete)) || freecard2 ? true : false
+                })
                 //filter for to_complete status
-                  var freecard3 = false;
-                  if(!$scope.to_complete  || parseInt($scope.to_complete) == 0 || $scope.currentState != 8)
-                      var freecard3 = true;
-                  resolved = resolved.filter( data => {
+                var freecard3 = false;
+                if (!$scope.to_complete || parseInt($scope.to_complete) == 0 || $scope.currentState != 8)
+                    var freecard3 = true;
+                resolved = resolved.filter(data => {
 
-                      return (parseInt(data.completed) <= parseInt($scope.to_complete)) || freecard3 ? true : false
-                  })
+                    return (parseInt(data.completed) <= parseInt($scope.to_complete)) || freecard3 ? true : false
+                })
 
                 //filter for importance status
-                  resolved = resolved.filter( data => {
-                      console.log(data.wt,$scope.importance)
-                      if($scope.importance == 20){
-                        return (parseInt(data.wt) > 0  && parseInt(data.wt) <= 20)? true : false;
-                      }
-                      else if($scope.importance == 60){
-                        return (parseInt(data.wt) > 20 && parseInt(data.wt) <= 60)? true : false;
-                      }
-                      else if($scope.importance == 100){
-                        return (parseInt(data.wt) > 60 && parseInt(data.wt) <= 100)? true : false;
-                      }else{
+                resolved = resolved.filter(data => {
+                    console.log(data.wt, $scope.importance)
+                    if ($scope.importance == 20) {
+                        return (parseInt(data.wt) > 0 && parseInt(data.wt) <= 20) ? true : false;
+                    } else if ($scope.importance == 60) {
+                        return (parseInt(data.wt) > 20 && parseInt(data.wt) <= 60) ? true : false;
+                    } else if ($scope.importance == 100) {
+                        return (parseInt(data.wt) > 60 && parseInt(data.wt) <= 100) ? true : false;
+                    } else {
                         return true
-                      }
-                  })
+                    }
+                })
 
-                  //filter for quality
-                  var freecard4 = false;
-                  if(!$scope.from_quality || parseInt($scope.from_quality) == 0 )
+                //filter for quality
+                var freecard4 = false;
+                if (!$scope.from_quality || parseInt($scope.from_quality) == 0)
                     var freecard4 = true;
 
-                  resolved = resolved.filter( data => {
-                    console.log("quality data: ",parseInt(data.wt),$scope.from_quality)
-                    if(freecard4){
-                      return true;
+                resolved = resolved.filter(data => {
+                    console.log("quality data: ", parseInt(data.wt), $scope.from_quality)
+                    if (freecard4) {
+                        return true;
+                    } else if (parseInt(data.quality) >= parseInt($scope.from_quality)) {
+                        return true;
+                    } else {
+                        return false;
                     }
-                    else if(parseInt(data.quality) >= parseInt($scope.from_quality)){
-                      return true;
-                    }else{
-                      return false;
-                    }
-                  })
+                })
 
-                  var freecard5 = false;
-                  if(!$scope.to_quality || parseInt($scope.from_quality) == 0 )
+                var freecard5 = false;
+                if (!$scope.to_quality || parseInt($scope.from_quality) == 0)
                     var freecard5 = true;
 
-                  resolved = resolved.filter( data => {
-                    if(freecard5){
-                      return true;
+                resolved = resolved.filter(data => {
+                    if (freecard5) {
+                        return true;
+                    } else if (parseInt(data.quality) <= parseInt($scope.to_quality)) {
+                        return true;
+                    } else {
+                        return false;
                     }
-                    else if(parseInt(data.quality) <= parseInt($scope.to_quality)){
-                      return true;
-                    }else{
-                      return false;
-                    }
-                  })
+                })
 
 
 
@@ -285,8 +289,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     $scope.setUsersList();
                 }
             }
-        }
-        else {
+        } else {
             delete $scope.selectedProject;
             $scope.usersList = []
         }
@@ -368,54 +371,59 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         var lvls = object.entities;
 
         var o = {};
-        if(lvls)
-        for (var i = 0; i < lvls.length; i++) {
-            var lvl = lvls[i];
-            var l1 = lvl.l1;
-            var l2 = lvl.l2;
-            var l3 = lvl.l3;
-            var l4 = lvl.l4;
+        if (lvls)
+            for (var i = 0; i < lvls.length; i++) {
+                var lvl = lvls[i];
+                var l1 = lvl.l1;
+                var l2 = lvl.l2;
+                var l3 = lvl.l3;
+                var l4 = lvl.l4;
 
-            if (l1 != undefined && l1 != "undefined") {
-                if (!(l1 in o)) { o[l1] = {}; }
-                var ol1 = o[l1];
-                if (l2 != undefined && l2 != "undefined") {
-                    if (!(l2 in ol1)) { ol1[l2] = {}; }
-                    var ol2 = ol1[l2];
-                    if (l3 != undefined && l3 != "undefined") {
-                        if (!(l3 in ol2)) { ol2[l3] = {}; }
-                        var ol3 = ol2[l3];
-
-                        if (l4 != undefined && l4 != "undefined") {
-                            if (!(l4 in ol3)) {
-                                ol3[l4] = null;
+                if (l1 != undefined && l1 != "undefined") {
+                    if (!(l1 in o)) {
+                        o[l1] = {};
+                    }
+                    var ol1 = o[l1];
+                    if (l2 != undefined && l2 != "undefined") {
+                        if (!(l2 in ol1)) {
+                            ol1[l2] = {};
+                        }
+                        var ol2 = ol1[l2];
+                        if (l3 != undefined && l3 != "undefined") {
+                            if (!(l3 in ol2)) {
+                                ol2[l3] = {};
                             }
+                            var ol3 = ol2[l3];
+
+                            if (l4 != undefined && l4 != "undefined") {
+                                if (!(l4 in ol3)) {
+                                    ol3[l4] = null;
+                                }
+                            }
+
                         }
 
                     }
-
                 }
             }
-        }
         $log.debug("output entities array");
         $log.debug(o);
         $scope.selectedEntitiesArray = o;
 
         $scope.taskObject.status = object.status || "8";
-        if(   isNaN(new Date($scope.taskObject.dateActualStart).getTime())
-           || isNaN(new Date($scope.taskObject.datePlannedEnd).getTime())
-          ){
-          $scope.passed = "البيانات غير مكتمل"
-        }
-        else{
-          var today  = new Date().getTime();
-          var start  = new Date($scope.taskObject.dateActualStart).getTime();
-          var end    = new Date($scope.taskObject.datePlannedEnd).getTime();
-          var part   = today - start;
-          var total  = end - start;
-          var passed = Math.round((part / total) * 100)
-          passed = Math.min(passed ,100);
-          $scope.passed = `${passed}`;
+        if (isNaN(new Date($scope.taskObject.datePlannedStart).getTime()) ||
+            isNaN(new Date($scope.taskObject.datePlannedEnd).getTime())
+        ) {
+            $scope.passed = "البيانات غير مكتمل"
+        } else {
+            var today = new Date().getTime();
+            var start = new Date($scope.taskObject.datePlannedStart).getTime();
+            var end = new Date($scope.taskObject.datePlannedEnd).getTime();
+            var part = today - start;
+            var total = end - start;
+            var passed = Math.round((part / total) * 100)
+            passed = Math.min(passed, 100);
+            $scope.passed = `${passed}`;
         }
 
         $scope.taskObject.acheive = object.acheive
@@ -465,8 +473,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
 
                 }
             });
-        }
-        else {
+        } else {
             $.alert("لم يتم اختيار أي مهمة");
         }
 
@@ -507,8 +514,9 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
     };
     $scope.editTask = function (taskObject, valid) {
         $scope.makeChanges = false;
-        if (valid || 1) {
-            if ($scope.selectedTask == undefined) {
+        console.log("fhaedofdldsnds: ", $scope.taskObject.project)
+        if (true) {
+            if ($scope.selectedTask == undefined && $scope.taskObject.project && $scope.taskObject.project != "" && $scope.taskObject.name && $scope.taskObject.name != "") {
                 $.confirm({
                     title: '',
                     content: 'تأكيد إضافة مهمة؟',
@@ -535,16 +543,18 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
 
                     }
                 });
-
+            } else {
+                $.alert("من فضلك تأكد من إكمال البيانات المطلوبة");
             }
-            else {
-                $.confirm({
-                    title: '',
-                    content: 'تأكيد تعديل مهمة؟',
-                    buttons: {
-                        confirm: {
-                            text: 'تأكيد',
-                            action: function () {
+        } else {
+            $.confirm({
+                title: '',
+                content: 'تأكيد تعديل مهمة؟',
+                buttons: {
+                    confirm: {
+                        text: 'تأكيد',
+                        action: function () {
+                            if ($scope.selectedTask == undefined && $scope.taskObject.project && $scope.taskObject.project != "" && $scope.taskObject.name && $scope.taskObject.name != "") {
                                 var submittedForm = $scope.initializeTaskForm(taskObject);
                                 submittedForm._id = $scope.selectedTask._id;
                                 $log.debug("Submit task form");
@@ -553,24 +563,22 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                                     $scope.renderTasks($scope.projectId, $scope.stageName);
                                     $.alert("تم تعديل المهمة بنجاح!");
                                 });
-                            }
-                        },
-                        cancel: {
-                            text: 'إلغاء',
-                            action: function () {
-                                console.log("Cancelled");
+                            } else {
+                                $.alert("من فضلك تأكد من إكمال البيانات المطلوبة");
                             }
                         }
-
+                    },
+                    cancel: {
+                        text: 'إلغاء',
+                        action: function () {
+                            console.log("Cancelled");
+                        }
                     }
-                });
 
-            }
-        }
-        else {
-            $.alert("من فضلك تأكد من إكمال البيانات المطلوبة");
-        }
+                }
+            });
 
+        }
     };
 
 
@@ -587,7 +595,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     action: function () {
                         $timeout(function () {
                             $scope.filterTeamArr.push(user);
-                            $scope.tasks = $scope.tasks.filter(prog => prog["teamInt"].indexOf(user._id) > -1 || prog["teamExt"].indexOf(user._id) > -1 );
+                            $scope.tasks = $scope.tasks.filter(prog => prog["teamInt"].indexOf(user._id) > -1 || prog["teamExt"].indexOf(user._id) > -1);
                         });
                     }
                 },
@@ -635,8 +643,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                 add: {
                     text: 'تم',
                     btnClass: 'btn-blue',
-                    action: function (scope, button) {
-                    }
+                    action: function (scope, button) {}
                 }
             }
         });
@@ -653,9 +660,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     text: 'تم',
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
-                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {
-                        }
-                        else {
+                        if ($scope.entitiesModel.firstLevel != undefined && $scope.entitiesModel.firstLevel != '') {} else {
                             $ngConfirm('يجب اختيار المستوى الأول');
                             return false;
                         }
@@ -681,8 +686,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                 cancel: {
                     text: 'إغلاق',
                     btnClass: 'btn-red',
-                    action: function (scope, button) {
-                    }
+                    action: function (scope, button) {}
                 }
             }
         });
@@ -721,8 +725,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     $scope.disableSecondLevelEntity = true;
                     $scope.disableThirdLevelEntity = true;
                     $scope.disableFourthLevelEntity = true;
-                }
-                else {
+                } else {
                     $scope.disableSecondLevelEntity = false;
                 }
                 break;
@@ -733,8 +736,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                 if ($scope.userFilterEntitiesModel.secondLevel === "") {
                     $scope.disableThirdLevelEntity = true;
                     $scope.disableFourthLevelEntity = true;
-                }
-                else {
+                } else {
                     $scope.disableThirdLevelEntity = false;
                 }
                 break;
@@ -743,8 +745,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                 $scope.userFilterEntitiesModel.fourthLevel = '';
                 if ($scope.userFilterEntitiesModel.thirdLevel === "") {
                     $scope.disableFourthLevelEntity = true;
-                }
-                else {
+                } else {
                     $scope.disableFourthLevelEntity = false;
                 }
                 break;
@@ -854,9 +855,9 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
                         console.log("scope.result", scope.result)
-                        if(!scope.result){
+                        if (!scope.result) {
                             $scope.printReport(false);
-                        }else{
+                        } else {
                             $scope.printReport(true);
                         }
                     }
@@ -901,8 +902,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
 
                 }
             });
-        }
-        else {
+        } else {
             $scope.printReport(true);
         }
 
@@ -965,16 +965,16 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                 cancel: {
                     text: 'إلغاء',
                     btnClass: 'btn-red',
-                    action: function (scope, button) {
-                    }
+                    action: function (scope, button) {}
                 },
             }
         });
     }
-    $scope.calcAuto =function(){
-      console.log('hi')
+    $scope.calcAuto = function () {
+        console.log('hi')
     }
     $scope.passed = "10%"
+
     function serialize(obj, lstCmpl, lstCrnt) {
         lstCmpl = lstCmpl || [];
         lstCrnt = lstCrnt || [];
@@ -993,6 +993,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
 
         return lstCmpl;
     };
+
     function convert(arr) {
         var res = [];
 
@@ -1050,7 +1051,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                         if ($scope.entityl1 != undefined && $scope.entityl1 != '') {
                             $timeout(function () {
                                 // var newEntityObject = {};
-                              //  debugger;
+                                //  debugger;
                                 if (!($scope.entityl1 in $scope.selectedEntitiesArray)) {
                                     $scope.selectedEntitiesArray[$scope.entityl1] = null;
                                 }
@@ -1093,8 +1094,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                                 $log.debug($scope.selectedEntitiesArray);
                                 $scope.$apply();
                             });
-                        }
-                        else {
+                        } else {
                             $ngConfirm('يجب اختيار المستوى الأول');
                             return false;
                         }
@@ -1103,107 +1103,102 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                 cancel: {
                     text: 'إلغاء',
                     btnClass: 'btn-red',
-                    action: function (scope, button) {
-                    }
+                    action: function (scope, button) {}
                 },
             }
         });
     };
     $scope.deleteEntityFromProgram = function (type, key1, key2, key3, key4) {
-      $.confirm({
-        title: '',
-        content: 'هل ترغب بحذف الجهة من هذه القائمة؟',
-        buttons: {
-          confirm: {
-            text: 'حذف',
-            action: function () {
-              $timeout(function () {
-                if (type == "firstLevel") {
-                  delete $scope.selectedEntitiesArray[key1];
+        $.confirm({
+            title: '',
+            content: 'هل ترغب بحذف الجهة من هذه القائمة؟',
+            buttons: {
+                confirm: {
+                    text: 'حذف',
+                    action: function () {
+                        $timeout(function () {
+                            if (type == "firstLevel") {
+                                delete $scope.selectedEntitiesArray[key1];
 
+                            } else if (type == "secondLevel") {
+                                delete $scope.selectedEntitiesArray[key1][key2];
+                            } else if (type == "thirdLevel") {
+                                delete $scope.selectedEntitiesArray[key1][key2][key3];
+                            } else if (type == "fourthLevel") {
+                                delete $scope.selectedEntitiesArray[key1][key2][key3][key4];
+                            }
+                            $log.debug("Entities after deleting item");
+                            $log.debug($scope.selectedEntitiesArray);
+                            $scope.$apply();
+                        });
+
+                    }
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    action: function () {
+                        console.log("Cancelled");
+                    }
                 }
-                else if (type == "secondLevel") {
-                  delete $scope.selectedEntitiesArray[key1][key2];
-                }
-                else if (type == "thirdLevel") {
-                  delete $scope.selectedEntitiesArray[key1][key2][key3];
-                }
-                else if (type == "fourthLevel") {
-                  delete $scope.selectedEntitiesArray[key1][key2][key3][key4];
-                }
-                $log.debug("Entities after deleting item");
-                $log.debug($scope.selectedEntitiesArray);
-                $scope.$apply();
-              });
 
             }
-          },
-          cancel: {
-            text: 'إلغاء',
-            action: function () {
-              console.log("Cancelled");
-            }
-          }
-
-        }
-      });
+        });
     };
-    $scope.validateMinMax=function(val,obj){
-      if(obj  > 100)    $scope[val] =100;
-      else if (obj < 0) $scope[val] =0;
-      if (!$scope[val]) $scope[val] = 0;
+    $scope.validateMinMax = function (val, obj) {
+        if (obj > 100) $scope[val] = 100;
+        else if (obj < 0) $scope[val] = 0;
+        if (!$scope[val]) $scope[val] = 0;
     }
 
-        $scope.$watch("currentState",function(oldval,newval){
-          $scope.renderTasks($scope.projectId,$scope.stageName);
-        })
-        $scope.$watch("from_complete",function(oldval,newval){
-          $scope.renderTasks($scope.projectId,$scope.stageName);
-        })
-        $scope.$watch("to_complete",function(oldval,newval){
-          $scope.renderTasks($scope.projectId,$scope.stageName);
-        })
-        $scope.$watch("from_quality",function(oldval,newval){
-          $scope.renderTasks($scope.projectId,$scope.stageName);
-        })
-        $scope.$watch("to_quality",function(oldval,newval){
-          $scope.renderTasks($scope.projectId,$scope.stageName);
-        })
-        $scope.$watch("importance",function(oldval,newval){
-          $scope.renderTasks($scope.projectId,$scope.stageName);
-        })
-        $scope.$watch("isAuto",function(oldval,newval){
-          if($scope.isAuto){
+    $scope.$watch("currentState", function (oldval, newval) {
+        $scope.renderTasks($scope.projectId, $scope.stageName);
+    })
+    $scope.$watch("from_complete", function (oldval, newval) {
+        $scope.renderTasks($scope.projectId, $scope.stageName);
+    })
+    $scope.$watch("to_complete", function (oldval, newval) {
+        $scope.renderTasks($scope.projectId, $scope.stageName);
+    })
+    $scope.$watch("from_quality", function (oldval, newval) {
+        $scope.renderTasks($scope.projectId, $scope.stageName);
+    })
+    $scope.$watch("to_quality", function (oldval, newval) {
+        $scope.renderTasks($scope.projectId, $scope.stageName);
+    })
+    $scope.$watch("importance", function (oldval, newval) {
+        $scope.renderTasks($scope.projectId, $scope.stageName);
+    })
+    $scope.$watch("isAuto", function (oldval, newval) {
+        if ($scope.isAuto) {
             console.log("in if")
-            if($scope.taskObject){
-              console.log("in if 2")
-              if(    isNaN(new Date($scope.taskObject.dateActualStart).getTime())
-                  || isNaN(new Date($scope.taskObject.datePlannedEnd).getTime())){
-                console.log("in if 3")
-                $scope.taskObject.status = "8";
-              }
-              else if(parseFloat($scope.taskObject.completed) / parseFloat($scope.passed) >= 0.85){
-                console.log("in elseif 1")
-                $scope.taskObject.status = "4";
-              }else if(parseFloat($scope.taskObject.completed) / parseFloat($scope.passed) < 0.85){
-                console.log("in elseif 2")
-                $scope.taskObject.status = "5";
-              }
+            if ($scope.taskObject) {
+                console.log("in if 2")
+                if (isNaN(new Date($scope.taskObject.dateActualStart).getTime()) ||
+                    isNaN(new Date($scope.taskObject.datePlannedEnd).getTime())) {
+                    console.log("in if 3")
+                    $scope.taskObject.status = "8";
+                } else if (parseFloat($scope.taskObject.completed) / parseFloat($scope.passed) >= 0.85) {
+                    console.log("in elseif 1")
+                    $scope.taskObject.status = "4";
+                } else if (parseFloat($scope.taskObject.completed) / parseFloat($scope.passed) < 0.85) {
+                    console.log("in elseif 2")
+                    $scope.taskObject.status = "5";
+                }
             }
-          }else{
+        } else {
 
-          }
-          //console.log($scope.programForm.status);
-        })
-    $scope.filterProjectsForNewTask = function(){
-      console.log($scope.taskObject,$scope.projects);
-      $scope.projects.filter((project) => project._id == $scope.taskObject.project)
-                     .map((project) => {
-                       
-                       if(!$scope.selectedProject)
-                        $scope.selectedProject={}
-                       $scope.selectedProject.stages = project.stages
-                     })
+        }
+        //console.log($scope.programForm.status);
+    })
+    $scope.filterProjectsForNewTask = function () {
+        console.log($scope.taskObject, $scope.projects);
+        $scope.projects.filter((project) => project._id == $scope.taskObject.project)
+            .map((project) => {
+
+                if (!$scope.selectedProject)
+                    $scope.selectedProject = {}
+                $scope.selectedProject.stages = project.stages
+            })
 
     }
 });

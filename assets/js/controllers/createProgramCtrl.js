@@ -362,7 +362,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         }
         else{
           var today  = new Date().getTime();
-          var start  = new Date($scope.programForm.dateActualStart).getTime();
+          var start  = new Date($scope.programForm.datePlannedStart).getTime();
           var end    = new Date($scope.programForm.datePlannedEnd).getTime();
           var part   = today - start;
           var total  = end - start;
@@ -730,18 +730,19 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
     };
     $scope.addEntityToProgram = function () {
         $ngConfirm({
+            closeIcon: true,
             title: 'إضافة جهة',
             contentUrl: 'add-entity-template.html',
             scope: $scope,
             rtl: true,
             buttons: {
-                add: {
+                button1: {
                     text: 'إضافة',
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
                         console.log("selectedEntitiesArray", $scope.selectedEntitiesArray)
                         if ($scope.entityl1 != undefined && $scope.entityl1 != '') {
-                            $timeout(function () {
+                            //$timeout(function () {
                                 // var newEntityObject = {};
                               //  debugger;
                                 if (!($scope.entityl1 in $scope.selectedEntitiesArray)) {
@@ -782,10 +783,10 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                                     }
                                     $scope.selectedEntitiesArray[$scope.entityl1] = secondLevel;
                                 }
-                                $log.debug("Entities object after adding");
-                                $log.debug($scope.selectedEntitiesArray);
-                                $scope.$apply();
-                            });
+                                //$scope.$apply();
+                                //$ngConfirm('تم الإضافه');
+                                return false;
+                           // });
                         }
                         else {
                             $ngConfirm('يجب اختيار المستوى الأول');
@@ -793,10 +794,11 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                         }
                     }
                 },
-                cancel: {
-                    text: 'إلغاء',
+                button2: {
+                    text: 'إغلاق',
                     btnClass: 'btn-red',
                     action: function (scope, button) {
+                        $scope.$apply();
                     }
                 },
             }

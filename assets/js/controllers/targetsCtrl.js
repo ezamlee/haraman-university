@@ -130,6 +130,8 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
             $scope.strategicGoals = goals;
             $scope.selectedStrategicGoal = goals[$scope.selectedStrategicGoalIndex];
             console.log("$scope.selectedStrategicGoal", $scope.selectedStrategicGoal);
+            console.log("my test: ",Object.values($scope.selectedStrategicGoal.subgoals));
+            
 
         });
     };
@@ -138,6 +140,15 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
         $scope.selectedStrategicComplete = 0;
         $scope.selectedStrategicGoalIndex = index;
         $scope.selectedStrategicGoal = selectedGoal;
+        //$scope.subgoals = Object.values($scope.selectedStrategicGoal.subgoals);
+        $scope.subgoals = Object.keys($scope.selectedStrategicGoal.subgoals).map( key => {
+            return {
+                "_id" : key,
+                "name":$scope.selectedStrategicGoal.subgoals[key]['name'],
+                "wt":$scope.selectedStrategicGoal.subgoals[key]['wt'],
+                "completed":$scope.selectedStrategicGoal.subgoals[key]['completed']
+            }
+        }) 
         $scope.showSecondaryGoalsColumn = true;
         $scope.strategicGoalModel = selectedGoal.name;
         // (function CalcGoalCompleted(){
@@ -226,6 +237,7 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
         // }
     };
     $scope.onSecondaryGoalSelected = function (key, index, value) {
+        console.log("the key is: ",value,key,index)
         $scope.selectedSecondaryGoal = value;
         $scope.selectedSecondaryGoalIndex = index;
         $scope.secondaryGoalModel = value.name;

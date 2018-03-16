@@ -28,8 +28,8 @@
                                         <div class="form-group">
                                             <label> </label>
                                             <select multiple="multiple" class="form-control height-45-vh clearborder">
-                                                <option ng-repeat="mainGoal in strategicGoals" ng-click="onStrategicGoalSelected(mainGoal,$index)">
-                                                  {{$index + 1}} - {{mainGoal.name}}
+                                                <option ng-repeat="mainGoal in strategicGoals | orderBy: 'name' : false" ng-click="onStrategicGoalSelected(mainGoal,$index)">
+                                                  <!-- {{$index + 1}} - --> {{mainGoal.name}} 
                                                 </option>
                                             </select>
                                         </div>
@@ -57,7 +57,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <hr>
-                                            <textarea rows="3" class="form-control" placeholder="" ng-model="strategicGoalModel" required></textarea>
+                                            <textarea rows="3" class="form-control" ng-model="strategicGoalModel" required></textarea>
                                             <hr>
                                         </div>
                                     </div>
@@ -182,8 +182,8 @@
                                         <div class="form-group">
                                             <label></label>
                                             <select multiple="multiple" class="form-control height-45-vh clearborder">
-                                                <option ng-repeat="(key, value) in selectedStrategicGoal.subgoals" ng-click="onSecondaryGoalSelected(key,$index,value)">
-                                                   {{$index + 1}} - {{value.name}}
+                                                <option ng-repeat="value in subgoals | orderBy: name : false" ng-click="onSecondaryGoalSelected(value._id,$index,value)">
+                                                   <!-- {{$index + 1}} - -->  {{value.name}} 
                                                 </option>
                                             </select>
                                         </div>
