@@ -146,7 +146,7 @@
                             <div class="panel-body">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label > الحاله الرهانه </label>
+                                        <label > الحاله الراهنه </label>
                                         <br><span style="color:white">-</span><br>
                                         <select style="margin-top:6px" name="select" class="form-control" ng-model="currentState">
                                             <option value="0"> الكل </option>
@@ -235,17 +235,18 @@
                                     <div class="form-group">
                                         <label>الجهات ذات العلاقة</label>
                                         <div class="form-control" style="height: 214px;padding: 7px; overflow: auto;">
+
                                             <div ng-if="entitiesModel.firstLevel">
-                                                <p ng-if="entitiesModel.firstLevel== 0" style="font-weight: bold;">{{selectedFirstLevelObject.name}}</p>
+                                                <p ng-if="entitiesModel.firstLevel== 0" style="font-weight: bold;" ng-click="entityfilter(1)">{{selectedFirstLevelObject.name}}</p>
                                             </div>
                                             <div ng-if="entitiesModel.secondLevel">
-                                                <p>&rsaquo;{{selectedSecondLevelObject.name}}</p>
+                                                <p ng-click="entityfilter(2)" >&rsaquo;{{selectedSecondLevelObject.name}}</p>
                                             </div>
                                             <div ng-if="entitiesModel.thirdLevel">
-                                                <p>&rsaquo;&rsaquo;{{selectedThirdLevelObject.name}}</p>
+                                                <p ng-click="entityfilter(3)">&rsaquo;&rsaquo;{{selectedThirdLevelObject.name}}</p>
                                             </div>
                                             <div ng-if="entitiesModel.fourthLevel">
-                                                <p>&rsaquo;&rsaquo;&rsaquo;{{selectedForthLevelObject.name}}</p>
+                                                <p ng-click="entityfilter(4)">&rsaquo;&rsaquo;&rsaquo;{{selectedForthLevelObject.name}}</p>
                                             </div>
 
                                         </div>

@@ -174,6 +174,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.renderPrograms($scope.filterationModel);
     };
     $scope.renderPrograms = function (filter) {
+        console.log("filter is: " , filter);
         user.getPrograms(filter).then(function (resolved) {
             $timeout(function () {
               //filter for program status
@@ -349,13 +350,15 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         $log.debug(o);
         $scope.selectedGoalsArray = o;
         $scope.programForm.wt = selectedProgram.wt || 0;
+        $scope.programForm.completed = selectedProgram.quality || 0;
+        $scope.programForm.quality = selectedProgram.completed || 0 ;
 
-        user.getAnalytics('program',selectedProgram._id).then(data => {
-          $scope.programForm.completed = data.WT || 0;
-          $scope.programForm.quality = data.QA || 0 ;
-        });
+        // user.getAnalytics('program',selectedProgram._id).then(data => {
+        //   $scope.programForm.completed = data.WT || 0;
+        //   $scope.programForm.quality = data.QA || 0 ;
+        // });
         $scope.programForm.status = selectedProgram.status || "8";
-        if(   isNaN(new Date($scope.programForm.dateActualStart).getTime())
+        if(   isNaN(new Date($scope.programForm.datePlannedStart).getTime())
            || isNaN(new Date($scope.programForm.datePlannedEnd).getTime())
           ){
           $scope.programForm.passed = "البيانات غير مكتمل"
@@ -368,7 +371,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
           var total  = end - start;
           var passed = Math.round((part / total) * 100)
           passed = Math.min(passed ,100);
-          $scope.programForm.passed = `${passed}`;
+          $scope.programForm.passed =  selectedProgram.passed ||  `${passed}`;
 
         }
         console.log("check the auto",$scope.isAuto,$scope.selectedProgram.isAuto);
@@ -1002,7 +1005,70 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         });
 
     };
+    $scope.entityfilter = function(level){
+        $ngConfirm({
+            title: 'تأكيد الحزف',
+            content:"<p>تاكيد</p>",
+            scope: $scope,
+            buttons:{
+                confirm:{
+                    text: 'تاكيد',
+                    btnClass: 'btn-blue',
+                    action: function(scope, button){
 
+                        switch(level){
+                            case 1:
+                                $scope.selectedFirstLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l1'] = undefined;
+                                    $scope.entitiesModel.firstLevel = "";
+                                }catch(err){
+                                    console.log(error);
+                                }
+                            case 2:
+                                $scope.selectedSecondLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l2'] = undefined;
+                                    $scope.entitiesModel.secondLevel = "";
+                                }catch(err){
+                                    console.log(error);
+                                }
+                                
+                            case 3:
+                                $scope.selectedThirdLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l3'] = undefined;
+                                    $scope.entitiesModel.thirdLevel = "";
+                                }catch(err){
+                                    console.log(error);
+                                }
+                            case 4:
+                                $scope.selectedForthLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l4'] = undefined;
+                                    $scope.entitiesModel.fourthLevel = "";
+                                }catch(err){
+                                    console.log(error);
+                                }
+                        }
+                        console.log($scope.filterationModel,$scope.entitiesModel);
+                        $scope.renderPrograms($scope.filterationModel);
+                        $scope.$apply();
+
+                    }
+                    
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    btnClass: 'btn-red',
+                    action: function(){
+                        
+                        return false;
+                    }
+                }
+            }
+        })
+    }
     $scope.printReport = function (printAllPrograms, reportForm) {
         console.log("reportObj", $scope.reportForm)
         $ngConfirm({
@@ -1200,7 +1266,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
         console.log("in if")
         if($scope.programForm){
           console.log("in if 2")
-          if(    isNaN(new Date($scope.programForm.dateActualStart).getTime())
+          if(    isNaN(new Date($scope.programForm.datePlannedStart).getTime())
               || isNaN(new Date($scope.programForm.datePlannedEnd).getTime())){
             console.log("in if 3")
             $scope.programForm.status = "8";

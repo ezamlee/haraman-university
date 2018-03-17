@@ -8,6 +8,8 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
     // start "added by heba"
     $scope.min = 0;
     $scope.max = 100;
+    $scope.projectId = '';
+    $scope.stageName = '';
 
     $scope.result = false;
     $scope.reportForm = {
@@ -27,6 +29,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
     $scope.entitiesModel = {};
     $scope.taskObject = {};
     $scope.userFilterEntitiesModel = {};
+    $scope.selectedEntitiesArray={};
     $scope.filterationModel = {
         "entities": {
             "$elemMatch": {
@@ -90,6 +93,74 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         });
     };
     $scope.renderEntities();
+
+    $scope.entityfilter = function(level){
+        console.log("level entered")
+        $ngConfirm({
+            title: 'تأكيد الحزف',
+            content:"<p>تاكيد</p>",
+            scope: $scope,
+            buttons:{
+                confirm:{
+                    text: 'تاكيد',
+                    btnClass: 'btn-blue',
+                    action: function(scope, button){
+
+                        switch(level){
+                            case 1:
+                                $scope.selectedFirstLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l1'] = undefined;
+                                    $scope.entitiesModel.firstLevel = undefined;
+                                }catch(err){
+                                    console.log(error);
+                                }
+                            case 2:
+                                $scope.selectedSecondLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l2'] = undefined;
+                                    $scope.entitiesModel.secondLevel = undefined;
+                                }catch(err){
+                                    console.log(error);
+                                }
+                                
+                            case 3:
+                                $scope.selectedThirdLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l3'] = undefined;
+                                    $scope.entitiesModel.thirdLevel = undefined;
+                                }catch(err){
+                                    console.log(error);
+                                }
+                            case 4:
+                                $scope.selectedForthLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l4'] = undefined;
+                                    $scope.entitiesModel.fourthLevel = undefined;
+                                }catch(err){
+                                    console.log(error);
+                                }
+                        }
+                        console.log("find entities");
+                        $scope.renderTasks($scope.projectId,$scope.stageName,$scope.filterationModel.entities);
+                        $scope.$apply();
+
+                    }
+                    
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    btnClass: 'btn-red',
+                    action: function(){
+                        
+                        return false;
+                    }
+                }
+            }
+        })
+    }
+
+
     $scope.onAssociationSelected = function (entityLevel) {
         switch (entityLevel) {
             case 'level1':
@@ -133,7 +204,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         }
         $scope.updateFilterationModel();
         // $scope.renderPrograms($scope.filterationModel);
-        $scope.renderTasks();
+        $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
 
     };
     $scope.renderGoals = function () {
@@ -186,20 +257,21 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         if ($scope.programId != undefined) {
             if ($scope.programId === "") {
                 $scope.renderProjects();
-                $scope.renderTasks();
+                $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
             } else {
                 var object = {
                     "program": $scope.programId
                 }
-                $scope.renderProjects(object);
+                $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
             }
         } else {
-            $scope.renderProjects();
+            $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
         }
 
     };
     $scope.renderTasks = function (projectId, stageName) {
-        user.getTasks(projectId, stageName).then(function (resolved) {
+        console.log("filter tasks are: ",$scope.filterationModel.entities)
+        user.getTasks(projectId, stageName,$scope.filterationModel.entities).then(function (resolved) {
             $timeout(function () {
                 console.log(tasks);
                 //filter for program status
@@ -275,7 +347,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
             });
         });
     };
-    $scope.renderTasks();
+    $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
     $scope.onProjectSelected = function () {
         $scope.stageName = '';
         // $scope.internalTeamArr = [];
@@ -294,11 +366,11 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
             $scope.usersList = []
         }
 
-        $scope.renderTasks($scope.projectId, $scope.stageName);
+        $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
 
     };
     $scope.onStageSelected = function () {
-        $scope.renderTasks($scope.projectId, $scope.stageName);
+        $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
     };
     $scope.usersList = [];
     $scope.setUsersList = function () {
@@ -423,9 +495,9 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
             var total = end - start;
             var passed = Math.round((part / total) * 100)
             passed = Math.min(passed, 100);
-            $scope.passed = `${passed}`;
+            $scope.passed = object.passed ||  `${passed}`;
         }
-
+        $scope.isAuto = object.isAuto || false;
         $scope.taskObject.acheive = object.acheive
     };
     $scope.onTaskClicked = function (task) {
@@ -510,6 +582,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         submittedForm.project = taskObject.project // null//$scope.projectId ? $scope.projectId : "";
         submittedForm.acheive = taskObject.acheive;
         submittedForm.managerHelp = taskObject.managerHelp;
+        submittedForm.isAuto = $scope.isAuto || false;
         return submittedForm;
     };
     $scope.editTask = function (taskObject, valid) {
@@ -529,7 +602,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                                 $log.debug("Submit task form");
                                 $log.debug(submittedForm);
                                 user.addTask(submittedForm).then(function (resolved) {
-                                    $scope.renderTasks($scope.projectId, $scope.stageName);
+                                    $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
                                     $.alert("تمت إضافة مهمة بنجاح!");
                                 });
                             }
@@ -544,40 +617,40 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     }
                 });
             } else {
-                $.alert("من فضلك تأكد من إكمال البيانات المطلوبة");
-            }
-        } else {
-            $.confirm({
-                title: '',
-                content: 'تأكيد تعديل مهمة؟',
-                buttons: {
-                    confirm: {
-                        text: 'تأكيد',
-                        action: function () {
-                            if ($scope.selectedTask == undefined && $scope.taskObject.project && $scope.taskObject.project != "" && $scope.taskObject.name && $scope.taskObject.name != "") {
-                                var submittedForm = $scope.initializeTaskForm(taskObject);
-                                submittedForm._id = $scope.selectedTask._id;
-                                $log.debug("Submit task form");
-                                $log.debug(submittedForm);
-                                user.editTask(submittedForm).then(function (resolved) {
-                                    $scope.renderTasks($scope.projectId, $scope.stageName);
-                                    $.alert("تم تعديل المهمة بنجاح!");
-                                });
-                            } else {
-                                $.alert("من فضلك تأكد من إكمال البيانات المطلوبة");
+                if ( $scope.taskObject.project && $scope.taskObject.project != "" && $scope.taskObject.name && $scope.taskObject.name != "") {
+                    $.confirm({
+                        title: '',
+                        content: 'تأكيد تعديل مهمة؟',
+                        buttons: {
+                            confirm: {
+                                text: 'تأكيد',
+                                action: function () {
+
+                                    var submittedForm = $scope.initializeTaskForm(taskObject);
+                                    submittedForm._id = $scope.selectedTask._id;
+                                    $log.debug("Submit task form");
+                                    $log.debug(submittedForm);
+                                    user.editTask(submittedForm).then(function (resolved) {
+                                        $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
+                                        $.alert("تم تعديل المهمة بنجاح!");
+                                    });
+
+                                }
+                            },
+                            cancel: {
+                                text: 'إلغاء',
+                                action: function () {
+                                    console.log("Cancelled");
+                                }
                             }
-                        }
-                    },
-                    cancel: {
-                        text: 'إلغاء',
-                        action: function () {
-                            console.log("Cancelled");
-                        }
-                    }
 
+                        }
+                    });
+                }else{
+                    $ngConfirm("ـاكد من إدخال كل البيانات")
+                    return false;
                 }
-            });
-
+            }
         }
     };
 
@@ -619,7 +692,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     action: function () {
                         $timeout(function () {
                             $scope.filterTeamArr.splice(index, 1);
-                            $scope.renderTasks();
+                            $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
                         });
                     }
                 },
@@ -1049,7 +1122,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
                         if ($scope.entityl1 != undefined && $scope.entityl1 != '') {
-                            $timeout(function () {
+                           // $timeout(function () {
                                 // var newEntityObject = {};
                                 //  debugger;
                                 if (!($scope.entityl1 in $scope.selectedEntitiesArray)) {
@@ -1092,8 +1165,9 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                                 }
                                 $log.debug("Entities object after adding");
                                 $log.debug($scope.selectedEntitiesArray);
-                                $scope.$apply();
-                            });
+                                return false;
+                                //$scope.$apply();
+                           // });
                         } else {
                             $ngConfirm('يجب اختيار المستوى الأول');
                             return false;
@@ -1103,7 +1177,9 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                 cancel: {
                     text: 'إلغاء',
                     btnClass: 'btn-red',
-                    action: function (scope, button) {}
+                    action: function (scope, button) {
+                        $scope.$apply()
+                    }
                 },
             }
         });
@@ -1151,29 +1227,29 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
     }
 
     $scope.$watch("currentState", function (oldval, newval) {
-        $scope.renderTasks($scope.projectId, $scope.stageName);
+        $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
     })
     $scope.$watch("from_complete", function (oldval, newval) {
-        $scope.renderTasks($scope.projectId, $scope.stageName);
+        $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
     })
     $scope.$watch("to_complete", function (oldval, newval) {
-        $scope.renderTasks($scope.projectId, $scope.stageName);
+        $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
     })
     $scope.$watch("from_quality", function (oldval, newval) {
-        $scope.renderTasks($scope.projectId, $scope.stageName);
+        $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
     })
     $scope.$watch("to_quality", function (oldval, newval) {
-        $scope.renderTasks($scope.projectId, $scope.stageName);
+        $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
     })
     $scope.$watch("importance", function (oldval, newval) {
-        $scope.renderTasks($scope.projectId, $scope.stageName);
+        $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
     })
     $scope.$watch("isAuto", function (oldval, newval) {
         if ($scope.isAuto) {
             console.log("in if")
             if ($scope.taskObject) {
                 console.log("in if 2")
-                if (isNaN(new Date($scope.taskObject.dateActualStart).getTime()) ||
+                if (isNaN(new Date($scope.taskObject.datePlannedStart).getTime()) ||
                     isNaN(new Date($scope.taskObject.datePlannedEnd).getTime())) {
                     console.log("in if 3")
                     $scope.taskObject.status = "8";

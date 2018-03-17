@@ -326,7 +326,7 @@ app.factory('user', function ($q, $rootScope, $log, $timeout, connector) {
             var deferred = $q.defer();
 
             connector.send(project, '/project', 'POST', null).then(function (resolved) {
-                console.log("project sent is : ",project);
+                console.log("project sent is : ", project);
                 if (resolved.data.message === "OK") {
                     deferred.resolve(resolved.data);
                 }
@@ -355,15 +355,14 @@ app.factory('user', function ($q, $rootScope, $log, $timeout, connector) {
         'updateHomeContents': function (message, vision, principles) {
             var $this = this;
             var deferred = $q.defer();
-            var data =
-                {
-                    "_id": "homeContents",
-                    "data": {
-                        "message": message ? message : "",
-                        "vision": vision ? vision : "",
-                        "principles": principles ? principles : ""
-                    }
+            var data = {
+                "_id": "homeContents",
+                "data": {
+                    "message": message ? message : "",
+                    "vision": vision ? vision : "",
+                    "principles": principles ? principles : ""
                 }
+            }
             connector.send(data, '/global', 'PUT', null).then(function (resolved) {
                 $log.debug('edit Project response');
                 $log.debug(resolved.data);
@@ -482,11 +481,19 @@ app.factory('user', function ($q, $rootScope, $log, $timeout, connector) {
             });
             return deferred.promise;
         },
-        'getTasks': function (projectId, stageName) {
-            var filter = {
-                "project": projectId != '' ? projectId : undefined,
-                "stage": stageName != '' ? stageName : undefined
-            };
+        'getTasks': function (projectId, stageName, entities) {
+            console.log("passed values are: ", projectId, stageName, entities)
+            if (projectId || stageName || entities.$elemMatch.l1 || entities.$elemMatch.l2 || entities.$elemMatch.l3 || entities.$elemMatch.l4) {
+                console.log("made filter")
+                var filter = {
+                    "project": projectId != '' ? projectId : undefined,
+                    "stage": stageName != '' ? stageName : undefined,
+                    "entities": entities.$elemMatch.l1 || entities.$elemMatch.l2 || entities.$elemMatch.l3 || entities.$elemMatch.l4 ? entities : undefined
+                };
+            } else {
+                console.log("skipped filter")
+                filter = {};
+            }
             var $this = this;
             var deferred = $q.defer();
             connector.send(filter, '/mission/list', 'POST', null).then(function (resolved) {
@@ -514,20 +521,20 @@ app.factory('user', function ($q, $rootScope, $log, $timeout, connector) {
             });
             return deferred.promise;
         },
-        'getAnalytics' : function(endPoint,PointId) {
-          var $this = this;
-          var deferred = $q.defer();
-          connector.send(null,`/analytics/${endPoint}/${PointId}`,'GET',null)
-            .then(function (resolved){
-              if(    resolved.data.message != "Reduce of empty array with no initial value"
-                && resolved.data.message != "Cannot read property 'dateActualStart' of null"
-              )
-                deferred.resolve(resolved.data);
-              },
-              function (reject){
-                deferred.reject(rejected);
-              });
-          return deferred.promise;
+        'getAnalytics': function (endPoint, PointId) {
+            var $this = this;
+            var deferred = $q.defer();
+            connector.send(null, `/analytics/${endPoint}/${PointId}`, 'GET', null)
+                .then(function (resolved) {
+                        if (resolved.data.message != "Reduce of empty array with no initial value" &&
+                            resolved.data.message != "Cannot read property 'dateActualStart' of null"
+                        )
+                            deferred.resolve(resolved.data);
+                    },
+                    function (reject) {
+                        deferred.reject(rejected);
+                    });
+            return deferred.promise;
         }
 
     };

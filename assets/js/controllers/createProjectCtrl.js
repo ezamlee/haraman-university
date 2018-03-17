@@ -23,6 +23,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
     $scope.projectObject = {};
     $scope.projectObject.stages = [];
     $scope.userFilterEntitiesModel = {};
+    $scope.selectedEntitiesArray={};
     $scope.filterationModel = {
         "entities": {
             "$elemMatch": {
@@ -262,6 +263,71 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         }
 
     };
+    $scope.entityfilter = function(level){
+        console.log("level entered")
+        $ngConfirm({
+            title: 'تأكيد الحزف',
+            content:"<p>تاكيد</p>",
+            scope: $scope,
+            buttons:{
+                confirm:{
+                    text: 'تاكيد',
+                    btnClass: 'btn-blue',
+                    action: function(scope, button){
+
+                        switch(level){
+                            case 1:
+                                $scope.selectedFirstLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l1'] = undefined;
+                                    $scope.entitiesModel.firstLevel = "";
+                                }catch(err){
+                                    console.log(error);
+                                }
+                            case 2:
+                                $scope.selectedSecondLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l2'] = undefined;
+                                    $scope.entitiesModel.secondLevel = "";
+                                }catch(err){
+                                    console.log(error);
+                                }
+                                
+                            case 3:
+                                $scope.selectedThirdLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l3'] = undefined;
+                                    $scope.entitiesModel.thirdLevel = "";
+                                }catch(err){
+                                    console.log(error);
+                                }
+                            case 4:
+                                $scope.selectedForthLevelObject = null;
+                                try{
+                                    $scope.filterationModel['entities']['$elemMatch']['l4'] = undefined;
+                                    $scope.entitiesModel.fourthLevel = "";
+                                }catch(err){
+                                    console.log(error);
+                                }
+                        }
+                        console.log("the filtaration data is: ",$scope.filterationModel,$scope.entitiesModel);
+                        $scope.renderProjects($scope.filtrationProgram);
+                        $scope.$apply();
+
+                    }
+                    
+                },
+                cancel: {
+                    text: 'إلغاء',
+                    btnClass: 'btn-red',
+                    action: function(){
+                        
+                        return false;
+                    }
+                }
+            }
+        })
+    }
     $scope.setProjectObject = function (object) {
         $scope.projectObject._id = object._id;
         $scope.projectObject.name = object.name;
@@ -291,28 +357,31 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         if (object.outputs)
             $scope.projectObject.outputs = object.outputs[0] || null;
         $scope.projectObject.stages = object.stages;
-        $scope.projectObject.wt = object.wt;
+        $scope.projectObject.wt = object.wt || 0;
+        $scope.projectObject.completed = parseFloat(object.completed) || 0;
+        $scope.projectObject.quality = parseFloat(object.quality) || 0;
 
-        user.getAnalytics('project', object._id).then(data => {
-            $scope.projectObject.completed = data.WT || 0;
-            $scope.projectObject.quality = data.QA || 0;
-        });
+
+        // user.getAnalytics('project', object._id).then(data => {
+        //     $scope.projectObject.completed = data.WT || 0;
+        //     $scope.projectObject.quality = data.QA || 0;
+        // });
         $scope.projectObject.status = object.status || "8";
-        if (isNaN(new Date($scope.projectObject.dateActualStart).getTime()) ||
+        if (isNaN(new Date($scope.projectObject.datePlannedStart).getTime()) ||
             isNaN(new Date($scope.projectObject.datePlannedEnd).getTime())
         ) {
             $scope.passed = "البيانات غير مكتمل"
         } else {
             var today = new Date().getTime();
-            var start = new Date($scope.projectObject.dateActualStart).getTime();
+            var start = new Date($scope.projectObject.datePlannedStart).getTime();
             var end = new Date($scope.projectObject.datePlannedEnd).getTime();
             var part = today - start;
             var total = end - start;
             var passed = Math.round((part / total) * 100)
             passed = Math.min(passed, 100);
-            $scope.passed = `${passed}`;
+            $scope.passed = object.passed || `${passed}`;
         }
-
+        
         $scope.isAuto = object.isAuto || false;
 
         $scope.selectedEntitiesArray = {};
@@ -1189,7 +1258,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
             console.log("in if")
             if ($scope.projectObject) {
                 console.log("in if 2")
-                if (isNaN(new Date($scope.projectObject.dateActualStart).getTime()) ||
+                if (isNaN(new Date($scope.projectObject.datePlannedStart).getTime()) ||
                     isNaN(new Date($scope.projectObject.datePlannedEnd).getTime())) {
                     console.log("in if 3")
                     $scope.projectObject.status = "8";
