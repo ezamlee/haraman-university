@@ -3,7 +3,6 @@
  */
 app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, user, $ngConfirm) {
 
-    console.log("Welcome to targetsCtrl");
 
     // start "added by heba"
 
@@ -58,7 +57,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                     text: 'طباعة',
                     btnClass: 'btn-blue',
                     action: function (scope, button) {
-                        console.log("scope.result", scope.result)
                         if(!scope.result){
                             $scope.printReport(false);
                         }else{
@@ -70,7 +68,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                     text: 'إغلاق',
                     btnClass: 'btn-red',
                     action: function (scope, button) {
-                        console.log("Cancelled");
                     }
                 }
             }
@@ -79,7 +76,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
     };
 
     $scope.printReport = function (reportForm) {
-        console.log("reportObj", $scope.reportForm)
         $ngConfirm({
             title: '',
             contentUrl: 'target-print-template.html',
@@ -96,14 +92,10 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                     action: function (scope, button) {
 
                         var htmlPrint = document.getElementById("printArea");
-                        console.log("Parsed html");
-                        console.log(htmlPrint);
                         var mywindow = window.open('', 'PRINT', 'height=400,width=600');
                         mywindow.document.write($('<div/>').append($(htmlPrint).clone()).html());
                         mywindow.document.close(); // necessary for IE >= 10
                         mywindow.focus(); // necessary for IE >= 10*/
-                        console.log("To be printed");
-                        console.log(mywindow.document);
                         mywindow.print();
                         mywindow.close();
 
@@ -125,12 +117,9 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
 
     $scope.renderGoals = function () {
         user.getGoals().then(function (goals) {
-            console.log("goals", goals);
             //debugger;
             $scope.strategicGoals = goals;
             $scope.selectedStrategicGoal = goals[$scope.selectedStrategicGoalIndex];
-            console.log("$scope.selectedStrategicGoal", $scope.selectedStrategicGoal);
-            console.log("my test: ",Object.values($scope.selectedStrategicGoal.subgoals));
             
 
         });
@@ -152,8 +141,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
         $scope.showSecondaryGoalsColumn = true;
         $scope.strategicGoalModel = selectedGoal.name;
         // (function CalcGoalCompleted(){
-        //   console.log(Object.values($scope.selectedStrategicGoal.subgoals))
-        // $scope.selectedStrategicComplete =   Object.values($scope.selectedStrategicGoal.subgoals).reduce( (sum,subgoal)=> { console.log(sum) ;return sum + (parseFloat(subgoal.wt || 0)/100 * parseFloat(subgoal.completed || 0)/100) } ,0 )
         // })()
         user.getPrograms({}).then( data => {
              finalData = [];
@@ -213,7 +200,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                 cancel: {
                     text: 'إلغاء',
                     action: function () {
-                        console.log("Cancelled");
                     }
                 }
 
@@ -237,7 +223,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
         // }
     };
     $scope.onSecondaryGoalSelected = function (key, index, value) {
-        console.log("the key is: ",value,key,index)
         $scope.selectedSecondaryGoal = value;
         $scope.selectedSecondaryGoalIndex = index;
         $scope.secondaryGoalModel = value.name;
@@ -260,9 +245,7 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
           data.map( Project => {$scope.arrayOfPrograms.includes(Project.program) ? finalData.push(Project) : "null" })
           return finalData
         }).then(data => {$scope.relatedPrograms = data });
-        console.log("1-> " ,$scope.relatedProjects )
-        console.log("2-> " ,$scope.arrayOfPrograms )
-        console.log("3-> " ,$scope.relatedPrograms )
+
     }
     $scope.deleteSecondaryGoal = function () {
         if ($scope.selectedSecondaryObjectKey) {
@@ -287,7 +270,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                     cancel: {
                         text: 'إلغاء',
                         action: function () {
-                            console.log("Cancelled");
                         }
                     }
 
@@ -299,7 +281,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
 
     };
     $scope.editSecondaryGoal = function (valid) {
-      console.log(valid)
 
         if (valid || 1) {
             if ($scope.selectedStrategicGoal != undefined) {
@@ -313,8 +294,20 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                                 text: 'تأكيد',
                                 action: function () {
                                     var goalObject = angular.copy($scope.selectedStrategicGoal);
-                                    goalObject.subgoals[$scope.selectedSecondaryObjectKey].name = $scope.secondaryGoalModel;
-                                    debugger;
+                                    //goalObject.subgoals[$scope.selectedSecondaryObjectKey].name = $scope.secondaryGoalModel;
+                                    
+                                    let subgoals = {};
+                                    console.log(JSON.stringify($scope.subgoals));
+                                    $scope.subgoals.map( subGoal => {
+                                        console.log(JSON.stringify(subGoal));
+                                        subgoals[subGoal._id] = {
+                                            "name": subGoal.name || "",
+                                            "wt": subGoal.wt || 0,
+                                            "completed":subGoal.completed || 0
+                                        }
+                                    })
+                                    console.log('goalObject is: ',JSON.stringify(subgoals));
+                                    goalObject.subgoals  = subgoals;
                                     user.updateGoal(goalObject).then(function (resolved) {
                                         $.alert("تم تعديل هدف فرعي بنجاح!");
                                         $scope.strategicGoalModel = '';
@@ -326,7 +319,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                             cancel: {
                                 text: 'إلغاء',
                                 action: function () {
-                                    console.log("Cancelled");
                                 }
                             }
 
@@ -356,7 +348,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                             cancel: {
                                 text: 'إلغاء',
                                 action: function () {
-                                    console.log("Cancelled");
                                 }
                             }
 
@@ -393,7 +384,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                         cancel: {
                             text: 'إلغاء',
                             action: function () {
-                                console.log("Cancelled");
                             }
                         }
 
@@ -410,7 +400,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                             text: 'تأكيد',
                             action: function () {
                                 var goalObject = angular.copy($scope.selectedStrategicGoal);
-                                console.log("===>",goalObject);
                                 goalObject.name = $scope.strategicGoalModel;
                                 user.updateGoal(goalObject).then(function (resolved) {
                                     $.alert("تم تعديل هدف استراتيجي بنجاح!");
@@ -423,7 +412,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                         cancel: {
                             text: 'إلغاء',
                             action: function () {
-                                console.log("Cancelled");
                             }
                         }
 
@@ -436,17 +424,14 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
     };
 })
 .directive('numbersOnly', function () {
-    console.log("hello from directive")
     return {
         require: 'ngModel',
         link: function (scope, element, attr, ngModelCtrl) {
             function fromUser(text) {
                 if (text) {
-                    console.log("text", text)
                     var transformedInput = text.replace(/[^0-9]/g, '');
 
                     if (transformedInput > 100) {
-                        console.log("transformedInput > 100")
                         transformedInput = 100
                         return transformedInput;
                     }
