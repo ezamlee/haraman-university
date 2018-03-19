@@ -118,8 +118,17 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
     $scope.renderGoals = function () {
         user.getGoals().then(function (goals) {
             //debugger;
-            $scope.strategicGoals = goals;
+            $scope.strategicGoals = goals.sort((a,b)=> a.name.localeCompare(b.name));//objs.sort((a, b) => a.last_nom.localeCompare(b.last_nom));
+            console.log("final selected Strategic Goal Index is: ",$scope.selectedStrategicGoalIndex , $scope.selectedStrategicGoal );
             $scope.selectedStrategicGoal = goals[$scope.selectedStrategicGoalIndex];
+            $scope.onStrategicGoalSelected($scope.selectedStrategicGoal,$scope.selectedStrategicGoalIndex);
+            
+            let value = Object.values( $scope.selectedStrategicGoal.subgoals ).sort( (a,b) => a.name.localeCompare(b.name))[$scope.selectedSecondaryGoalIndex];
+            if( $scope.isSecondaryGoalUpdate){
+                $scope.selectedSecondaryGoalIndex = index;
+                $scope.selectedSecondaryObjectKey = key;
+                $scope.onSecondaryGoalSelected($scope.selectedSecondaryObjectKey,$scope.selectedSecondaryGoalIndex,value)
+            }
             
 
         });
@@ -161,7 +170,7 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
            return finalData
          }).then(data => {$scope.MainrelatedPrograms = data });
 
-        $scope.secondaryGoalModel = '';
+        if(!$scope.isSecondaryGoalUpdate) $scope.secondaryGoalModel = '';
         $scope.relatedProjects = [];
         $scope.arrayOfPrograms = [];
         $scope.relatedPrograms = [];
@@ -210,6 +219,9 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
     $scope.addSecondaryGoal = function (valid) {
         delete $scope.selectedSecondaryObjectKey;
         $scope.secondaryGoalModel = "";
+        $scope.selectedSecondaryGoal = undefined;
+        $scope.relatedPrograms = [];
+        $scope.relatedProjects = [];
         // if (valid) {
         //     var timestampString = new Date().getTime() + '';
         //     var goalObject = angular.copy($scope.selectedStrategicGoal);
@@ -225,8 +237,9 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
     $scope.onSecondaryGoalSelected = function (key, index, value) {
         $scope.selectedSecondaryGoal = value;
         $scope.selectedSecondaryGoalIndex = index;
-        $scope.secondaryGoalModel = value.name;
         $scope.selectedSecondaryObjectKey = key;
+        $scope.secondaryGoalModel = value.name;
+        
         user.getPrograms({}).then( data => {
              finalData = [];
              $scope.arrayOfPrograms = [];
@@ -297,7 +310,6 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                                     //goalObject.subgoals[$scope.selectedSecondaryObjectKey].name = $scope.secondaryGoalModel;
                                     
                                     let subgoals = {};
-                                    console.log(JSON.stringify($scope.subgoals));
                                     $scope.subgoals.map( subGoal => {
                                         console.log(JSON.stringify(subGoal));
                                         subgoals[subGoal._id] = {
@@ -306,12 +318,12 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                                             "completed":subGoal.completed || 0
                                         }
                                     })
-                                    console.log('goalObject is: ',JSON.stringify(subgoals));
                                     goalObject.subgoals  = subgoals;
                                     user.updateGoal(goalObject).then(function (resolved) {
                                         $.alert("تم تعديل هدف فرعي بنجاح!");
-                                        $scope.strategicGoalModel = '';
-                                        $scope.secondaryGoalModel = '';
+                                        //$scope.strategicGoalModel = '';
+                                        //$scope.secondaryGoalModel = '';
+                                        $scope.isSecondaryGoalUpdate = true;
                                         $scope.renderGoals();
                                     });
                                 }
@@ -401,10 +413,13 @@ app.controller('targetsCtrl', function ($log, $scope, $rootScope, $location, use
                             action: function () {
                                 var goalObject = angular.copy($scope.selectedStrategicGoal);
                                 goalObject.name = $scope.strategicGoalModel;
+                                
+                                $scope.tempStrategicID = goalObject._id;
                                 user.updateGoal(goalObject).then(function (resolved) {
                                     $.alert("تم تعديل هدف استراتيجي بنجاح!");
-                                    $scope.strategicGoalModel = '';
-                                    $scope.secondaryGoalModel = '';
+                                    //$scope.strategicGoalModel = '';
+                                    //$scope.secondaryGoalModel = '';
+                                    $scope.isSecondaryGoalUpdate = false;
                                     $scope.renderGoals();
                                 });
                             }

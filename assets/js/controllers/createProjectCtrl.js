@@ -171,6 +171,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
     };
     $scope.renderPrograms();
     $scope.renderProjects = function (filtrationProgram) {
+        
 
         user.getProjects(filtrationProgram).then(function (resolved) {
             console.log(resolved)
@@ -242,11 +243,17 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                 })
 
                 $scope.projects = resolved;
+                if($scope.tempID){
+                    let tempProject = resolved.filter(project => project._id == $scope.tempID)[0];
+                    $scope.onProjectClicked(tempProject);
+                }
+                
                 $scope.$apply();
             });
 
         });
     };
+
     $scope.renderProjects();
     $scope.filterProjects = function () {
         if ($scope.programId != undefined) {
@@ -328,7 +335,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
             }
         })
     }
-    $scope.setProjectObject = function (object) {
+    $scope.setProjectObject = function (object) {    
         $scope.projectObject._id = object._id;
         $scope.projectObject.name = object.name;
         $scope.projectObject.program = object.program;
@@ -427,6 +434,12 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         $log.debug(o);
         $scope.selectedEntitiesArray = o;
 
+        if($scope.passed < 0 ){
+            $scope.projectObject.passed = 'لم يبدأ بعد';
+            $scope.selectedProject.status = '2';
+            $scope.projectObject.status = '2';
+        }
+
     };
     $scope.onProjectClicked = function (project) {
         console.log(project)
@@ -434,6 +447,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.projectObject = project;
         $scope.projectObject = $scope.selectedProject;
         $scope.setProjectObject($scope.selectedProject);
+        $scope.addProjectStage();
 
     };
     $scope.renderUsers = function (filter) {
@@ -542,8 +556,15 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
         $scope.projectObject.outputs = [];
         delete $scope.selectedProject;
         delete $scope.selectedProjectStage;
+        $scope.tempID = undefined;
+        $scope.passed = undefined;
+        $scope.selectedEntitiesArray={};
+        $scope.indicatorName = undefined;
+        $scope.goalValue = undefined;
+        $scope.actualValue = undefined;
         $scope.internalTeamArr = [];
         $scope.externalTeamArr = [];
+        $scope.
         $scope.indicatorName = "";
         $scope.goalValue = "";
         $scope.actualValue = "";
@@ -597,11 +618,12 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                                 console.log("The current object being created is: ", projectObject);
                                 var submittedForm = $scope.initializeProjectForm(projectObject);
                                 submittedForm._id = (new Date().getTime()).toString();
-                                console.log("the new id is: ", submittedForm._id);
-                                user.addProject(submittedForm).then(function (resolved) {
-                                    $scope.filterProjects();
-                                    $.alert("تمت إضافة مشروع بنجاح!");
-                                });
+                                if(submittedForm.name && submittedForm.program && submittedForm.program != "" && submittedForm.name!= "" ){
+                                    user.addProject(submittedForm).then(function (resolved) {
+                                        $scope.filterProjects();
+                                        $.alert("تمت إضافة مشروع بنجاح!");
+                                    });
+                                }
                             }
                         },
                         cancel: {
@@ -625,7 +647,7 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                                 action: function () {
                                     var submittedForm = $scope.initializeProjectForm(projectObject);
                                     submittedForm._id = $scope.selectedProject._id;
-
+                                    $scope.tempID = submittedForm._id;
                                     user.editProject(submittedForm).then(function (resolved) {
                                         $scope.filterProjects();
                                         $.alert("تم تعديل المشروع بنجاح!");
@@ -1262,7 +1284,9 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                     isNaN(new Date($scope.projectObject.datePlannedEnd).getTime())) {
                     console.log("in if 3")
                     $scope.projectObject.status = "8";
-                } else if (parseFloat($scope.projectObject.completed) / parseFloat($scope.passed) >= 0.85) {
+                } else if ($scope.passed < 0){
+                    $scope.projectObject.status = '2';
+                }else if (parseFloat($scope.projectObject.completed) / parseFloat($scope.passed) >= 0.85) {
                     console.log("in elseif 1")
                     $scope.projectObject.status = "4";
                 } else if (parseFloat($scope.projectObject.completed) / parseFloat($scope.passed) < 0.85) {

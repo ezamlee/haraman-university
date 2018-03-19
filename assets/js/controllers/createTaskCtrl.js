@@ -340,7 +340,10 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     }
                 })
 
-
+                if($scope.tempID){
+                    let tempTask = resolved.filter(task => task._id == $scope.tempID)[0];
+                    $scope.onTaskClicked(tempTask);
+                }
 
                 $scope.tasks = resolved;
                 $scope.$apply();
@@ -496,6 +499,12 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
             var passed = Math.round((part / total) * 100)
             passed = Math.min(passed, 100);
             $scope.passed = object.passed ||  `${passed}`;
+
+            if($scope.passed < 0 ){
+                $scope.passed = "لم يبدأ بعد";
+                $scope.taskObject.status = "2";
+                
+            }
         }
         $scope.isAuto = object.isAuto || false;
         $scope.taskObject.acheive = object.acheive
@@ -555,7 +564,9 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         delete $scope.selectedTask;
         $scope.internalTeamArr = [];
         $scope.externalTeamArr = [];
+        $scope.selectedEntitiesArray={};
         $scope.makeChanges = true;
+        $scope.tempID = undefined;
     };
     $scope.initializeTaskForm = function (taskObject) {
         var submittedForm = angular.copy(taskObject);
@@ -628,8 +639,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
 
                                     var submittedForm = $scope.initializeTaskForm(taskObject);
                                     submittedForm._id = $scope.selectedTask._id;
-                                    $log.debug("Submit task form");
-                                    $log.debug(submittedForm);
+                                    $scope.tempID = submittedForm._id;
                                     user.editTask(submittedForm).then(function (resolved) {
                                         $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
                                         $.alert("تم تعديل المهمة بنجاح!");
@@ -1046,7 +1056,6 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
     $scope.calcAuto = function () {
         console.log('hi')
     }
-    $scope.passed = "10%"
 
     function serialize(obj, lstCmpl, lstCrnt) {
         lstCmpl = lstCmpl || [];
@@ -1253,6 +1262,8 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     isNaN(new Date($scope.taskObject.datePlannedEnd).getTime())) {
                     console.log("in if 3")
                     $scope.taskObject.status = "8";
+                }else if($scope.passed < 0 ){
+                    $scope.taskObject.status = "2";
                 } else if (parseFloat($scope.taskObject.completed) / parseFloat($scope.passed) >= 0.85) {
                     console.log("in elseif 1")
                     $scope.taskObject.status = "4";
