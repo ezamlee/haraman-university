@@ -483,17 +483,20 @@ app.factory('user', function ($q, $rootScope, $log, $timeout, connector) {
         },
         'getTasks': function (projectId, stageName, entities) {
             console.log("passed values are: ", projectId, stageName, entities)
-            if (projectId || stageName || entities.$elemMatch.l1 || entities.$elemMatch.l2 || entities.$elemMatch.l3 || entities.$elemMatch.l4) {
-                console.log("made filter")
-                var filter = {
-                    "project": projectId != '' ? projectId : undefined,
-                    "stage": stageName != '' ? stageName : undefined,
-                    "entities": entities.$elemMatch.l1 || entities.$elemMatch.l2 || entities.$elemMatch.l3 || entities.$elemMatch.l4 ? entities : undefined
-                };
-            } else {
-                console.log("skipped filter")
-                filter = {};
+            
+            let filter ={};
+            
+            if(projectId != ''){
+                filter['project'] = projectId;
             }
+            if(stageName != ''){
+                filter['stage'] = stageName;
+            }
+            if(entities.$elemMatch.l1 || entities.$elemMatch.l2 || entities.$elemMatch.l3 || entities.$elemMatch.l4){
+                filter['entities'] = entities;
+            }       
+            
+            console.log("filter is -------------->",filter)
             var $this = this;
             var deferred = $q.defer();
             connector.send(filter, '/mission/list', 'POST', null).then(function (resolved) {

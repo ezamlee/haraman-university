@@ -251,23 +251,22 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
         });
     };
     $scope.renderProjects();
-    $scope.filterProjects = function () {
-        $scope.projectId = '';
-        $scope.stageName = '';
-        if ($scope.programId != undefined) {
-            if ($scope.programId === "") {
-                $scope.renderProjects();
-                $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
-            } else {
-                var object = {
-                    "program": $scope.programId
+    $scope.filterProgram = function () {
+        if( $scope.programId == -1){
+            $scope.relatedProjectsArray = [];
+        }
+        else if($scope.programId && $scope.programId != ''){
+            user.getProjects({"program" : $scope.programId}).then( data => {
+                if(data,data.length > 0){
+                    $scope.relatedProjectsArray = data.map( project => project._id );
+                    
                 }
-                $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
-            }
-        } else {
-            $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
+                
+            });
         }
 
+
+        $scope.renderTasks($scope.projectId, $scope.stageName,$scope.filterationModel.entities);
     };
     $scope.renderTasks = function (projectId, stageName) {
         console.log("filter tasks are: ",$scope.filterationModel.entities)
@@ -344,7 +343,15 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                     let tempTask = resolved.filter(task => task._id == $scope.tempID)[0];
                     $scope.onTaskClicked(tempTask);
                 }
-
+                $scope.filterTeamArr.forEach(user => {
+                    resolved = resolved.filter(prog => prog["teamInt"].indexOf(user._id) > -1 || prog["teamExt"].indexOf(user._id) > -1);
+                });
+                console.log("=====>",$scope.programId)
+                if($scope.relatedProjectsArray && $scope.relatedProjectsArray.length > 0 && $scope.programId && $scope.programId != -1){
+                    resolved = resolved.filter( task => {
+                        return $scope.relatedProjectsArray.indexOf((task.project).toString()) > -1
+                    });
+                }
                 $scope.tasks = resolved;
                 $scope.$apply();
             });

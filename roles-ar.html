@@ -79,8 +79,8 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label> البرنامج </label>
-                      <select name="select" class="form-control" ng-model="programId" ng-change="filterProjects()">
-                        <option value="">جميع البرامج</option>
+                      <select name="select" class="form-control" ng-model="programId" ng-change="filterProgram()">
+                        <option value="-1">جميع البرامج</option>
                         <option ng-repeat="program in programs" value="{{program._id}}">{{program.name}}
                         </option>
                       </select>

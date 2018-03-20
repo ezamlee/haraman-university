@@ -250,7 +250,9 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                         return false;
                     }
                 })
-
+                $scope.filterTeamArr.forEach(user => {
+                    resolved = resolved.filter(prog => prog["teamInt"].indexOf(user._id) > -1 || prog["teamExt"].indexOf(user._id) > -1);
+                });
                 console.log(resolved);
                 $scope.programs = resolved;
                 $scope.$apply();
@@ -897,17 +899,7 @@ app.controller('createProgramCtrl', function ($log, $scope, $rootScope, $locatio
                     action: function () {
                         $timeout(function () {
                             $scope.filterTeamArr.splice(index, 1);
-                            if ($scope.filterTeamArr.length > 0) {
-                                var x = [];
-                                for (let i in $scope.filterTeamArr) {
-                                    $scope.renderPrograms();
-                                    x.push(...$scope.programs.filter(prog => prog["teamInt"].indexOf($scope.filterTeamArr[i]._id) > -1 || prog["teamExt"].indexOf($scope.filterTeamArr[i]._id) > -1));
-                                    $scope.programs = x;
-                                }
-                            } else {
-                                console.log("else")
-                                $scope.renderPrograms();
-                            }
+                            $scope.renderPrograms($scope.filterationModel);
                         });
                     }
                 },

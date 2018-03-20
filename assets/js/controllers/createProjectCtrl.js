@@ -241,6 +241,9 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                         return false;
                     }
                 })
+                $scope.filterTeamArr.forEach(user => {
+                    resolved = resolved.filter(prog => prog["teamInt"].indexOf(user._id) > -1 || prog["teamExt"].indexOf(user._id) > -1);
+                });
 
                 $scope.projects = resolved;
                 if($scope.tempID){
@@ -1080,7 +1083,11 @@ app.controller('createProjectCtrl', function ($log, $scope, $rootScope, $locatio
                     action: function () {
                         $timeout(function () {
                             $scope.filterTeamArr.splice(index, 1);
-                            $scope.renderProjects();
+                            if($scope.filterationModel)
+                                $scope.renderProjects($scope.filtrationProgram);
+                            else
+                                $scope.renderProjects();
+                            
                         });
                     }
                 },
