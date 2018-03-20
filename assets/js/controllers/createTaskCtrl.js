@@ -349,6 +349,7 @@ app.controller('createTaskCtrl', function ($log, $scope, $rootScope, $location, 
                 console.log("=====>",$scope.programId)
                 if($scope.relatedProjectsArray && $scope.relatedProjectsArray.length > 0 && $scope.programId && $scope.programId != -1){
                     resolved = resolved.filter( task => {
+                        console.log(task);
                         return $scope.relatedProjectsArray.indexOf((task.project).toString()) > -1
                     });
                 }
